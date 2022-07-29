@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',  # for future feature - logging in with social accounts
 ]
 
 MIDDLEWARE = [
@@ -58,7 +62,10 @@ ROOT_URLCONF = 'midi_dragon.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +77,33 @@ TEMPLATES = [
         },
     },
 ]
+
+# ALLAUTH
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+# temporarily displaying account confirmation emails to the console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# allowing allauth to use username or email for logging in
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+# ensuring that email is required and the user has to confirm its correct
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+# setting minimum username length
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+# setting the login url and redirect url
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'midi_dragon.wsgi.application'
 
