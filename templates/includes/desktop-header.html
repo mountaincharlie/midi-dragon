@@ -1,0 +1,99 @@
+<!-- logo and important navigation -->
+<div class="row">
+
+    <!-- CLICKABLE LOGO -->
+    <div class="col-3">
+        <a class="navbar-brand start-0" href="#" aria-label="Link to landing page">
+            <i class="fa-solid fa-dragon"></i>
+            Midi<strong>DRAGON</strong>
+        </a>
+    </div>
+
+    <!-- search form with small search icon - hidden with JS until Search icon clicked -->
+    <div class="col-3">
+        <!-- with id="search-form" -->
+    </div>
+
+    <!-- search icon (expands form with JS ) -->
+    <div class="col-2 text-center">
+        <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+        <p>Search</p>
+    </div>
+
+    <!-- PROFILE ICON DROPDOWN -->
+    <div class="col-2 text-center">
+        {% if user.is_authenticated %}
+            <!-- profile dropdown btn -->
+            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="profiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-circle-user midi-teal"></i>
+                <p>Profile</p>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="profiledropdownbtn">
+                {% if user.is_superuser %}
+                    <li><a class="dropdown-item" href="#">Site Management</a></li>
+                {% endif %}
+                <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#">My Details</a></li>
+                <li><a class="dropdown-item" href="#">Project Drafts</a></li>
+                <li><a class="dropdown-item" href="#">Projects In Progress</a></li>
+                <li><a class="dropdown-item" href="#">Completed Projects</a></li>
+                <li><a class="dropdown-item" href="#">Order History</a></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+        {% else %}
+            <!-- login dropdown btn -->
+            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="logindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-circle-user"></i>
+                <p>Login</p>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="logindropdownbtn">
+                <li><a class="dropdown-item" href="#">Login</a></li>
+                <li><a class="dropdown-item" href="#">Register</a></li>
+            </ul>
+        {% endif %}
+        
+    </div>
+
+    <!-- TRACKLIST ICON -->
+    <div class="col-2 text-center">
+        <!-- link to tracklist -->
+        <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}">
+            <i class="fa-solid fa-compact-disc"></i>
+            <p>
+                {% if tracklist_total %}
+                    £{{ tracklist_total|floatformat:2 }}
+                {% else %}
+                    £0.00
+                {% endif %}
+            </p>
+        </a>
+    </div>
+</div>
+<!-- 3 secondary nav btns -->
+<div class="row">
+    <div class="col-12">
+        <ul class="list-inline list-unstyled">
+            <li class="list-inline-item dropdown">
+                <!-- pre-made songs btn with dropdown - ADD SITE BTN styling -->
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="premadesongsdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    Pre-made Songs
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="premadesongsdropdownbtn">
+                    <li><a class="dropdown-item" href="#">By Price</a></li>
+                    <li><a class="dropdown-item" href="#">By Genre</a></li>
+                    <li><a class="dropdown-item" href="#">By Length</a></li>
+                    <li><a class="dropdown-item" href="#">By BPM</a></li>
+                    <li><a class="dropdown-item" href="#">All Songs</a></li>
+                </ul>
+            </li>
+            <li class="list-inline-item">
+                <!-- btn to custom song form -->
+                <a class="btn" href="#" role="btn">Design Custom Song</a>
+            </li>
+            <li class="list-inline-item">
+                <!-- btn to testimonials page -->
+                <a class="btn" href="#" role="btn">Testimonials</a>
+            </li>
+        </ul>
+    </div>
+</div>
