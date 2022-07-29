@@ -1,0 +1,90 @@
+<div class="row">
+
+    <!-- burger icon dropdown  -->
+    <div class="col text-center">
+        <!-- burger icon is the dropdown-toggle -->
+        <!-- unordered list is in the dropdown-menu -->
+        <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="burgericondropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="burgericondropdownbtn">
+            <li>
+                <button class="dropdown-item btn btn-secondary dropdown-toggle" type="button" id="mobilepremadesongsdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    Pre-made Songs
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="mobilepremadesongsdropdownbtn">
+                    <li><a class="dropdown-item" href="#">By Price</a></li>
+                    <li><a class="dropdown-item" href="#">By Genre</a></li>
+                    <li><a class="dropdown-item" href="#">By Length</a></li>
+                    <li><a class="dropdown-item" href="#">By BPM</a></li>
+                    <li><a class="dropdown-item" href="#">All Songs</a></li>
+                </ul>
+            </li>
+            <li><a class="dropdown-item" href="#">Design Custom Song</a></li>
+            <li><a class="dropdown-item" href="#">Testimonials</a></li>
+        </ul>
+    </div>
+
+    <!-- clickable site logo -->
+    <div class="col text-center">
+        <a class="navbar-brand" href="#" aria-label="Link to landing page">
+            <i class="fa-solid fa-dragon"></i>
+            Midi<strong>DRAGON</strong>
+        </a>
+    </div>
+
+    <!-- search icon dropdown -->
+    <div class="col text-center">
+        <!-- search icon is the dropdown-toggle -->
+        <!-- search form is in the dropdown-menu -->
+        
+    </div>
+
+    <!-- login/profile dropdown -->
+    <div class="col text-center">
+        {% if user.is_authenticated %}
+            <!-- profile dropdown btn -->
+            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="profiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-circle-user midi-teal"></i>
+                <p>Profile</p>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="profiledropdownbtn">
+                {% if user.is_superuser %}
+                    <li><a class="dropdown-item" href="#">Site Management</a></li>
+                {% endif %}
+                <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#">My Details</a></li>
+                <li><a class="dropdown-item" href="#">Project Drafts</a></li>
+                <li><a class="dropdown-item" href="#">Projects In Progress</a></li>
+                <li><a class="dropdown-item" href="#">Completed Projects</a></li>
+                <li><a class="dropdown-item" href="#">Order History</a></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+        {% else %}
+            <!-- login dropdown btn -->
+            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="logindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-circle-user"></i>
+                <p>Login</p>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="logindropdownbtn">
+                <li><a class="dropdown-item" href="#">Login</a></li>
+                <li><a class="dropdown-item" href="#">Register</a></li>
+            </ul>
+        {% endif %}
+    </div>
+
+    <!-- tracklist icon -->
+    <div class="col text-center">
+        <!-- same as on meduim+ screens -->
+        <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}">
+            <i class="fa-solid fa-compact-disc"></i>
+            <p>
+                {% if tracklist_total %}
+                    £{{ tracklist_total|floatformat:2 }}
+                {% else %}
+                    £0.00
+                {% endif %}
+            </p>
+        </a>
+    </div>
+</div>
