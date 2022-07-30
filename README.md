@@ -728,6 +728,9 @@ If the logged in user is the admin then a different view class is called wheneve
 
 ### Code
 * (installed django extensions if any)
+* Expandable navbar made with [Bootstrap 5 navbars](https://getbootstrap.com/docs/5.0/components/navbar/#external-content)
+* Dropdown menus made with [Bootstrap 5 dropdowns](https://getbootstrap.com/docs/5.0/components/dropdowns/)
+* Email Subscription form created with [Mailchimp's](https://mailchimp.com/en-gb/) Embedded Form Builder
 
 ### Media
 * Images:
