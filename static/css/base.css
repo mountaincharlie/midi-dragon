@@ -1,0 +1,53 @@
+/* ---------- midi dragon site colours */
+
+.midi-teal {
+    color: #00D1CF;
+}
+
+.midi-pink {
+    color: #FF57D2;
+}
+
+.midi-d-grey {
+    color: #1D212E;
+}
+
+.midi-l-grey {
+    color: #9A9EAE;
+}
+
+
+/* ---------- midi dragon b.g. colours */
+
+.midi-teal-bg {
+    background-color: #00D1CF;
+}
+
+.midi-pink-bg {
+    background-color: #FF57D2;
+}
+
+.midi-d-grey-bg {
+    background-color: #1D212E;
+}
+
+.midi-l-grey-bg {
+    background-color: #9A9EAE;
+}
+
+
+/* ---------- midi dragon btns */
+
+/* teal, grey, red */
+/* pink highlight on hover/select */
+/* sizes and rounded corners to add to all btns */
+
+
+/* ---------- mailchimp  */
+
+#mc_embed_signup{
+    background:#9A9EAE;  /* was #fff */
+    clear:left;
+    font:14px Helvetica,Arial,sans-serif;
+    width:600px;
+}
