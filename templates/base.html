@@ -24,12 +24,13 @@
         <!-- google font api -->
         
         <!-- custom css link -->
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
         
         <!-- font awesome cdn -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
         <!-- favicon link -->
-        <link href = "{% media 'midi-dragon-favicon.png' %}" rel = "shortcut icon" type = "image/x-icon">
+        <link href = "{% static 'midi-dragon-favicon.png' %}" rel = "shortcut icon" type = "image/x-icon">
         {% endblock %}
 
         {% block extra_css %}
@@ -53,17 +54,17 @@
 
     <body>
         <!-- responsive sticky navbar header - CHECK after landing page created -->
-        <header class="sticky-top container-fluid">
-            <nav class="navbar navbar-expand-md navbar-light">
+        <header class="sticky-top midi-d-grey-bg w-100">
+            <nav class="navbar navbar-light w-100">
 
                 <!-- ------ for medium screens and above ---- -->
-                <div class="d-none d-md-flex">
+                <div class="container d-none d-md-block m-0 px-0">
                     {% include 'includes/desktop-header.html' %}
                 </div>
                 <!-- ------ end of medium screen nav ------ -->
 
                 <!-- ------ for smallest screen up to medium ----- -->
-                <div class="d-flex d-md-none">
+                <div class="container d-block d-md-none m-0 px-0">
                     {% include 'includes/mobile-header.html' %}
                 </div>
                 <!-- ------ end of medium screen nav ------ -->
@@ -75,10 +76,12 @@
         {% if messages %}
         {% endif %}
 
-        {% block content %}
-        {% endblock %}
-
-        <footer class="container footer-container">
+        <div class="content-block">
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+        <footer class="container footer-container midi-d-grey-bg w-100">
 
             <div class="row">
                 {% include 'includes/footer.html' %}
