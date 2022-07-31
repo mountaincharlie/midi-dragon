@@ -1,5 +1,10 @@
 body{
-    
+    background-image: linear-gradient(39deg, rgba(29,33,46,0.7) 25%, rgba(0,209,207,0.7) 50%, rgba(255,87,210,0.7) 75%), url(/media/midi-dragon-home-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* color:; */
+    /* font-family:; */
 }
 
 .content-block{
@@ -102,6 +107,16 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 }
 
 
+/* ---------- midi dragon page headings */
+
+/* .page-heading {
+    text-align: center;
+    font-size:;
+    font-family:;
+    font-weight;:
+} */
+
+
 /* ---------- navbar */
 
 #profiledropdownbtn::after,
@@ -112,9 +127,7 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     content: none;
 }
 
-
-/* ---------- navbar on mobile */
-
+/* fixing dropdown-menu displaying on mobile */
 .mobiledropdowncontainer{
     position:relative;
 }
