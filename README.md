@@ -727,6 +727,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * [GeeksforGeeks' solution](https://www.geeksforgeeks.org/how-to-remove-arrow-in-dropdown-in-bootstrap/) for how to remove the arrow from the Bootstrap dropdowns.
 
 ### Content
+* Homepage background gradient created using [cssgradient's online tool](https://cssgradient.io/) 
 * Fonts:
   * 
 
