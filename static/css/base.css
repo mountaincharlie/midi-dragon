@@ -1,7 +1,43 @@
+body{
+    
+}
+
+.content-block{
+    min-height: 70vh;
+}
+
+.container{
+    max-width:100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+
+/* overriding BS5 dropdown-item background color on hover */
+
+.dropdown-item:hover{
+    background-color: #1D212E;
+}
+
+
+/* ---------- hover pink */
+
+a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
+    color: #FF57D2 !important;
+    border-color: #FF57D2 !important;
+}
+
+
 /* ---------- midi dragon site colours */
 
 .midi-teal {
-    color: #00D1CF;
+    color: #00D1CF !important;
 }
 
 .midi-pink {
@@ -9,30 +45,30 @@
 }
 
 .midi-d-grey {
-    color: #1D212E;
+    color: #1D212E !important;
 }
 
 .midi-l-grey {
-    color: #9A9EAE;
+    color: #9A9EAE !important;
 }
 
 
 /* ---------- midi dragon b.g. colours */
 
 .midi-teal-bg {
-    background-color: #00D1CF;
+    background-color: #00D1CF !important;
 }
 
 .midi-pink-bg {
-    background-color: #FF57D2;
+    background-color: #FF57D2 !important;
 }
 
 .midi-d-grey-bg {
-    background-color: #1D212E;
+    background-color: #1D212E !important;
 }
 
 .midi-l-grey-bg {
-    background-color: #9A9EAE;
+    background-color: #9A9EAE !important;
 }
 
 
@@ -42,12 +78,77 @@
 /* pink highlight on hover/select */
 /* sizes and rounded corners to add to all btns */
 
+.btn {
+    color: #9A9EAE;
+    border: 1px solid #9A9EAE;
+}
 
-/* ---------- mailchimp  */
+.btn-l-grey {
+    color: #9A9EAE;
+    border-color: #9A9EAE;
+}
+
+.btn-d-grey {
+    color: #1D212E;
+    border-color: #1D212E;
+}
+
+
+/* ---------- midi dragon hrs */
+
+.hr-80 {
+    margin: auto;
+    width:80%;
+}
+
+
+/* ---------- navbar */
+
+#profiledropdownbtn::after,
+#mobileprofiledropdownbtn::after,
+#logindropdownbtn::after,
+#mobilelogindropdownbtn::after,
+#burgericondropdownbtn::after {
+    content: none;
+}
+
+
+/* ---------- navbar on mobile */
+
+.mobiledropdowncontainer{
+    position:relative;
+}
+
+
+/* ---------- mailchimp builtin and overidden styling */
 
 #mc_embed_signup{
-    background:#9A9EAE;  /* was #fff */
+    background:#9A9EAE;
     clear:left;
+    border-radius: 4px;
     font:14px Helvetica,Arial,sans-serif;
-    width:600px;
+    /* width:600px; */
+    width:80%;
+    margin: auto;
+}
+
+#mc_embed_signup .button{
+    color:#9A9EAE !important;
+    background-color: #1D212E !important;
+}
+
+#mc_embed_signup .button:hover{
+    color:#1D212E !important;
+    background-color: #FF57D2 !important;
+}
+
+#mce-EMAIL{
+    background-color: #9A9EAE !important;
+    border-color: #00D1CF !important;
+}
+
+#mc_embed_signup #mc-embedded-subscribe-form div.mce_inline_error{
+    color:#1D212E !important;
+    background-color: #9A9EAE !important;
+    font-weight: bold !important;
 }
