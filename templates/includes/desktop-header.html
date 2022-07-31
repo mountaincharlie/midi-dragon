@@ -1,98 +1,104 @@
 <!-- logo and important navigation -->
-<div class="row">
+<div class="row w-100">
 
     <!-- CLICKABLE LOGO -->
     <div class="col-3">
-        <a class="navbar-brand start-0" href="#" aria-label="Link to landing page">
+        <a class="navbar-brand text-start midi-teal fs-2 ps-3" href="#" aria-label="Link to landing page">
             <i class="fa-solid fa-dragon"></i>
-            Midi<strong>DRAGON</strong>
+            midi<strong>DRAGON</strong>
         </a>
     </div>
 
     <!-- search form with small search icon - hidden with JS until Search icon clicked -->
-    <div class="col-3">
+    <div class="col-3 midi-l-grey">
         <!-- with id="search-form" -->
     </div>
 
-    <!-- search icon (expands form with JS ) -->
-    <div class="col-2 text-center">
-        <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
-        <p>Search</p>
-    </div>
-
-    <!-- PROFILE ICON DROPDOWN -->
-    <div class="col-2 text-center">
-        {% if user.is_authenticated %}
-            <!-- profile dropdown btn -->
-            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="profiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-circle-user midi-teal"></i>
-                <p>Profile</p>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="profiledropdownbtn">
-                {% if user.is_superuser %}
-                    <li><a class="dropdown-item" href="#">Site Management</a></li>
-                {% endif %}
-                <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                <li><a class="dropdown-item" href="#">My Details</a></li>
-                <li><a class="dropdown-item" href="#">Project Drafts</a></li>
-                <li><a class="dropdown-item" href="#">Projects In Progress</a></li>
-                <li><a class="dropdown-item" href="#">Completed Projects</a></li>
-                <li><a class="dropdown-item" href="#">Order History</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-        {% else %}
-            <!-- login dropdown btn -->
-            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="logindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-circle-user"></i>
-                <p>Login</p>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="logindropdownbtn">
-                <li><a class="dropdown-item" href="#">Login</a></li>
-                <li><a class="dropdown-item" href="#">Register</a></li>
-            </ul>
-        {% endif %}
-        
-    </div>
-
-    <!-- TRACKLIST ICON -->
-    <div class="col-2 text-center">
-        <!-- link to tracklist -->
-        <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}">
-            <i class="fa-solid fa-compact-disc"></i>
-            <p>
-                {% if tracklist_total %}
-                    £{{ tracklist_total|floatformat:2 }}
+    <!-- 3 desktop icons -->
+    <div class="col-6 midi-l-grey">
+        <ul class="list-inline list-unstyled w-100 text-end">
+            <!-- search icon -->
+            <li class="list-inline-item dropdown midi-l-grey fs-5 px-4">
+                <div class="text-center pink-hover">
+                    <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+                    <p>Search</p>
+                </div>
+            </li>
+            <!-- profile icon -->
+            <li class="list-inline-item dropdown midi-l-grey fs-5 px-4">
+                {% if user.is_authenticated %}
+                <div class="dropdown-toggle text-center midi-teal pink-hover fs-5" type="button" id="profiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p>Profile</p>
+                </div>
+                <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="profiledropdownbtn">
+                    {% if user.is_superuser %}
+                        <li><a class="dropdown-item midi-l-grey" href="#">Site Management</a></li>
+                    {% endif %}
+                    <li><a class="dropdown-item midi-l-grey" href="#">Dashboard</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">My Details</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Project Drafts</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Projects In Progress</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Completed Projects</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Order History</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Logout</a></li>
+                </ul>
                 {% else %}
-                    £0.00
+                <div class="dropdown-toggle text-center pink-hover fs-5" type="button" id="logindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <p>Login</p>
+                </div>
+                <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="logindropdownbtn">
+                    <li><a class="dropdown-item midi-l-grey" href="#">Login</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Register</a></li>
+                </ul>
                 {% endif %}
-            </p>
-        </a>
+            </li>
+            <!-- tracklist icon -->
+            <li class="list-inline-item fs-5 ps-4">
+                <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}">
+                    <div class="text-center fs-5">
+                        <i class="fa-solid fa-compact-disc"></i>
+                        <p>
+                            {% if tracklist_total %}
+                                £{{ tracklist_total|floatformat:2 }}
+                            {% else %}
+                                £0.00
+                            {% endif %}
+                        </p>
+                    </div> 
+                </a>
+            </li>
+        </ul>
     </div>
+
+    
+    
 </div>
 <!-- 3 secondary nav btns -->
-<div class="row">
-    <div class="col-12">
-        <ul class="list-inline list-unstyled">
-            <li class="list-inline-item dropdown">
+<div class="row w-100">
+    <div class="col-12 text-center">
+        <ul class="list-inline list-unstyled w-100 d-flex justify-content-evenly">
+            <li class="list-inline-item dropdown midi-l-grey">
                 <!-- pre-made songs btn with dropdown - ADD SITE BTN styling -->
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="premadesongsdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-l-grey dropdown-toggle fs-5 px-4 py-1" type="button" id="premadesongsdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
                     Pre-made Songs
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="premadesongsdropdownbtn">
-                    <li><a class="dropdown-item" href="#">By Price</a></li>
-                    <li><a class="dropdown-item" href="#">By Genre</a></li>
-                    <li><a class="dropdown-item" href="#">By Length</a></li>
-                    <li><a class="dropdown-item" href="#">By BPM</a></li>
-                    <li><a class="dropdown-item" href="#">All Songs</a></li>
+                <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="premadesongsdropdownbtn">
+                    <li><a class="dropdown-item midi-l-grey" href="#">By Price</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">By Genre</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">By Length</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">By BPM</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">All Songs</a></li>
                 </ul>
             </li>
-            <li class="list-inline-item">
+            <li class="list-inline-item midi-l-grey">
                 <!-- btn to custom song form -->
-                <a class="btn" href="#" role="btn">Design Custom Song</a>
+                <a class="btn btn-l-grey fs-5 px-4 py-1" href="#" role="btn">Design Custom Song</a>
             </li>
-            <li class="list-inline-item">
+            <li class="list-inline-item midi-l-grey">
                 <!-- btn to testimonials page -->
-                <a class="btn" href="#" role="btn">Testimonials</a>
+                <a class="btn btn-l-grey fs-5 px-4 py-1" href="#" role="btn">Testimonials</a>
             </li>
         </ul>
     </div>
