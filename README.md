@@ -685,8 +685,10 @@ If the logged in user is the admin then a different view class is called wheneve
 ---
 
 ### Bugs and Fixes
-* Bug: 
-    * Fix: 
+* Bug: after setting the background-color for the dropdown-menus in the site header to dark grey, when hovering over each item, the background changed to white.
+    * Fix: targetting the dropdown-menu hover in base.css and overriding the Bootstrap 5 highlighting, keeping the background-color as dark grey while the links' text was pink on hover.
+* Bug: when setting up the header for mobile (small screens) when selecting the Profile/Login icon or expanding the burger icon, their dropdown-menus displayed on the left-hand side of the screen instead of below them.
+    * Fix: adding the mobiledropdowncontainer class to both divs containing the dropdown menus and setting their position to relative in base.css, as recommended by [Roy](https://stackoverflow.com/a/35956506) 
 * Bug: 
     * Fix: 
 
@@ -722,9 +724,11 @@ If the logged in user is the admin then a different view class is called wheneve
 
 ### Helpful Resources
 * [dbdiagram.io](https://dbdiagram.io/home) for creating my initial and final database schema designs.
+* [GeeksforGeeks' solution](https://www.geeksforgeeks.org/how-to-remove-arrow-in-dropdown-in-bootstrap/) for how to remove the arrow from the Bootstrap dropdowns.
 
 ### Content
-* 
+* Fonts:
+  * 
 
 ### Code
 * (installed django extensions if any)
