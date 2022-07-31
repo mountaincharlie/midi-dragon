@@ -1,80 +1,81 @@
-<div class="row">
+<div class="row w-100">
 
     <!-- burger icon dropdown  -->
-    <div class="col text-center">
+    <div class="col mobiledropdowncontainer text-center fs-1 p-0">
         <!-- burger icon is the dropdown-toggle -->
         <!-- unordered list is in the dropdown-menu -->
-        <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="burgericondropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="burgericondropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-bars"></i>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="burgericondropdownbtn">
-            <li>
-                <button class="dropdown-item btn btn-secondary dropdown-toggle" type="button" id="mobilepremadesongsdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+        </div>
+        <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="burgericondropdownbtn">
+            <li class="dropdown-item midi-l-grey pink-hover">
+                <div class="midi-l-grey">
                     Pre-made Songs
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="mobilepremadesongsdropdownbtn">
-                    <li><a class="dropdown-item" href="#">By Price</a></li>
-                    <li><a class="dropdown-item" href="#">By Genre</a></li>
-                    <li><a class="dropdown-item" href="#">By Length</a></li>
-                    <li><a class="dropdown-item" href="#">By BPM</a></li>
-                    <li><a class="dropdown-item" href="#">All Songs</a></li>
+                </div>
+                <ul class="midi-d-grey-bg">
+                    <li><a class="midi-l-grey" href="#">By Price</a></li>
+                    <li><a class="midi-l-grey" href="#">By Genre</a></li>
+                    <li><a class="midi-l-grey" href="#">By Length</a></li>
+                    <li><a class="midi-l-grey" href="#">By BPM</a></li>
+                    <li><a class="midi-l-grey" href="#">All Songs</a></li>
                 </ul>
             </li>
-            <li><a class="dropdown-item" href="#">Design Custom Song</a></li>
-            <li><a class="dropdown-item" href="#">Testimonials</a></li>
+            <li class="dropdown-item pink-hover"><a class="midi-l-grey" href="#">Design Custom Song</a></li>
+            <li class="dropdown-item pink-hover"><a class="midi-l-grey" href="#">Testimonials</a></li>
         </ul>
     </div>
 
     <!-- clickable site logo -->
-    <div class="col text-center">
-        <a class="navbar-brand" href="#" aria-label="Link to landing page">
+    <div class="col text-center p-0">
+        <a class="navbar-brand midi-teal fs-1" href="#" aria-label="Link to landing page">
             <i class="fa-solid fa-dragon"></i>
-            Midi<strong>DRAGON</strong>
         </a>
     </div>
 
     <!-- search icon dropdown -->
-    <div class="col text-center">
+    <div class="col midi-l-grey pink-hover text-center fs-5 p-0">
         <!-- search icon is the dropdown-toggle -->
         <!-- search form is in the dropdown-menu -->
+        <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+        <p>Search</p>
         
     </div>
 
     <!-- login/profile dropdown -->
-    <div class="col text-center">
+    <div class="col mobiledropdowncontainer text-center p-0 midi-l-grey">
         {% if user.is_authenticated %}
             <!-- profile dropdown btn -->
-            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="profiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-circle-user midi-teal"></i>
+            <div class="dropdown-toggle text-center midi-teal pink-hover fs-5" type="button" id="mobileprofiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-circle-user"></i>
                 <p>Profile</p>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="profiledropdownbtn">
+            </div>
+            <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="mobileprofiledropdownbtn">
                 {% if user.is_superuser %}
-                    <li><a class="dropdown-item" href="#">Site Management</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="#">Site Management</a></li>
                 {% endif %}
-                <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                <li><a class="dropdown-item" href="#">My Details</a></li>
-                <li><a class="dropdown-item" href="#">Project Drafts</a></li>
-                <li><a class="dropdown-item" href="#">Projects In Progress</a></li>
-                <li><a class="dropdown-item" href="#">Completed Projects</a></li>
-                <li><a class="dropdown-item" href="#">Order History</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Dashboard</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">My Details</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Project Drafts</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Projects In Progress</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Completed Projects</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Order History</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Logout</a></li>
             </ul>
         {% else %}
             <!-- login dropdown btn -->
-            <button class="btn btn-secondary dropdown-toggle text-center" type="button" id="logindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle text-center pink-hover fs-5" type="button" id="mobilelogindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-circle-user"></i>
                 <p>Login</p>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="logindropdownbtn">
-                <li><a class="dropdown-item" href="#">Login</a></li>
-                <li><a class="dropdown-item" href="#">Register</a></li>
+            </div>
+            <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="mobilelogindropdownbtn">
+                <li><a class="dropdown-item midi-l-grey" href="#">Login</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="#">Register</a></li>
             </ul>
         {% endif %}
     </div>
 
     <!-- tracklist icon -->
-    <div class="col text-center">
+    <div class="col text-center fs-5 p-0">
         <!-- same as on meduim+ screens -->
         <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}">
             <i class="fa-solid fa-compact-disc"></i>
