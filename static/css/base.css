@@ -1,10 +1,14 @@
 body{
-    background-image: linear-gradient(39deg, rgba(29,33,46,0.7) 25%, rgba(0,209,207,0.7) 50%, rgba(255,87,210,0.7) 75%), url(/media/midi-dragon-home-image.jpg);
+    background-image: linear-gradient(39deg, rgba(29,33,46,1) 25%, rgba(0,209,207,0.7) 50%, rgba(255,87,210,0.8) 75%), url(/media/midi-dragon-home-image.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* color:; */
-    /* font-family:; */
+    color:#1D212E;
+    font-family:'Fira Sans', sans-serif;
+}
+
+.logo-font{
+    font-family:'BioRhyme', sans-serif;
 }
 
 .content-block{
@@ -98,6 +102,13 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border-color: #1D212E;
 }
 
+.large-btn{
+    font-weight: bold;
+    border-width: 2px;
+    border-radius: 4px;
+    font-size:large;
+}
+
 
 /* ---------- midi dragon hrs */
 
@@ -106,15 +117,26 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     width:80%;
 }
 
+.hr-90-dark {
+    margin: auto;
+    width:90%;
+    border: 1px solid #1D212E;
+}
+
+.hr-90-light {
+    margin: auto;
+    width:90%;
+    border: 1px solid #9A9EAE;
+}
+
 
 /* ---------- midi dragon page headings */
 
-/* .page-heading {
+.page-heading {
     text-align: center;
-    font-size:;
-    font-family:;
-    font-weight;:
-} */
+    font-family:'BioRhyme', sans-serif;
+    font-weight:bold;
+}
 
 
 /* ---------- navbar */
@@ -133,13 +155,19 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 }
 
 
+/* ---------- homepage */
+
+#homepage-container li{
+    font-size:large;
+}
+
 /* ---------- mailchimp builtin and overidden styling */
 
 #mc_embed_signup{
     background:#9A9EAE;
     clear:left;
     border-radius: 4px;
-    font:14px Helvetica,Arial,sans-serif;
+    font:14px Fira Sans,sans-serif;
     /* width:600px; */
     width:80%;
     margin: auto;
