@@ -312,7 +312,7 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 * For non-logged users:
   * screenshots (desktop and mobile)
 * Description of features
-  * Nav
+  * Nav icons (tracklist has title attribute since it doesnt have a label to say what it is)
   * Admin Site Management option
   * clickable logo
   * search functionality
@@ -725,11 +725,13 @@ If the logged in user is the admin then a different view class is called wheneve
 ### Helpful Resources
 * [dbdiagram.io](https://dbdiagram.io/home) for creating my initial and final database schema designs.
 * [GeeksforGeeks' solution](https://www.geeksforgeeks.org/how-to-remove-arrow-in-dropdown-in-bootstrap/) for how to remove the arrow from the Bootstrap dropdowns.
+* [cssgradient's online tool](https://cssgradient.io/) used to help visualise the homepage background gradient.
+* [Typewolf](https://www.typewolf.com/google-fonts) for finding the best Google fonts for this project.
 
 ### Content
-* Homepage background gradient created using [cssgradient's online tool](https://cssgradient.io/) 
 * Fonts:
-  * 
+  * Google Font's [BioRhyme](https://fonts.google.com/specimen/BioRhyme) for the logo font and headings.
+  * Google Font's [Fira Sans](https://fonts.google.com/specimen/Fira+Sans) for the rest of the site's text content.
 
 ### Code
 * (installed django extensions if any)
