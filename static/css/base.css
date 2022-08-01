@@ -145,13 +145,30 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 #mobileprofiledropdownbtn::after,
 #logindropdownbtn::after,
 #mobilelogindropdownbtn::after,
-#burgericondropdownbtn::after {
+#burgericondropdownbtn::after,
+#mobilesearchdropdownbtn::after {
     content: none;
 }
 
 /* fixing dropdown-menu displaying on mobile */
 .mobiledropdowncontainer{
     position:relative;
+}
+
+.search-form input{
+    border-color:#9A9EAE;
+}
+
+.search-form input:hover{
+    border-color:#FF57D2;
+}
+
+.search-form input:focus{
+    border-color:#00D1CF;
+}
+
+#mobile-search-form {
+    width:60vw;
 }
 
 
@@ -185,8 +202,17 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 
 #mce-EMAIL{
     background-color: #9A9EAE !important;
-    border-color: #00D1CF !important;
+    border-color: #1D212E !important;
 }
+
+#mce-EMAIL:hover{
+    border-color:#FF57D2 !important;
+}
+
+#mce-EMAIL:focus{
+    border-color:#00D1CF !important;
+}
+
 
 #mc_embed_signup #mc-embedded-subscribe-form div.mce_inline_error{
     color:#1D212E !important;

@@ -33,11 +33,25 @@
     </div>
 
     <!-- search icon dropdown -->
-    <div class="col midi-l-grey pink-hover text-center fs-5 p-0">
+    <div class="col mobiledropdowncontainer midi-l-grey pink-hover text-center fs-5 p-0">
         <!-- search icon is the dropdown-toggle -->
         <!-- search form is in the dropdown-menu -->
-        <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
-        <p>Search</p>
+        <div class="dropdown-toggle text-center pink-hover fs-5" type="button" id="mobilesearchdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <p>Search</p>
+        </div>
+        <div class="dropdown-menu midi-d-grey-bg" aria-labelledby="mobilesearchdropdownbtn">
+            <form method="GET" action="#" id="mobile-search-form" class="dropdown-item search-form">
+                <div class="input-group">
+                    <!-- the 'query' is what is being submitted -->
+                    <input class="form-control midi-l-grey rounded-2 midi-d-grey-bg" type="text" name="query" placeholder="Browse">
+                    <!-- DOES IT NEED form-control CLASS TO WORK? - STYLE DIFFERENTLY -->
+                    <div role="button" class="btn midi-l-grey pink-hover" type="submit">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </form>
+        </div>
         
     </div>
 
