@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',  # future feat - logging in with social accounts
     'home',
+    'songs',
 ]
 
 MIDDLEWARE = [
