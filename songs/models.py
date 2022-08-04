@@ -1,6 +1,9 @@
+import random
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+# from django.db.models.signals import pre_save
+from django.utils.text import slugify
 
 
 class Genre(models.Model):
@@ -84,14 +87,14 @@ class Song(models.Model):
     image - if not provided a placeholder is used instead
     audio_file - the audio file for the song (downloadable and playable on the site)
     video_file - any associated video file (used for if the song is being used as a Testimonial and the user wants the video the song was used in to be avaliable to view on the site)
-    slug - unique identifier for each song to be used in the urls to protect the song id's being visible to users (set by the pre_save method only on song creation - the admin can edit the slug but the unique constraint should prevent duplication)
+    slug - unique identifier for each song to be used in the urls to protect the song id's being visible to users (set by the unique_slug_generator method if the song doesnt have one - the admin can edit the slug but the unique constraint prevents accidental duplication)
     project_type - FK to ProjectType model (set to null if the Project Type is deleted)
     user - FK to Django's User model (set to null if the user is deleted)
     genre - FK to Genre model (set to null if the Genre is deleted)
     # audio_clip - WOULD HAVE
     bpm - the beats per minute for the song (must be positive and has a minimum constraint of 35bpm and maximum of 155bpm)
     duration - the length of the song in minutes and seconds
-    price - the price of the song in GBP to 2 d.p. (if I'm not the 'user' then the song is a custom song and its price needs to be calculated with a pre_save signal every time its updated)
+    price - the price of the song in GBP to 2 d.p. (if I'm not the 'user' then the song is a custom song and its price needs to be calculated with a pre_save signal every time its updated to override any existing value)
     likes - ManyToMany field with Django's User model to keep track of the user's who have liked the song
     instruments - ManyToMany field with the Instrument model to store the instruments used in the song
     song_purpose - TextField for the user to provide the song's purpose (part 1 of the song's details description)
@@ -106,18 +109,18 @@ class Song(models.Model):
     Contains the methods:
     number_of_likes - for returning the number of likes 
     """
-    name = models.CharField(max_length=260)  # required
-    image = models.ImageField(null=True, blank=True)  # set placeholder image?
+    name = models.CharField(max_length=260)
+    image = models.ImageField(null=True, blank=True, default='placeholder.jpg')
     audio_file = models.FileField(null=True, blank=True)
     video_file = models.FileField(null=True, blank=True)
-    slug = models.SlugField(max_length=200)  #, unique=True, default=random_slug) USE pre/post save signals to generate
+    slug = models.SlugField(null=False, unique=True)
     project_type = models.ForeignKey(ProjectType, null=True, blank=True, on_delete=models.SET_NULL)  # set to null if the project type is deleted
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='site_user')
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     # audio_clip = models.FileField(null=True, blank=True)  # WOULD HAVE - for users to provide their own audio clips
     bpm = models.PositiveIntegerField(null=True, blank=True, validators=[MinValueValidator(35), MaxValueValidator(155)])
     duration = models.DurationField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)  # overwritten and calculated in pre/post signal if im not the user
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     likes = models.ManyToManyField(User, blank=True, related_name='song_like')
     instruments = models.ManyToManyField(Instrument, blank=True, related_name='song_instrument')
     song_purpose = models.TextField(null=True, blank=True)
@@ -142,6 +145,37 @@ class Song(models.Model):
         """ method for counting the number of likes a song has """
         return self.likes.count()
 
-    # method for creating the slug on song creation only
+    # ---------- functions for creating the slug on song creation
 
-    # method for price caluclation IF the song is a custom song (every time its updated)
+    def unique_slug_generator(self):
+        """
+        Method for generating a random slug for each Song instance upon saving
+        it.
+        This method:
+        -generates a list of 20 random integers in the range 0 to 100
+        -turns the integer list into a string list
+        -joins all the string list items into one string
+        -slugifies the song's name
+        -combines the random string with the slugified name to get the
+        random_slug (to further reduce chances of creating an existing slug)
+        -returns the random_slug
+        """
+        random_numbers_list = [random.randint(0, 100) for i in range(20)]
+        random_str_list = [str(i) for i in random_numbers_list]
+        random_str = str("".join(random_str_list))
+        name_slug = str(slugify(self.name))
+        random_slug = name_slug + random_str
+
+        return random_slug
+
+    def save(self, *agrs, **kwargs):
+        """
+        Overrides save method
+        Sets slug if it doesnt already have one
+        Calls the save method again
+        """
+        if not self.slug:
+            self.slug = self.unique_slug_generator()
+        super().save(*agrs, **kwargs)
+
+    # method for overriding the price with a caluclation IF the song is a custom song (project_type.min_price + every time its updated)
