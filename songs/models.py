@@ -5,21 +5,81 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Genre(models.Model):
     """
+    Inherits Django's models.Model and represents the Genre table in the
+    database
+    Only the Admin can create/edit Genres (the unique constraint helps prevent duplication)
+    Contains the fields:
+    name - required and must be unique (programatic name)
+    display_name - required and must be unique (name displayed to the user)
     """
+    name = models.CharField(max_length=260, unique=True)
+    display_name = models.CharField(max_length=260, unique=True)
+
+    class Meta:
+        """ meta data for how to order genres """
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def get_display_name(self):
+        return self.display_name
 
 
 class Instrument(models.Model):
     """
+    Inherits Django's models.Model and represents the Instrument table in the
+    database
+    Only the Admin can create/edit Instruments (the unique constraint helps prevent duplication)
+    Contains the fields:
+    name - required and must be unique (programatic name)
+    display_name - required and must be unique (name displayed to the user)
     """
+    name = models.CharField(max_length=260, unique=True)
+    display_name = models.CharField(max_length=260, unique=True)
+
+    class Meta:
+        """ meta data for how to order instruments """
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def get_display_name(self):
+        return self.display_name
 
 
 class ProjectType(models.Model):
     """
+    Inherits Django's models.Model and represents the ProjectType table in the
+    database
+    Only the Admin can create/edit Project Types (the unique constraint helps prevent duplication)
+    Contains the fields:
+    name - required and must be unique (programatic name)
+    song_length_range - length range that each projeect type can be (just for displaying to the user)
+    num_included_instruments - the number of instruments which are included with each Project Type (used for setting up the Custom Song form for the user)
+    num_included_reviews - the number of review sessions which are included with each Project Type (used for setting up the Custom Song form for the user)
+    min_price - the price of each Project Type without any additional Instruments/Reviews etc...
     """
+    name = models.CharField(max_length=260, unique=True)
+    song_length_range = models.CharField(max_length=100)  # 10-30s, 31-59s, 1-5 mins
+    num_included_instruments = models.PositiveIntegerField()
+    num_included_reviews = models.PositiveIntegerField()
+    min_price = models.DecimalField(max_digits=6, decimal_places=2)
 
- 
+    class Meta:
+        """ meta data for how to order project types (cheapest first) """
+        ordering = ['min_price']
+
+    def __str__(self):
+        return self.name
+
+
 class Song(models.Model):
     """
+    Inherits Django's models.Model and represents the Song table in the
+    database
+    Contains the fields:
     name - required field but doesnt have to be unique
     image - if not provided a placeholder is used instead
     audio_file - the audio file for the song (downloadable and playable on the site)
@@ -43,6 +103,8 @@ class Song(models.Model):
     completed - BooleanField for if the song is complete (False by default)
     public - BooleanField for if the song can be public (pre-made songs will only be visible to users if this is True and custom songs will only be visible on the testimonial page if this it True - False by default)
     created_date - DateTimeField set to the current time when the song was created (for controlling the ordering of songs displayed)
+    Contains the methods:
+    number_of_likes - for returning the number of likes 
     """
     name = models.CharField(max_length=260)  # required
     image = models.ImageField(null=True, blank=True)  # set placeholder image?
@@ -67,20 +129,19 @@ class Song(models.Model):
     completed = models.BooleanField(default=False)
     public = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
- 
+
     class Meta:
         """ meta data for how to order songs """
         ordering = ['-created_date']
- 
+
     def __str__(self):
         """ method to return the song name as a string for each song """
         return str(self.name)
- 
+
     def number_of_likes(self):
         """ method for counting the number of likes a song has """
         return self.likes.count()
- 
+
     # method for creating the slug on song creation only
- 
+
     # method for price caluclation IF the song is a custom song (every time its updated)
- 
