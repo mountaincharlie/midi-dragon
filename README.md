@@ -727,6 +727,9 @@ If the logged in user is the admin then a different view class is called wheneve
 * [GeeksforGeeks' solution](https://www.geeksforgeeks.org/how-to-remove-arrow-in-dropdown-in-bootstrap/) for how to remove the arrow from the Bootstrap dropdowns.
 * [cssgradient's online tool](https://cssgradient.io/) used to help visualise the homepage background gradient.
 * [Typewolf](https://www.typewolf.com/google-fonts) for finding the best Google fonts for this project.
+* [Code Institute's 'friendly_name' models field idea](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/f6c3de32aa152b98da174daba13412388258b9b8/products/models.py) for how to have a programamtic and displayed version of my Genre and Instrument instances. This was useful because the search functionality required the Genre and Instrument names to be written programatically (with no uppercases or spaces) but it was better for the UXD for the Genre and Instrument names to contain uppercases and spaces when displayed to users.
+* [Code Institute's idea for creating order numbers by overriding the default save method](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/f6c3de32aa152b98da174daba13412388258b9b8/checkout/models.py) for how to call my unique_slug_generator method to make sure that all Song instances have a slug, which is used in urls as a unique identifier to avoid exposing mydatabase's primary keys.
+* [Tom's solution on Slack](https://stackoverflow.com/a/42426801) for how to use Django's PositiveIntegerField with minimum and maximum value constraints.
 
 ### Content
 * Fonts:
@@ -738,6 +741,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * Expandable navbar made with [Bootstrap 5 navbars](https://getbootstrap.com/docs/5.0/components/navbar/#external-content)
 * Dropdown menus made with [Bootstrap 5 dropdowns](https://getbootstrap.com/docs/5.0/components/dropdowns/)
 * Email Subscription form created with [Mailchimp's](https://mailchimp.com/en-gb/) Embedded Form Builder
+* My Song modle's unique_slug_generator method uses my own [random_slug method from my Cook eBook project](https://github.com/mountaincharlie/project-four-cook-ebook/blob/main/cook_ebook/models.py) with the small addition of using the name of the Song in the slug to further reduce the chance of duplicate slugs
 
 ### Media
 * Images:
