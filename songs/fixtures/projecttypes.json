@@ -1,0 +1,35 @@
+[
+    {"pk": 1,
+        "model": "songs.projecttype",
+        "fields":
+        {
+            "name": "Mini",
+            "song_length_range": "10-30s",
+            "num_included_instruments": "2",
+            "num_included_reviews": "1",
+            "min_price": "20.00"
+        }
+    },
+    {"pk": 2,
+        "model": "songs.projecttype",
+        "fields":
+        {
+            "name": "Reg",
+            "song_length_range": "31s-1min29s",
+            "num_included_instruments": "3",
+            "num_included_reviews": "2",
+            "min_price": "38.00"
+        }
+    },
+    {"pk": 3,
+        "model": "songs.projecttype",
+        "fields":
+        {
+            "name": "Pro",
+            "song_length_range": "1min30s-6mins",
+            "num_included_instruments": "4",
+            "num_included_reviews": "3",
+            "min_price": "53.00"
+        }
+    }
+]
