@@ -1,0 +1,37 @@
+[
+    {"pk": 1,
+        "model": "songs.genre",
+        "fields":
+        {"name": "lofi", "display_name": "Lofi"}
+    },
+    {"pk": 2,
+        "model": "songs.genre",
+        "fields":
+        {"name": "indie", "display_name": "Indie"}
+    },
+    {"pk": 3,
+        "model": "songs.genre",
+        "fields":
+        {"name": "cinematic", "display_name": "Cinematic"}
+    },
+    {"pk": 4,
+        "model": "songs.genre",
+        "fields":
+        {"name": "atmospheric", "display_name": "Atmospheric"}
+    },
+    {"pk": 5,
+        "model": "songs.genre",
+        "fields":
+        {"name": "solo_piano", "display_name": "Solo Piano"}
+    },
+    {"pk": 6,
+        "model": "songs.genre",
+        "fields":
+        {"name": "post_rock", "display_name": "Post Rock"}
+    },
+    {"pk": 7,
+        "model": "songs.genre",
+        "fields":
+        {"name": "rock", "display_name": "Rock"}
+    }
+]
