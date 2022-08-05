@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Browse Songs{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container py-4 overlay">
+    <!-- page heading -->
+    <h1 class="midi-l-grey page-heading">BROWSE SONGS</h1>
+    <hr class="hr-90-light">
+    
+    <!-- grid structure and loop for displaying songs (for song in songs - in context dict) -->
+    {% for song in songs %}
+        <p class="midi-l-grey">{{ song.name }}</p>
+    {% endfor %}
+</div>
+ 
+{% endblock %}
