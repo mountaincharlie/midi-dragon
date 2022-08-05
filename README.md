@@ -745,10 +745,13 @@ If the logged in user is the admin then a different view class is called wheneve
 
 ### Media
 * Images:
-    * 
+  * Homepage background - by [moutaincharlie](https://github.com/mountaincharlie)
+  * For Finding My Place song - by [moutaincharlie](https://github.com/mountaincharlie)
+  * For Someplace song - by [Jérôme Prax on Unsplash](https://unsplash.com/photos/jLZWzT_kdTI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink)
+  * 
 * Icons:
-    * Font Awesome's …
-    * Favicon made Font Awesome's …
+  * Font Awesome's …
+  * Favicon made Font Awesome's …
 
 
 ## Future Features [TO FINISH]
