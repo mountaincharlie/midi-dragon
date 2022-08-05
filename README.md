@@ -686,11 +686,17 @@ If the logged in user is the admin then a different view class is called wheneve
 
 ### Bugs and Fixes
 * Bug: after setting the background-color for the dropdown-menus in the site header to dark grey, when hovering over each item, the background changed to white.
-    * Fix: targetting the dropdown-menu hover in base.css and overriding the Bootstrap 5 highlighting, keeping the background-color as dark grey while the links' text was pink on hover.
+  * Fix: targetting the dropdown-menu hover in base.css and overriding the Bootstrap 5 highlighting, keeping the background-color as dark grey while the links' text was pink on hover.
 * Bug: when setting up the header for mobile (small screens) when selecting the Profile/Login icon or expanding the burger icon, their dropdown-menus displayed on the left-hand side of the screen instead of below them.
-    * Fix: adding the mobiledropdowncontainer class to both divs containing the dropdown menus and setting their position to relative in base.css, as recommended by [Roy](https://stackoverflow.com/a/35956506) 
+  * Fix: adding the mobiledropdowncontainer class to both divs containing the dropdown menus and setting their position to relative in base.css, as recommended by [Roy](https://stackoverflow.com/a/35956506) 
+* Bug: when I was creating my first instance for the Song model, the slug field would not be set on saving the instance since the slug field had the 'blank=False' constraint.
+  * Fix: I replaced the constraint with 'null=True, blank=True' so that the slug could be set by my custom unique_slug_generator method on save.
+* Bug: When creating my SongAdmin action methods, in the Songs app admin.py, I had trouble accessing the public field for the instance inorder to check if its value was True or False and to update its value accordingly.
+  * Fix: through some trial and error and print statements, I found that the syntax to access the public field's value from the instance was: queryset[0].public.
+* Bug: I realised that by using the syntax: queryset[0] I didn't allow for the cases where the selected songs had different values for public/completed/testimonial status and so only the first song's field value was being changed.
+  * Fix: I included a for loop in each action method to check the field status for each song in the field set individually. This also resulted in me using the syntax: song.public (to access the field value), song.public = False (to change the field value) and song.save() (to save the change).
 * Bug: 
-    * Fix: 
+  * Fix:
 
 ### Unfixed Bugs
 * Should be: No known unfixed bugs (other than warnings/errors explained in code validation section)
