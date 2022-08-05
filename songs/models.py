@@ -109,11 +109,11 @@ class Song(models.Model):
     Contains the methods:
     number_of_likes - for returning the number of likes 
     """
-    name = models.CharField(max_length=260)
+    name = models.CharField(max_length=60)
     image = models.ImageField(null=True, blank=True, default='placeholder.jpg')
     audio_file = models.FileField(null=True, blank=True)
     video_file = models.FileField(null=True, blank=True)
-    slug = models.SlugField(null=False, unique=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)  # null=False,
     project_type = models.ForeignKey(ProjectType, null=True, blank=True, on_delete=models.SET_NULL)  # set to null if the project type is deleted
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='site_user')
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
@@ -127,7 +127,7 @@ class Song(models.Model):
     song_feel = models.TextField(null=True, blank=True)
     additional_details = models.TextField(null=True, blank=True)
     # song_end_fade = models.BooleanField(default=True)  # WOULD HAVE - option for it to end on the note or fade to silence
-    use_as_testinomial = models.BooleanField(default=False)
+    use_as_testimonial = models.BooleanField(default=False)
     testimonial_text = models.TextField(null=True, blank=True)
     completed = models.BooleanField(default=False)
     public = models.BooleanField(default=False)
@@ -136,10 +136,6 @@ class Song(models.Model):
     class Meta:
         """ meta data for how to order songs """
         ordering = ['-created_date']
-
-    def __str__(self):
-        """ method to return the song name as a string for each song """
-        return str(self.name)
 
     def number_of_likes(self):
         """ method for counting the number of likes a song has """
@@ -160,7 +156,7 @@ class Song(models.Model):
         random_slug (to further reduce chances of creating an existing slug)
         -returns the random_slug
         """
-        random_numbers_list = [random.randint(0, 100) for i in range(20)]
+        random_numbers_list = [random.randint(0, 100) for i in range(10)]
         random_str_list = [str(i) for i in random_numbers_list]
         random_str = str("".join(random_str_list))
         name_slug = str(slugify(self.name))
@@ -177,5 +173,9 @@ class Song(models.Model):
         if not self.slug:
             self.slug = self.unique_slug_generator()
         super().save(*agrs, **kwargs)
+
+    def __str__(self):
+        """ method to return the song name as a string for each song """
+        return str(self.name)
 
     # method for overriding the price with a caluclation IF the song is a custom song (project_type.min_price + every time its updated)
