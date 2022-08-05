@@ -1,0 +1,77 @@
+[
+    {"pk": 1,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "piano", "display_name": "Piano"}
+    },
+    {"pk": 2,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "acoustic_guitar", "display_name": "Acoustic Guitar"}
+    },
+    {"pk": 3,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "electric_guitar", "display_name": "Electric Guitar"}
+    },
+    {"pk": 4,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "bass_guitar", "display_name": "Bass Guitar"}
+    },
+    {"pk": 5,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "ukulele", "display_name": "Ukulele"}
+    },
+    {"pk": 6,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "drums", "display_name": "Drums"}
+    },
+    {"pk": 7,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "percussion", "display_name": "Percussion"}
+    },
+    {"pk": 8,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "violin", "display_name": "Violin"}
+    },
+    {"pk": 9,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "violin_ensemble", "display_name": "Violin Ensemble"}
+    },
+    {"pk": 10,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "cello", "display_name": "Cello"}
+    },
+    {"pk": 11,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "trumpet", "display_name": "Trumpet"}
+    },
+    {"pk": 12,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "vibraphone", "display_name": "Vibraphone"}
+    },
+    {"pk": 13,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "music_box", "display_name": "Music Box"}
+    },
+    {"pk": 14,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "kalimba", "display_name": "Kalimba"}
+    },
+    {"pk": 15,
+        "model": "songs.instrument",
+        "fields":
+        {"name": "choir_pads", "display_name": "Choir Pads"}
+    }
+]
