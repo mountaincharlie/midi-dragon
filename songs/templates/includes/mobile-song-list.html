@@ -1,0 +1,37 @@
+<div class="col-4 px-0 text-center">
+    <a href="#" title="Go to song details">
+        <img class="square-img-med img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+    </a>
+</div>
+<div class="col-6 text-start">
+    <div class="row">
+        <div class="col-12 px-0">
+            <a href="#" class="midi-l-grey" title="Go to song details">
+                <h5>{{ song.name }}</h5>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 px-0">
+            <p>{{ song.genre.display_name }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 px-0">
+            <p>£{{ song.price }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 px-0">
+            <audio controls controlsList="nodownload" class="mobile-audio-ctrls">
+                <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+</div>
+<div class="col-2 text-center">
+    <a href="#">
+        <i class="fa-solid fa-circle-plus midi-l-grey fs-1" title="Add to Tracklist"></i>
+    </a>
+</div>
