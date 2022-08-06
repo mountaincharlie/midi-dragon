@@ -20,8 +20,8 @@
         <div class="col-12 col-md-6 text-end"></div>
     </div>
     
-    <!-- small headings on medium+ screens -->
-    <div class="row midi-l-grey mb-2 text-center">
+    <!-- med+ screens only (put in an includes snippet?) -->
+    <div class="row d-none d-md-flex midi-l-grey mb-2 text-center">
         <div class="col-md-1 col-lg-2"></div>
         <div class="col-md-2">
             <h5 class="mb-0 fw-bolder midi-teal">NAME</h5>
@@ -35,16 +35,58 @@
         </div>
         <div class="col-md-1 mb-0"></div>
     </div>
+
     <div class="row">
         <div class="col-12 p-0">
-            <hr class="hr-full-light m-0 mb-2">
+            <hr class="hr-full-teal m-0 mb-2">
         </div>
     </div>
 
     <!-- wrap in IF STATEMENT so if there are no songs then a message is displayed - sorry we couldn't find any songs matching your search results, try adjusting your search or return to All Pre-made Songs -->
     {% for song in songs %}
-        <!-- use include snippets to put the desktop or mobile grid structures here -->
-        <div class="row hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
+        <!-- rows on med+ screens (make includes snippet?) -->
+        <div class="row d-md-none hover-highlight-row midi-l-grey logo-font align-items-center mb-2">
+            <div class="col-4 px-0 text-center">
+                <a href="#" title="Go to song details">
+                    <img class="square-img-med img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                </a>
+            </div>
+            <div class="col-6 text-start">
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <a href="#" class="midi-l-grey" title="Go to song details">
+                            <h5>{{ song.name }}</h5>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <p>{{ song.genre.display_name }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <p>£{{ song.price }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <audio controls controlsList="nodownload" class="mobile-audio-ctrls">
+                            <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 text-center">
+                <a href="#">
+                    <i class="fa-solid fa-circle-plus midi-l-grey fs-1" title="Add to Tracklist"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- rows on med+ screens (make includes snippet?) -->
+        <div class="row d-none d-md-flex hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
             <!-- wrap image and name in a link to the song's details -->
             <div class="col-md-1 col-lg-2">
                 <a href="#" title="Go to song details">

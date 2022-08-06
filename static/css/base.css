@@ -129,9 +129,14 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border: 1px solid #9A9EAE;
 }
 
-.hr-full-light{
+/* .hr-full-light{
     width:100%;
     border: 1px solid #9A9EAE;
+} */
+
+.hr-full-teal{
+    width:100%;
+    border: 1px solid #00D1CF;
 }
 
 
@@ -172,19 +177,22 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border-radius: 2px;
 }
 
+/* on med+ screens browsing */
 .square-img-small{
     height: 5vw;
     width: 5vw;
 }
 
-.square-img-small:hover{
-    border-color:#FF57D2;
+/* on mobile screens browsing */
+.square-img-med{
+    height: 25vw;
+    width: 25vw;
 }
 
-/* .square-img-med{
-    height: ;
-    width: ;
-} */
+.square-img-small:hover,
+.square-img-med:hover{
+    border-color:#FF57D2;
+}
 
 /* .square-img-large{
     height: ;
@@ -225,6 +233,11 @@ audio::-webkit-media-controls-volume-slider:hover{
     background-color:#FF57D2;
     border-radius: 10px;
 } */
+
+.mobile-audio-ctrls{
+    max-width: 100%;
+    padding:0;
+}
 
 audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-time-remaining-display{
     color:#1D212E;
