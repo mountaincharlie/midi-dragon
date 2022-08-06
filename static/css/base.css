@@ -35,14 +35,6 @@ li{
 }
 
 
-/* ---------- hover pink */
-
-a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
-    color: #FF57D2 !important;
-    border-color: #FF57D2 !important;
-}
-
-
 /* ---------- midi dragon site colours */
 
 .midi-teal {
@@ -59,6 +51,14 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 
 .midi-l-grey {
     color: #9A9EAE !important;
+}
+
+
+/* ---------- hover pink */
+
+a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
+    color: #FF57D2 !important;
+    border-color: #FF57D2 !important;
 }
 
 
@@ -117,11 +117,11 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     width:80%;
 }
 
-.hr-90-dark {
+/* .hr-90-dark {
     margin: auto;
     width:90%;
     border: 1px solid #1D212E;
-}
+} */
 
 .hr-90-light {
     margin: auto;
@@ -129,13 +129,106 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border: 1px solid #9A9EAE;
 }
 
+.hr-full-light{
+    width:100%;
+    border: 1px solid #9A9EAE;
+}
 
-/* ---------- midi dragon page headings */
+
+/* ---------- midi dragon borders */
+
+/* .top-border-light{
+    border-top: 1px solid #9A9EAE;
+} */
+
+.midi-btm-border-teal{
+    border-bottom: 1px solid #00D1CF;
+}
+
+/* .bottom-border-dark{
+    border-bottom: 1px solid #1D212E;
+} */
+
+
+/* ---------- midi dragon pages */
 
 .page-heading {
     text-align: center;
     font-family:'BioRhyme', sans-serif;
     font-weight:bold;
+    font-size: xx-large;
+}
+
+.overlay{
+    background: #1D212E;
+    min-height: 70vh;  /* same min-height as the content-block */
+}
+
+
+/* ---------- midi dragon images */
+
+.img-border-light{
+    border: 0.5px solid rgba(154, 158, 174, 0.5);
+    border-radius: 2px;
+}
+
+.square-img-small{
+    height: 5vw;
+    width: 5vw;
+}
+
+.square-img-small:hover{
+    border-color:#FF57D2;
+}
+
+/* .square-img-med{
+    height: ;
+    width: ;
+} */
+
+/* .square-img-large{
+    height: ;
+    width: ;
+} */
+
+
+/* ---------- Browse Pre-made Songs */
+
+.hover-highlight-row:hover{
+    background-color: rgba(0, 209, 207, 0.2);
+    /* background-color: rgba(255, 87, 210, 0.3); */
+}
+
+
+/* ---------- audio player */
+
+audio{
+    border-radius: 4px;
+    background-color:#9A9EAE;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+audio::-webkit-media-controls-panel{
+    background-color:#9A9EAE;
+    border: 1px solid #9A9EAE;
+}
+
+audio::-webkit-media-controls-play-button:hover,
+audio::-webkit-media-controls-mute-button:hover{
+    background-color:#FF57D2;
+    border-radius: 50%;
+}
+
+/* audio::-webkit-media-controls-timeline:hover,
+audio::-webkit-media-controls-volume-slider:hover{
+    background-color:#FF57D2;
+    border-radius: 10px;
+} */
+
+audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-time-remaining-display{
+    color:#1D212E;
+    font-family:'BioRhyme', sans-serif;
 }
 
 
@@ -177,6 +270,7 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 #homepage-container li{
     font-size:large;
 }
+
 
 /* ---------- mailchimp builtin and overidden styling */
 
