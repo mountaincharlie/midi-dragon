@@ -13,10 +13,10 @@
                     Pre-made Songs
                 </div>
                 <ul class="midi-d-grey-bg">
-                    <li><a class="midi-l-grey" href="#">By Price</a></li>
-                    <li><a class="midi-l-grey" href="#">By Genre</a></li>
-                    <li><a class="midi-l-grey" href="#">By Length</a></li>
-                    <li><a class="midi-l-grey" href="#">By BPM</a></li>
+                    <li><a class="midi-l-grey" href="{% url 'songs' %}?sort=price&direction=asc">By Price</a></li>
+                    <li><a class="midi-l-grey" href="{% url 'songs' %}?sort=genre&direction=asc">By Genre</a></li>
+                    <li><a class="midi-l-grey" href="{% url 'songs' %}?sort=duration&direction=asc">By Duration</a></li>
+                    <li><a class="midi-l-grey" href="{% url 'songs' %}?sort=bpm&direction=asc">By BPM</a></li>
                     <li><a class="midi-l-grey" href="{% url 'songs' %}">All Songs</a></li>
                 </ul>
             </li>
@@ -41,14 +41,14 @@
             <p>Search</p>
         </div>
         <div class="dropdown-menu midi-d-grey-bg" aria-labelledby="mobilesearchdropdownbtn">
-            <form method="GET" action="#" id="mobile-search-form" class="dropdown-item search-form">
+            <form method="GET" action="{% url 'songs' %}" id="mobile-search-form" class="dropdown-item search-form">
                 <div class="input-group">
                     <!-- the 'query' is what is being submitted -->
-                    <input class="form-control midi-l-grey rounded-2 midi-d-grey-bg" type="text" name="query" placeholder="Browse">
+                    <input class="form-control midi-l-grey rounded-2 midi-d-grey-bg" type="text" name="query" placeholder="Search">
                     <!-- DOES IT NEED form-control CLASS TO WORK? - STYLE DIFFERENTLY -->
-                    <div role="button" class="btn midi-l-grey pink-hover" type="submit">
+                    <button class="btn midi-l-grey pink-hover" type="submit">
                         <i class="fas fa-search"></i>
-                    </div>
+                    </button>
                 </div>
             </form>
         </div>

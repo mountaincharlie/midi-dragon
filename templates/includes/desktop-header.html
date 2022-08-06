@@ -12,14 +12,14 @@
     <!-- search form with small search icon - hidden with JS until Search icon clicked -->
     <div class="col-4 col-lg-5 midi-l-grey pt-1">
         <!-- with id="search-form" -->
-        <form method="GET" action="#" class="search-form">
+        <form method="GET" action="{% url 'songs' %}" class="search-form">
             <div class="input-group w-100">
                 <!-- the 'query' is what is being submitted -->
-                <input class="form-control midi-l-grey rounded-2 midi-d-grey-bg" type="text" name="query" placeholder="Browse Pre-made Songs">
-                <!-- DOES IT NEED form-control CLASS TO WORK? - STYLE DIFFERENTLY -->
-                <div role="button" class="btn midi-l-grey pink-hover" type="submit">
+                <input class="form-control midi-l-grey rounded-2 midi-d-grey-bg" type="text" name="query" placeholder="Search Pre-made Songs">
+                <!-- DOES btn NEED form-control CLASS TO WORK? - STYLE DIFFERENTLY -->
+                <button class="btn midi-l-grey pink-hover" type="submit">
                     <i class="fas fa-search"></i>
-                </div>
+                </button>
             </div>
         </form>
     </div>
@@ -95,10 +95,11 @@
                     <strong>Pre-made Songs</strong>
                 </button>
                 <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="premadesongsdropdownbtn">
-                    <li><a class="dropdown-item midi-l-grey" href="#">By Price</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">By Genre</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">By Length</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">By BPM</a></li>
+                    <!-- the ursl contain ort and direction parameters -->
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}?sort=price&direction=asc">By Price</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}?sort=genre&direction=asc">By Genre</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}?sort=duration&direction=asc">By Duration</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}?sort=bpm&direction=asc">By BPM</a></li>
                     <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}">All Songs</a></li>
                 </ul>
             </li>
