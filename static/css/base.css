@@ -146,6 +146,16 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border-top: 1px solid #9A9EAE;
 } */
 
+.midi-border-teal{
+    border-radius: 2px;
+    border-color: #00D1CF;
+}
+
+.midi-border-l-grey{
+    border-radius: 2px;
+    border-color: #9A9EAE;
+}
+
 .midi-btm-border-teal{
     border-bottom: 1px solid #00D1CF;
 }
