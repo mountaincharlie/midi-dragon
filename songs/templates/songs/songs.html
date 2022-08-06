@@ -1,18 +1,85 @@
 {% extends "base.html" %}
 {% load static %}
  
-{% block extra_title %} - Browse Songs{% endblock %}
+{% block extra_title %} - Pre-made Songs{% endblock %}
 
 {% block content %}
 <!-- bootstrap container for all the content on this page -->
-<div class="container py-4 overlay">
+<div class="container pt-2 pb-4 overlay">
     <!-- page heading -->
-    <h1 class="midi-l-grey page-heading">BROWSE SONGS</h1>
-    <hr class="hr-90-light">
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">PRE-MADE SONGS</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- num search results and search filter dropdown -->
+    <div class="row py-4">
+        <div class="col-12 col-md-6 text-start"></div>
+        <div class="col-12 col-md-6 text-end"></div>
+    </div>
     
-    <!-- grid structure and loop for displaying songs (for song in songs - in context dict) -->
+    <!-- small headings on medium+ screens -->
+    <div class="row midi-l-grey mb-2 text-center">
+        <div class="col-md-1 col-lg-2"></div>
+        <div class="col-md-2">
+            <h5 class="mb-0 fw-bolder midi-teal">NAME</h5>
+        </div>
+        <div class="col-md-5 col-lg-4 col-xl-3 mb-0"></div>
+        <div class="col-md-2 mb-0">
+            <h5 class="mb-0 fw-bolder midi-teal">GENRE</h5>
+        </div>
+        <div class="col-md-1 col-xl-2 mb-0">
+            <h5 class="mb-0 fw-bolder midi-teal">PRICE</h5>
+        </div>
+        <div class="col-md-1 mb-0"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-0">
+            <hr class="hr-full-light m-0 mb-2">
+        </div>
+    </div>
+
+    <!-- wrap in IF STATEMENT so if there are no songs then a message is displayed - sorry we couldn't find any songs matching your search results, try adjusting your search or return to All Pre-made Songs -->
     {% for song in songs %}
-        <p class="midi-l-grey">{{ song.name }}</p>
+        <!-- use include snippets to put the desktop or mobile grid structures here -->
+        <div class="row hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
+            <!-- wrap image and name in a link to the song's details -->
+            <div class="col-md-1 col-lg-2">
+                <a href="#" title="Go to song details">
+                    <img class="square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="#" class="midi-l-grey" title="Go to song details">
+                    <h5>{{ song.name }}</h5>
+                </a>
+            </div>
+            <div class="col-md-5 col-lg-4 col-xl-3">
+                <audio controls controlsList="nodownload" class="">
+                    <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            <div class="col-md-2">
+                <h5>{{ song.genre.display_name }}</h5>
+            </div>
+            <div class="col-md-1 col-xl-2">
+                <h5>£{{ song.price }}</h5>
+            </div>
+            <div class="col-md-1">
+                <a href="#">
+                    <i class="fa-solid fa-circle-plus midi-l-grey fs-3" title="Add to Tracklist"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-12">
+                <hr class="hr-90-light">
+            </div>
+        </div>
     {% endfor %}
 </div>
  
