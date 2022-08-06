@@ -17,7 +17,7 @@
                     <li><a class="midi-l-grey" href="#">By Genre</a></li>
                     <li><a class="midi-l-grey" href="#">By Length</a></li>
                     <li><a class="midi-l-grey" href="#">By BPM</a></li>
-                    <li><a class="midi-l-grey" href="#">All Songs</a></li>
+                    <li><a class="midi-l-grey" href="{% url 'songs' %}">All Songs</a></li>
                 </ul>
             </li>
             <li class="dropdown-item pink-hover"><a class="midi-l-grey" href="#">Design Custom Song</a></li>
@@ -27,7 +27,7 @@
 
     <!-- clickable site logo -->
     <div class="col text-center p-0">
-        <a class="navbar-brand midi-teal fs-1" href="#" aria-label="Link to landing page">
+        <a class="navbar-brand midi-teal fs-1" href="{% url 'home' %}" aria-label="Link to landing page">
             <i class="fa-solid fa-dragon"></i>
         </a>
     </div>

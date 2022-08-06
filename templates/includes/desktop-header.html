@@ -3,7 +3,7 @@
 
     <!-- CLICKABLE LOGO -->
     <div class="col-5 col-lg-4">
-        <a class="navbar-brand text-start midi-teal logo-font fs-2 ps-3" href="#" aria-label="Link to landing page">
+        <a class="navbar-brand text-start midi-teal logo-font fs-2 ps-3" href="{% url 'home' %}" aria-label="Link to landing page">
             <i class="fa-solid fa-dragon"></i>
             midi<strong>DRAGON</strong>
         </a>
@@ -99,7 +99,7 @@
                     <li><a class="dropdown-item midi-l-grey" href="#">By Genre</a></li>
                     <li><a class="dropdown-item midi-l-grey" href="#">By Length</a></li>
                     <li><a class="dropdown-item midi-l-grey" href="#">By BPM</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">All Songs</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}">All Songs</a></li>
                 </ul>
             </li>
             <li class="list-inline-item midi-l-grey">
