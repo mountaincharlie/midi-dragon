@@ -16,8 +16,28 @@
 
     <!-- num search results and search filter dropdown -->
     <div class="row py-4">
-        <div class="col-12 col-md-6 text-start"></div>
-        <div class="col-12 col-md-6 text-end"></div>
+        <div class="col-12 col-md-6 text-center text-md-end p-0">
+            
+            <p class="fs-5 d-inline midi-{% if songs %}teal{% else %}l-grey{% endif %} mb-2">
+                {{ songs|length }} song{% if songs|length == 1 %}{% else %}s{% endif %}
+            </p>
+            <p class="midi-l-grey fs-3 d-none d-md-inline"> | </p>
+        </div>
+        <div class="col-12 col-md-6 text-center text-md-start mt-2 d-inline p-0 ps-1">
+            <select id="search-sorting" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if sort_parameters != 'None_None' %}teal{% else %}l-grey{% endif %}">
+                <option value="reset" {% if sort_parameters == 'None_None' %}selected{% endif %}>Sort by: </option>
+                <option value="price_asc" {% if sort_parameters == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
+                <option value="price_desc" {% if sort_parameters == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
+                <option value="name_asc" {% if sort_parameters == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                <option value="name_desc" {% if sort_parameters == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                <option value="genre_asc" {% if sort_parameters == 'genre_asc' %}selected{% endif %}>Genre (A-Z)</option>
+                <option value="genre_desc" {% if sort_parameters == 'genre_desc' %}selected{% endif %}>Genre (Z-A)</option>
+                <option value="duration_asc" {% if sort_parameters == 'duration_asc' %}selected{% endif %}>Duration (short to long)</option>
+                <option value="duration_desc" {% if sort_parameters == 'duration_desc' %}selected{% endif %}>Duration (long to short)</option>
+                <option value="bpm_asc" {% if sort_parameters == 'bpm_asc' %}selected{% endif %}>BPM (low to high)</option>
+                <option value="bpm_desc" {% if sort_parameters == 'bpm_desc' %}selected{% endif %}>BPM (high to low)</option>
+            </select>
+        </div>
     </div>
 
     <!-- checking if the search returned any songs -->
@@ -54,7 +74,7 @@
             <div class="row align-middle">
                 <div class="col-12 text-center">
                     <p class="midi-l-grey fs-4">
-                        We couldn't find any songs matching your search options.
+                        We couldn't find any songs matching: "<span class="midi-teal">{{ song_search }}</span>"
                         <br>
                         Try adjusting your search or return to All Pre-made Songs
                     </p>
@@ -67,5 +87,60 @@
     {% endif %}
     
 </div>
- 
+{% endblock %}
+
+{% block postload_js %}
+    <!-- ensures we append this to the block and not replace any other -->
+    {{ block.super }}
+
+    <!-- PUT IN EXTERNAL JS FILE -->
+    <!-- JS for the sort dropdown feature - credit CI walkthrough for how to implement this -->
+    <script type="text/javascript">
+    
+        // capture change event from sort-selector
+        var searchSortingSelect = document.getElementById('search-sorting')
+
+        // adding change event listener
+        searchSortingSelect.addEventListener("change", updateUrl);
+
+        // the updateUrl function
+        /**
+         * @name updateUrl
+         * @description Gets the current url from the window.
+         * Gets the value of the selected select option.
+         * 
+        */
+        function updateUrl(){
+            // gets the current url
+            var currentUrl = new URL(window.location.href);
+
+            // getting the value from the select
+            var selectedOption = searchSortingSelect.options[searchSortingSelect.selectedIndex].value;
+
+            // checking if the reset option was selected
+            if(selectedOption != 'reset'){
+                // get the sort and direction by splitting at '_'
+                var sort = selectedOption.split("_")[0];
+                var direction = selectedOption.split("_")[1];
+                console.log(sort)
+                console.log(direction)
+
+                // replace those params in the url
+                currentUrl.searchParams.set("sort", sort);
+                currentUrl.searchParams.set("direction", direction);
+
+                // replacing url which also reloads page and reorders products
+                window.location.replace(currentUrl);
+            } else {
+                console.log('else applied')
+                // if reset => delete sort and direction
+                currentUrl.searchParams.delete("sort");
+                currentUrl.searchParams.delete("direction");
+
+                // replacing url which also reloads page and reorders products
+                window.location.replace(currentUrl);
+            }
+        };
+        
+    </script>
 {% endblock %}

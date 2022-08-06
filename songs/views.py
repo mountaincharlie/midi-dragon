@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.views import generic, View
-from .models import Song
+from django.db.models import Q
+from django.db.models.functions import Lower
+from .models import Song, Genre
 
 
 class SongsList(generic.ListView):
@@ -15,9 +17,58 @@ class SongsList(generic.ListView):
         Gets all of the songs which are public
         """
         public_songs = Song.objects.filter(public=True)
+        # resetting all vars
+        query = None
+        sort = None
+        direction = None
+
+        # ----------- credit- CI walkthrough for how to implement this
+        # checking if sorting has been applied first
+        if 'sort' in request.GET:
+            sort_key = request.GET['sort']
+            sort = sort_key
+            # using 'annotation' to add temporary field to model
+            if sort_key == 'name':
+                sort_key = 'lower_name'
+                public_songs = public_songs.annotate(lower_name=Lower('name'))
+            if sort_key == 'genre':
+                # setting the songs to order by genre name if genre is the sorting criteria
+                sort_key = 'genre__name'
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                # check if its decending so you add a '-' before
+                if direction == 'desc':
+                    sort_key = f'-{sort_key}'
+
+            # ordering the songs
+            public_songs = public_songs.order_by(sort_key)
+
+        # if query (name attribute on search form input) exists, we need to get its value
+        if 'query' in request.GET:
+            query = request.GET['query']
+            # handling blank search with django message and redirect
+            if not query:
+                # include error message with django messages
+                # reverse here just reloads the page
+                return redirect(reverse('songs'))
+
+            # using Django's Q to check if the search is in name OR any details
+            queries = (
+                Q(name__icontains=query)
+                | Q(song_purpose__icontains=query)
+                | Q(song_feel__icontains=query)
+                | Q(additional_details__icontains=query)
+            )
+
+            public_songs = public_songs.filter(queries)
+
+        # defining the current sorting 
+        selected_sorting = f'{sort}_{direction}'
 
         context = {
             'songs': public_songs,
+            'song_search': query,
+            'sort_parameters': selected_sorting,
         }
 
         return render(request, "songs/songs.html", context)
