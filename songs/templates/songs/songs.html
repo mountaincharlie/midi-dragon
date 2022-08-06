@@ -19,34 +19,53 @@
         <div class="col-12 col-md-6 text-start"></div>
         <div class="col-12 col-md-6 text-end"></div>
     </div>
-    
-    <!-- med+ screens only (put in an includes snippet?) -->
-    <div class="row d-none d-md-flex midi-l-grey mb-2 text-center">
-        {% include 'includes/desktop-song-list-headings.html' %}
-    </div>
 
-    <div class="row">
-        <div class="col-12 p-0">
-            <hr class="hr-full-teal m-0 mb-2">
-        </div>
-    </div>
-
-    <!-- wrap in IF STATEMENT so if there are no songs then a message is displayed - sorry we couldn't find any songs matching your search results, try adjusting your search or return to All Pre-made Songs -->
-    {% for song in songs %}
-        <div class="row d-md-none hover-highlight-row midi-l-grey logo-font align-items-center mb-2">
-            {% include 'includes/mobile-song-list.html' %}
+    <!-- checking if the search returned any songs -->
+    {% if songs %}
+        <!-- headings for med+ screens only -->
+        <div class="row d-none d-md-flex midi-l-grey mb-2 text-center">
+            {% include 'includes/desktop-song-list-headings.html' %}
         </div>
 
-        <div class="row d-none d-md-flex hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
-            {% include 'includes/desktop-song-list.html' %}
-        </div>
-
-        <div class="row mb-2">
-            <div class="col-12">
-                <hr class="hr-90-light">
+        <div class="row">
+            <div class="col-12 p-0">
+                <hr class="hr-full-teal m-0 mb-2">
             </div>
         </div>
-    {% endfor %}
+
+        {% for song in songs %}
+            <!-- song list rows on mobile -->
+            <div class="row d-md-none hover-highlight-row midi-l-grey logo-font align-items-center mb-2">
+                {% include 'includes/mobile-song-list.html' %}
+            </div>
+
+            <!-- song list rows on desktop -->
+            <div class="row d-none d-md-flex hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
+                {% include 'includes/desktop-song-list.html' %}
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                    <hr class="hr-90-light">
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+            <div class="row align-middle">
+                <div class="col-12 text-center">
+                    <p class="midi-l-grey fs-4">
+                        We couldn't find any songs matching your search options.
+                        <br>
+                        Try adjusting your search or return to All Pre-made Songs
+                    </p>
+                    <a href="{% url 'songs' %}" class="btn btn-l-grey fs-5 px-2 py-1" role="button">
+                        <i class="fa-solid fa-circle-arrow-left pe-2"></i>
+                        <strong>All Pre-made Songs</strong>
+                    </a>
+                </div>
+            </div>
+    {% endif %}
+    
 </div>
  
 {% endblock %}
