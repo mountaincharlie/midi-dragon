@@ -695,6 +695,8 @@ If the logged in user is the admin then a different view class is called wheneve
   * Fix: through some trial and error and print statements, I found that the syntax to access the public field's value from the instance was: queryset[0].public.
 * Bug: I realised that by using the syntax: queryset[0] I didn't allow for the cases where the selected songs had different values for public/completed/testimonial status and so only the first song's field value was being changed.
   * Fix: I included a for loop in each action method to check the field status for each song in the field set individually. This also resulted in me using the syntax: song.public (to access the field value), song.public = False (to change the field value) and song.save() (to save the change).
+* Bug: When manually testing if my header search form worked, the form was only submitted when I hit enter, not when clicking on my search icon.
+  * Fix: I had my submit 'button' made from a div element, styled to look like my buttons and with type="submit" and role="button" but the div actually needed to be a button element inorder for it to successfully submit the form.
 * Bug: 
   * Fix:
 
@@ -738,6 +740,8 @@ If the logged in user is the admin then a different view class is called wheneve
 * [Tom's solution on Slack](https://stackoverflow.com/a/42426801) for how to use Django's PositiveIntegerField with minimum and maximum value constraints.
 * [Fagan Media's page](https://www.faganmedia.com/support/disable-download-button-for-html5-audio-and-video-player) for how to disable the 'download' option from the audio element.
 * [Point Clear Media's page](https://pointclearmedia.com/2020/08/27/css-styling-the-audio-element/) for how to target parts of the audio element to style it. 
+* [W3School's page](https://www.w3schools.com/howto/howto_js_get_url.asp) for how to get the current window's url with javascript.
+* [Metring's page](https://ricardometring.com/getting-the-value-of-a-select-in-javascript) for how to get the value of a selected select option with javascript.
 
 ### Content
 * Fonts:
@@ -751,6 +755,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * Email Subscription form created with [Mailchimp's](https://mailchimp.com/en-gb/) Embedded Form Builder
 * My Song modle's unique_slug_generator method uses my own [random_slug method from my Cook eBook project](https://github.com/mountaincharlie/project-four-cook-ebook/blob/main/cook_ebook/models.py) with the small addition of using the name of the Song in the slug to further reduce the chance of duplicate slugs
 * I used [W3School's Audio Element page](https://www.w3schools.com/html/html5_audio.asp) to find the code for setting up the audio element with controls
+* In order to create the 'sort by' dropdown selector, I followed and adapted the logic implemented in Code Institue's walkthrough project for; the select element and Javascript in their [products template](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/f6c3de32aa152b98da174daba13412388258b9b8/products/templates/products/products.html) and the view function logic in their [all_products view function](https://github.com/mountaincharlie/e-commerce-walkthrough-project/blob/main/products/views.py)
 
 ### Media
 * Images:
