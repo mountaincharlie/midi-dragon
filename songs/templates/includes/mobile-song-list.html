@@ -1,12 +1,12 @@
 <div class="col-4 px-0 text-center">
-    <a href="#" title="Go to song details">
+    <a href="{% url 'song_details' song.slug %}" title="Go to song details">
         <img class="square-img-med img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
     </a>
 </div>
 <div class="col-6 text-start">
     <div class="row">
         <div class="col-12 px-0">
-            <a href="#" class="midi-l-grey" title="Go to song details">
+            <a href="{% url 'song_details' song.slug %}" class="midi-l-grey" title="Go to song details">
                 <h5>{{ song.name }}</h5>
             </a>
         </div>
