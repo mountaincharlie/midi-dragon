@@ -697,8 +697,11 @@ If the logged in user is the admin then a different view class is called wheneve
   * Fix: I included a for loop in each action method to check the field status for each song in the field set individually. This also resulted in me using the syntax: song.public (to access the field value), song.public = False (to change the field value) and song.save() (to save the change).
 * Bug: When manually testing if my header search form worked, the form was only submitted when I hit enter, not when clicking on my search icon.
   * Fix: I had my submit 'button' made from a div element, styled to look like my buttons and with type="submit" and role="button" but the div actually needed to be a button element inorder for it to successfully submit the form.
+* Bug: when trying to set the ImageField for my Song model to use my 'placeholder.jpg' as its default image, this only worked when also removing the 'blank=True' option and only for initially creating the Song instance without selecting an image. But without the 'blank=True' it was impossible to clear an existing image from a Song instance, so it would never have the placeholder image set for it.
+  * Fix: I added the 'blank=True' back to the ImageField and then where I was overriding the Song model's save method, I added a condition to check if the Song instance didn't have an image and if not, set it to be the 'placeholder.jpg'
 * Bug: 
   * Fix:
+
 
 ### Unfixed Bugs
 * Should be: No known unfixed bugs (other than warnings/errors explained in code validation section)
