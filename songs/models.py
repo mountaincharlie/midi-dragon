@@ -110,12 +110,12 @@ class Song(models.Model):
     number_of_likes - for returning the number of likes 
     """
     name = models.CharField(max_length=60)
-    image = models.ImageField(null=True, blank=True, default='placeholder.jpg')
+    image = models.ImageField(default='placeholder.jpg')
     audio_file = models.FileField(null=True, blank=True)
     video_file = models.FileField(null=True, blank=True)
     slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)  # null=False,
-    project_type = models.ForeignKey(ProjectType, null=True, blank=True, on_delete=models.SET_NULL)  # set to null if the project type is deleted
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='site_user')
+    project_type = models.ForeignKey(ProjectType, null=True, on_delete=models.SET_NULL)  # set to null if the project type is deleted
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='site_user')
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     # audio_clip = models.FileField(null=True, blank=True)  # WOULD HAVE - for users to provide their own audio clips
     bpm = models.PositiveIntegerField(null=True, blank=True, validators=[MinValueValidator(35), MaxValueValidator(155)])
@@ -168,10 +168,18 @@ class Song(models.Model):
         """
         Overrides save method
         Sets slug if it doesnt already have one
+        If no audio_file is present, it forces the public
+        status to be False so that the song can't be displayed to users
+        (For custom songs, the song doesn't need to be public for the user
+        of that song or the admin to view/edit its details)
         Calls the save method again
         """
         if not self.slug:
             self.slug = self.unique_slug_generator()
+        # super().save(*agrs, **kwargs)
+
+        if not self.audio_file:
+            self.public = False
         super().save(*agrs, **kwargs)
 
     def __str__(self):
