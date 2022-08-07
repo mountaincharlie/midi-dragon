@@ -29,7 +29,15 @@
     <h5>£{{ song.price }}</h5>
 </div>
 <div class="col-md-1">
-    <a href="#">
-        <i class="fa-solid fa-circle-plus midi-l-grey fs-3" title="Add to Tracklist"></i>
-    </a>
+    {% if user.is_superuser %}
+        {% if song.public %}
+            <p class="midi-teal small">Public</p>
+        {% else %}
+            <p class="midi-l-grey small">Private</p>
+        {% endif %}
+    {% else %}
+        <a href="#">
+            <i class="fa-solid fa-circle-plus midi-l-grey fs-3" title="Add to Tracklist"></i>
+        </a>
+    {% endif %}
 </div>

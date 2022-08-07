@@ -39,7 +39,15 @@
     </div>
 </div>
 <div class="col-2 text-center">
-    <a href="#">
-        <i class="fa-solid fa-circle-plus midi-l-grey fs-1" title="Add to Tracklist"></i>
-    </a>
+    {% if user.is_superuser %}
+        {% if song.public %}
+            <p class="midi-teal small">Public</p>
+        {% else %}
+            <p class="midi-l-grey small">Private</p>
+        {% endif %}
+    {% else %}
+        <a href="#">
+            <i class="fa-solid fa-circle-plus midi-l-grey fs-1" title="Add to Tracklist"></i>
+        </a>
+    {% endif %}
 </div>
