@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views import generic, View
 from django.db.models import Q
 from django.db.models.functions import Lower
@@ -78,3 +78,38 @@ class SongsList(generic.ListView):
         }
 
         return render(request, "songs/songs.html", context)
+
+
+class SongDetailsView(View):
+    """
+    Class based view inheriting Django's View
+    Contains the get method for displaying the details for a chosen
+    song by its slug.
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        get method for when users click on a song's image or name to
+        see the song's full details.
+        -gets all of the Song objects
+        -gets the chosen song by its slug
+        -sets a like variable as False
+        -checks if the current user has given a like to this song
+        -if so, it sets like as True(so that the like icon will be highlighted
+        in the song_details template)
+        -sets context dict with the song and its like status
+        -renders song_details.html with the request and context data
+        """
+        songs = Song.objects.all()
+        song = get_object_or_404(songs, slug=self.kwargs['slug'])
+
+        # setting like as False until its confirmed it has likes
+        like = False
+        if song.likes.filter(id=self.request.user.id).exists():
+            like = True
+
+        context = {
+            'song': song,
+            'like': like,
+        }
+
+        return render(request, 'songs/song_details.html', context)
