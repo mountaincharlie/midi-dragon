@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path('', views.SongsList.as_view(), name='songs'),
+    path('<slug:slug>/', views.SongDetailsView.as_view(), name='song_details'),
 ]
