@@ -9,13 +9,21 @@
     </a>
 </div>
 <div class="col-md-5 col-lg-4 col-xl-3">
+    {% if song.audio_file %}
     <audio controls controlsList="nodownload" class="">
         <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
         Your browser does not support the audio element.
     </audio>
+    {% else %}
+    <p class="midi-l-grey">(There is currently no audio file for '{{ song.name }}')</p>
+    {% endif %}
 </div>
 <div class="col-md-2">
+    {% if song.genre %}
     <h5>{{ song.genre.display_name }}</h5>
+    {% else %}
+    <p>(No assigned genre)</p>
+    {% endif %}
 </div>
 <div class="col-md-1 col-xl-2">
     <h5>£{{ song.price }}</h5>
