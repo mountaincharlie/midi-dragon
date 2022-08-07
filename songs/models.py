@@ -110,7 +110,7 @@ class Song(models.Model):
     number_of_likes - for returning the number of likes 
     """
     name = models.CharField(max_length=60)
-    image = models.ImageField(default='placeholder.jpg')
+    image = models.ImageField(blank=True)
     audio_file = models.FileField(null=True, blank=True)
     video_file = models.FileField(null=True, blank=True)
     slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)  # null=False,
@@ -180,6 +180,10 @@ class Song(models.Model):
 
         if not self.audio_file:
             self.public = False
+        # super().save(*agrs, **kwargs)
+
+        if not self.image:
+            self.image = 'placeholder.jpg'
         super().save(*agrs, **kwargs)
 
     def __str__(self):
