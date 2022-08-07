@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - {{ song.name }} song details{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <!-- <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">{{ song.name }}'s details</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div> -->
+
+    <!-- basic page structure -->
+
+    <!-- img, name, genre, username, Tracklist/download btn/this is in your tarcklist msg -->
+    <div class="row logo-font">
+        <div class="col-12 col-md-6 text-center text-md-start">
+            <img class="square-img-large" src="{{ song.image.url }}" alt="{{ song.name }} image">
+        </div>
+        <div class="col-12 col-md-6 text-center">
+            <h2 class="midi-l-grey">{{ song.name }}</h2>
+        </div>
+    </div>
+
+    <!-- audio player/your song will be playable here when the audio file is added msg -->
+    <div class="row"></div>
+
+    <!-- conditional testimonial row -->
+    <div class="row"></div>
+
+    <!-- song details row -->
+    <div class="row"></div>
+
+    <!-- like icon with toggle effect (LHS) and conditional edit/delete btns (RHS) for admin always and user IF they are the user and the song hasnt been purchased (not in any of their orders) or in their tracklist (msg to please remove from tracklist before edit/deleting) -->
+    <div class="row"></div>
+
+    
+</div>
+{% endblock %}
+
