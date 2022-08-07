@@ -145,7 +145,7 @@ class SongAdmin(admin.ModelAdmin):
             if song.public:
                 song.public = False
                 song.save()
-            elif song.completed:
+            elif song.completed and song.audio_file:
                 song.public = True
                 song.save()
 
