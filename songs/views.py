@@ -16,7 +16,13 @@ class SongsList(generic.ListView):
         """
         Gets all of the songs which are public
         """
-        public_songs = Song.objects.filter(public=True)
+        # only the admin can view all of the songs
+        if request.user.is_superuser:
+            songs = Song.objects.all()
+        # regular users (logged in or not, can only view public songs)
+        else:
+            songs = Song.objects.filter(public=True)
+
         # resetting all vars
         query = None
         sort = None
@@ -30,7 +36,7 @@ class SongsList(generic.ListView):
             # using 'annotation' to add temporary field to model
             if sort_key == 'name':
                 sort_key = 'lower_name'
-                public_songs = public_songs.annotate(lower_name=Lower('name'))
+                songs = songs.annotate(lower_name=Lower('name'))
             if sort_key == 'genre':
                 # setting the songs to order by genre name if genre is the sorting criteria
                 sort_key = 'genre__name'
@@ -41,7 +47,7 @@ class SongsList(generic.ListView):
                     sort_key = f'-{sort_key}'
 
             # ordering the songs
-            public_songs = public_songs.order_by(sort_key)
+            songs = songs.order_by(sort_key)
 
         # if query (name attribute on search form input) exists, we need to get its value
         if 'query' in request.GET:
@@ -60,13 +66,13 @@ class SongsList(generic.ListView):
                 | Q(additional_details__icontains=query)
             )
 
-            public_songs = public_songs.filter(queries)
+            songs = songs.filter(queries)
 
         # defining the current sorting 
         selected_sorting = f'{sort}_{direction}'
 
         context = {
-            'songs': public_songs,
+            'songs': songs,
             'song_search': query,
             'sort_parameters': selected_sorting,
         }
