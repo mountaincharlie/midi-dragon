@@ -3,6 +3,7 @@ from django.views import generic, View
 from django.db.models import Q
 from django.db.models.functions import Lower
 from .models import Song, Genre
+from django.contrib.auth.models import User
 
 
 class SongsList(generic.ListView):
@@ -19,14 +20,23 @@ class SongsList(generic.ListView):
         # only the admin can view all of the songs
         if request.user.is_superuser:
             songs = Song.objects.all()
-        # regular users (logged in or not, can only view public songs)
+        # for regular users (logged in or not, can only browse public pre-made songs)
         else:
-            songs = Song.objects.filter(public=True)
+            # pre-made songs are those where the admin is the user
+            superuser_name = User.objects.get(is_superuser=True)
+            premade_songs = Song.objects.filter(user=superuser_name)
+            # filtering these songs by only public ones
+            songs = premade_songs.filter(public=True)
+
+        # getting all of the genres
+        genres = Genre.objects.all()
 
         # resetting all vars
         query = None
         sort = None
         direction = None
+        selected_genre = None
+        selected_genre_display_name = None
 
         # ----------- credit- CI walkthrough for how to implement this
         # checking if sorting has been applied first
@@ -37,9 +47,9 @@ class SongsList(generic.ListView):
             if sort_key == 'name':
                 sort_key = 'lower_name'
                 songs = songs.annotate(lower_name=Lower('name'))
-            if sort_key == 'genre':
-                # setting the songs to order by genre name if genre is the sorting criteria
-                sort_key = 'genre__name'
+            # if sort_key == 'genre':
+            #     # setting the songs to order by genre name if genre is the sorting criteria
+            #     sort_key = 'genre__name'
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 # check if its decending so you add a '-' before
@@ -68,13 +78,25 @@ class SongsList(generic.ListView):
 
             songs = songs.filter(queries)
 
-        # defining the current sorting 
+        # defining the current sorting
         selected_sorting = f'{sort}_{direction}'
+
+        # checking if the genre filter has been applied
+        if 'genre' in request.GET:
+            selected_genre = request.GET['genre']
+            # print('select value?', selected_genre)
+            genre = Genre.objects.get(name=selected_genre)
+            selected_genre_display_name = genre.display_name
+            # print('selected genre:', genre.pk)
+            songs = songs.filter(genre=genre.pk)
 
         context = {
             'songs': songs,
             'song_search': query,
             'sort_parameters': selected_sorting,
+            'genres': genres,
+            'selected_genre': selected_genre,
+            'selected_genre_display_name': selected_genre_display_name,
         }
 
         return render(request, "songs/songs.html", context)
