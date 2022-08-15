@@ -23,7 +23,8 @@
             </p>
             <p class="midi-l-grey fs-3 d-none d-md-inline"> | </p>
         </div>
-        <div class="col-12 col-md-6 text-center text-md-start mt-2 d-inline p-0 ps-1">
+        <div class="col-12 col-md-4 text-center text-md-start mt-2 d-inline p-0 ps-1">
+            <!-- sort select -->
             <select id="search-sorting" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if sort_parameters != 'None_None' %}teal{% else %}l-grey{% endif %}">
                 <option value="reset" {% if sort_parameters == 'None_None' %}selected{% endif %}>Sort by: </option>
                 <option value="price_asc" {% if sort_parameters == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
@@ -37,6 +38,16 @@
                 <option value="bpm_asc" {% if sort_parameters == 'bpm_asc' %}selected{% endif %}>BPM (low to high)</option>
                 <option value="bpm_desc" {% if sort_parameters == 'bpm_desc' %}selected{% endif %}>BPM (high to low)</option>
             </select>
+            <!-- filtering by genre -->
+            {% if genres %}
+            <select id="genre-sorting" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_genre != None %}teal{% else %}l-grey{% endif %}">
+                <option value="reset" {% if selected_genre == None %}selected{% endif %}>Filter by Genre: </option>
+                {% for genre in genres %}
+                <option value="{{ genre.name }}" {% if selected_genre == genre.name %}selected{% endif %}>{{ genre.display_name }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+            
         </div>
     </div>
 
@@ -74,9 +85,19 @@
             <div class="row align-middle">
                 <div class="col-12 text-center">
                     <p class="midi-l-grey fs-4">
+                        {% if song_search %}
                         We couldn't find any songs matching: "<span class="midi-teal">{{ song_search }}</span>"
                         <br>
                         Try adjusting your search or return to All Pre-made Songs
+                        {% elif genres %}
+                        There aren't currently any songs with genre: "<span class="midi-teal">{{ selected_genre_display_name }}</span>"
+                        <br>
+                        But we're continually adding new songs, so keep checking this space!
+                        {% else %}
+                        We couldn't find any songs matching you search and filter parameters.
+                        <br>
+                        Try adjusting your search or return to All Pre-made Songs
+                        {% endif %}
                     </p>
                     <a href="{% url 'songs' %}" class="btn btn-l-grey fs-5 px-2 py-1" role="button">
                         <i class="fa-solid fa-circle-arrow-left pe-2"></i>
@@ -94,11 +115,13 @@
     {{ block.super }}
 
     <!-- PUT IN EXTERNAL JS FILE -->
-    <!-- JS for the sort dropdown feature - credit CI walkthrough for how to implement this -->
+    <!-- JS for the sort dropdown feature - credit CI walkthrough for how to implement the sort/direction select -->
     <script type="text/javascript">
     
+        // ------- sort-selector logic implemented from CI walkthrough
+
         // capture change event from sort-selector
-        var searchSortingSelect = document.getElementById('search-sorting')
+        var searchSortingSelect = document.getElementById('search-sorting');
 
         // adding change event listener
         searchSortingSelect.addEventListener("change", updateUrl);
@@ -106,41 +129,70 @@
         // the updateUrl function
         /**
          * @name updateUrl
-         * @description Gets the current url from the window.
-         * Gets the value of the selected select option.
-         * 
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedOption is split byt its '_' in order to get
+         * the 'sort' and 'direction' params.
+         * The 'sort' and 'direction' params are set in the currentUrl.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'sort' and 'direction'
+         * params are removed from the currentUrl, which is used to reload
+         * the page.
         */
         function updateUrl(){
-            // gets the current url
             var currentUrl = new URL(window.location.href);
-
-            // getting the value from the select
             var selectedOption = searchSortingSelect.options[searchSortingSelect.selectedIndex].value;
 
-            // checking if the reset option was selected
             if(selectedOption != 'reset'){
-                // get the sort and direction by splitting at '_'
                 var sort = selectedOption.split("_")[0];
                 var direction = selectedOption.split("_")[1];
-                console.log(sort)
-                console.log(direction)
 
-                // replace those params in the url
                 currentUrl.searchParams.set("sort", sort);
                 currentUrl.searchParams.set("direction", direction);
 
-                // replacing url which also reloads page and reorders products
                 window.location.replace(currentUrl);
             } else {
-                console.log('else applied')
-                // if reset => delete sort and direction
                 currentUrl.searchParams.delete("sort");
                 currentUrl.searchParams.delete("direction");
-
-                // replacing url which also reloads page and reorders products
                 window.location.replace(currentUrl);
             }
         };
-        
+    </script>
+    <script type="text/javascript">
+    
+        // ------- custom genre selector based on logic from CI walkthrough
+
+        // getting the genre selector by its ID
+        var genreSelect = document.getElementById('genre-sorting');
+
+        // adding the change event listener to the genre selector
+        genreSelect.addEventListener("change", filterByGenre);
+
+        /**
+         * @name filterByGenre
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedGenre is set as the 'genre' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'genre' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterByGenre(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedGenre = genreSelect.options[genreSelect.selectedIndex].value;
+
+            if(selectedGenre != 'reset'){
+                currentUrl.searchParams.set("genre", selectedGenre);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("genre");
+                window.location.replace(currentUrl);
+            }
+        };
     </script>
 {% endblock %}
