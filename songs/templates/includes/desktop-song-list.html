@@ -31,10 +31,11 @@
 <div class="col-md-1">
     {% if user.is_superuser %}
         {% if song.public %}
-            <p class="midi-teal small">Public</p>
+            <p class="midi-teal fs-6 m-0">Public</p>
         {% else %}
-            <p class="midi-l-grey small">Private</p>
+            <p class="midi-l-grey fs-6 m-0">Private</p>
         {% endif %}
+        <p class="midi-l-grey small m-0">[{{ song.user }}]</p>
     {% else %}
         <a href="#">
             <i class="fa-solid fa-circle-plus midi-l-grey fs-3" title="Add to Tracklist"></i>
