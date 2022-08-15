@@ -699,6 +699,8 @@ If the logged in user is the admin then a different view class is called wheneve
   * Fix: I had my submit 'button' made from a div element, styled to look like my buttons and with type="submit" and role="button" but the div actually needed to be a button element inorder for it to successfully submit the form.
 * Bug: when trying to set the ImageField for my Song model to use my 'placeholder.jpg' as its default image, this only worked when also removing the 'blank=True' option and only for initially creating the Song instance without selecting an image. But without the 'blank=True' it was impossible to clear an existing image from a Song instance, so it would never have the placeholder image set for it.
   * Fix: I added the 'blank=True' back to the ImageField and then where I was overriding the Song model's save method, I added a condition to check if the Song instance didn't have an image and if not, set it to be the 'placeholder.jpg'
+* Bug: When creating my select element for filtering searches by Genre, my if statement for setting the 'selected' attribute was not working ocrrectly, even when the Javascript and views logic was working correctly to filter search results.
+  * Fix: I removed the {{  }} and ' ' I was using within the 'if selected_genre' statements, which wasn't necessary since these aren't required when already inside template tags (an if statement in this case).
 * Bug: 
   * Fix:
 
@@ -745,6 +747,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * [Point Clear Media's page](https://pointclearmedia.com/2020/08/27/css-styling-the-audio-element/) for how to target parts of the audio element to style it. 
 * [W3School's page](https://www.w3schools.com/howto/howto_js_get_url.asp) for how to get the current window's url with javascript.
 * [Metring's page](https://ricardometring.com/getting-the-value-of-a-select-in-javascript) for how to get the value of a selected select option with javascript.
+* [Code Institute's idea for setting a background image on the body element and then using an overlay to cover it on other pages](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/static/css/base.css) for why I set a background image on my body element, which is visible on the landing page and on pages where I just wanted my dark grey background I craeted a custom overlay. The reason I applied this to the body for all pages instead of just the landing page is that the body background image loads quicker than other content on the page, so if a page takes a moment to load fully, the site's landing page image is visible in the background instead of a plain white background. 
 
 ### Content
 * Fonts:
@@ -759,6 +762,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * My Song modle's unique_slug_generator method uses my own [random_slug method from my Cook eBook project](https://github.com/mountaincharlie/project-four-cook-ebook/blob/main/cook_ebook/models.py) with the small addition of using the name of the Song in the slug to further reduce the chance of duplicate slugs
 * I used [W3School's Audio Element page](https://www.w3schools.com/html/html5_audio.asp) to find the code for setting up the audio element with controls
 * In order to create the 'sort by' dropdown selector, I followed and adapted the logic implemented in Code Institue's walkthrough project for; the select element and Javascript in their [products template](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/f6c3de32aa152b98da174daba13412388258b9b8/products/templates/products/products.html) and the view function logic in their [all_products view function](https://github.com/mountaincharlie/e-commerce-walkthrough-project/blob/main/products/views.py)
+* My JavaScript for implementing my Genres select in the All Pre-made Songs browsing page, was based on and adapted from the logic for the Sort Select described above, but the html and python in the views.py was custom made for this project.
 
 ### Media
 * Images:
