@@ -19,14 +19,19 @@
     <!-- img, name, genre, username, Tracklist/download btn/this is in your tarcklist msg -->
     <div class="row logo-font pt-4 align-items-center">
         <!-- image column -->
-        <div class="song-details-image-row col-12 col-md-4 text-center text-md-start overflow-hidden">
+        <div class="song-details-image-row col-12 pb-4 pb-md-0 col-md-4 text-center overflow-hidden">
             <img class="square-img-large" src="{{ song.image.url }}" alt="{{ song.name }} image">
         </div>
         <!-- main song details col -->
         <div class="col-12 col-md-8 text-center">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="midi-l-grey fs-1">{{ song.name }}</h2>
+                    <h2 class="midi-teal fs-1">{{ song.name }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 pt-1 pb-3">
+                    <hr class="hr-90-light">
                 </div>
             </div>
             <div class="row">
@@ -41,7 +46,7 @@
             <!-- username -->
             <div class="row">
                 <div class="col-12">
-                    <p class="midi-l-grey">{{ song.user }}</p>
+                    <p class="midi-l-grey m-0 pb-1">{{ song.user }}</p>
                 </div>
             </div>
             <!-- Add to tracklist/download btn or note to user -->
@@ -53,7 +58,7 @@
                     <!-- if the admin is viewing -->
                     {% if user.is_superuser %}
                         {% if song.audio_file %}
-                        <a href="{% url 'download_song' song.slug %}" class="midi-l-grey btn">
+                        <a href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
                             <i class="fa-solid fa-download fs-3"></i>
                             <p class="d-inline fs-5 ps-2 basic-font">Download</p>
                         </a>
@@ -78,6 +83,7 @@
                     <!-- if a none logged in user is viewing -->
                     {% else %}
                         {% if song.audio_file %}
+                        <p class="m-0 pb-1 fs-4">£{{ song.price }}</p>
                         <a href="#" class="btn midi-l-grey" role="button">
                             <i class="fa-solid fa-circle-plus fs-5" title="Add to Tracklist"></i>
                             <p class="fs-5 ps-2 d-inline basic-font">Add to Tracklist</p>
@@ -97,7 +103,7 @@
 
     <div class="row">
         <div class="col-12 py-4">
-            <hr class="hr-90-light">
+            <hr class="hr-90-teal">
         </div>
     </div>
     <!-- audio player/your song will be playable here when the audio file is added msg -->
@@ -112,22 +118,22 @@
             {% elif song.user.is_superuser %}
                 {% if user.is_superuser %}
                     {% if song.public %}
-                    <p class="basic-font midi-warning">
+                    <p class="basic-font midi-warning m-0">
                         This public song's audio will be playable once the audio file has been added or repaired.
                     </p>
                     {% else %}
-                    <p class="basic-font">
+                    <p class="basic-font m-0">
                         This private song's audio will be playable once the audio file has been added or repaired.
                     </p>
                     {% endif %}
                 {% else %}
-                <p class="basic-font midi-warning">
+                <p class="basic-font midi-warning m-0">
                     This song will become playable once the admin has repaired the audio file.
                 </p>
                 {% endif %}
             <!-- custom songs without audio files => song isnt complete yet -->
             {% else %}
-            <p class="basic-font">
+            <p class="basic-font m-0">
                 Your song will be playable here once its complete and uploaded by the admin.
                 <br>
                 If you have been notified that your song has been completed and the file is still not available, please contact the admin. 
@@ -137,7 +143,7 @@
     </div>
     <div class="row">
         <div class="col-12 py-4">
-            <hr class="hr-90-light">
+            <hr class="hr-90-teal">
         </div>
     </div>
 
@@ -154,22 +160,63 @@
             <p class="small">See more examples of songs created for other midiDRAGON users on our <a href="#" class="midi-teal">Testimonials page</a></p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 py-4">
+            <hr class="hr-80 midi-teal">
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- song details rows -->
+    <div class="row">
+        <div class="col-12 midi-l-grey text-center logo-font">
+            <h3>Song details</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 midi-l-grey text-center logo-font">
+            <p>
+                <strong>Project Type:</strong>{% if song.project_type %} {{ song.project_type }} {% else %} N/A {% endif %}
+            </p>
+            <p>
+                <strong>BPM:</strong>{% if song.bpm %} {{ song.bpm }} {% else %} N/A {% endif %}
+            </p>
+            <p>
+                <strong>Review Sessions:</strong>{% if song.num_of_reviews %} {{ song.num_of_reviews }} {% else %} N/A {% endif %}
+            </p>
+            <p>
+                <strong>Price:</strong>{% if song.price %} £{{ song.price }} {% else %} N/A {% endif %}
+            </p>
+        </div>
+        <div class="col-12 col-md-6 midi-l-grey text-center logo-font">
+            <p class="m-0">
+                <strong>Instruments:</strong>
+            </p>
+            {% if song.instruments.all %}
+            <ul class="p-0 m-0">
+                {% for instrument in song.instruments.all %}
+                <li>{{ instrument.display_name }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="m-0">N/A</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if song.song_purpose or song.song_feel or song.additional_details %}
+    <div class="row px-4">
+        <div class="col-12 midi-l-grey text-center logo-font px-4 pt-2">
+            <p class="m-0"><strong>Description:</strong></p>
+            <p class="m-0">{% if song.song_purpose %} {{ song.song_purpose }} {% endif %}</p>
+            <p class="m-0">{% if song.song_feel %} {{ song.song_feel }} {% endif %}</p>
+            <p class="m-0">{% if song.additional_details %} {{ song.additional_details }} {% endif %}</p>
+        </div>
+    </div>
     {% endif %}
 
     <div class="row">
         <div class="col-12 py-4">
             <hr class="hr-80 midi-teal">
-            <!-- row - project type column and bpm column -->
-            <!-- row - instruments list column and review sessions column -->
-            <!-- row - price -->
-            <!-- row - description = song_purpose + song_feel + additional_details -->
-        </div>
-    </div>
-
-    <!-- song details row -->
-    <div class="row">
-        <div class="col-12 midi-l-grey text-center logo-font">
-            <h3>Song details</h3>
         </div>
     </div>
 
