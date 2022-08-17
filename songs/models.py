@@ -161,27 +161,31 @@ class Song(models.Model):
         random_str_list = [str(i) for i in random_numbers_list]
         random_str = str("".join(random_str_list))
         name_slug = str(slugify(self.name))
-        random_slug = name_slug + random_str
+        random_slug = name_slug + '-' + random_str
 
         return random_slug
 
     def save(self, *agrs, **kwargs):
         """
         Overrides save method
-        Sets slug if it doesnt already have one
+        Sets slug if it doesnt already have one OR if the song name has
+        been changed.
+        (The change in the song name is checked by splitting the existing slug
+        and indexing it so that the number on the end is removed and comparing
+        it with the song's name split by spaces, if these don't match, then the
+        name has been updated and so the slug is recreated).
         If no audio_file is present, it forces the public
-        status to be False so that the song can't be displayed to users
+        status to be False so that the song can't be displayed to users.
         (For custom songs, the song doesn't need to be public for the user
         of that song or the admin to view/edit its details)
-        Calls the save method again
+        Calls the save method again.
         """
-        if not self.slug:
+
+        if not self.slug or not self.slug.split('-')[:-1] == self.name.split(' '):
             self.slug = self.unique_slug_generator()
-        # super().save(*agrs, **kwargs)
 
         if not self.audio_file:
             self.public = False
-        # super().save(*agrs, **kwargs)
 
         if not self.image:
             self.image = 'placeholder.jpg'
