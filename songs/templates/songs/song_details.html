@@ -17,17 +17,123 @@
     <!-- basic page structure -->
 
     <!-- img, name, genre, username, Tracklist/download btn/this is in your tarcklist msg -->
-    <div class="row logo-font">
-        <div class="col-12 col-md-6 text-center text-md-start">
+    <div class="row logo-font pt-4 align-items-center">
+        <!-- image column -->
+        <div class="song-details-image-row col-12 col-md-4 text-center text-md-start overflow-hidden">
             <img class="square-img-large" src="{{ song.image.url }}" alt="{{ song.name }} image">
         </div>
-        <div class="col-12 col-md-6 text-center">
-            <h2 class="midi-l-grey">{{ song.name }}</h2>
+        <!-- main song details col -->
+        <div class="col-12 col-md-8 text-center">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="midi-l-grey fs-1">{{ song.name }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 midi-l-grey">
+                    {% if song.genre %}
+                    <h3>{{ song.genre.display_name }}</h3>
+                    {% else %}
+                    <p>(No assigned genre)</p>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- username -->
+            <div class="row">
+                <div class="col-12">
+                    <p class="midi-l-grey">{{ song.user }}</p>
+                </div>
+            </div>
+            <!-- Add to tracklist/download btn or note to user -->
+            <div class="row">
+                <!-- add if statement for in the user's Tracklist => You already have this song in your Tracklist -->
+
+                <!-- add: OR song is in any of the user's orders -->
+                <div class="col-12 midi-l-grey">
+                    <!-- if the admin is viewing -->
+                    {% if user.is_superuser %}
+                        {% if song.audio_file %}
+                        <a href="{% url 'download_song' song.slug %}" class="midi-l-grey btn">
+                            <i class="fa-solid fa-download fs-3"></i>
+                            <p class="d-inline fs-5 ps-2 basic-font">Download</p>
+                        </a>
+                        <!-- for pre-made songs w/o audio_file -->
+                        {% elif song.user.is_superuser %}
+                            {% if song.public %}
+                            <p class="d-inline small basic-font midi-warning">
+                                This song is public, but it's audio file could not be found.
+                            </p>
+                            {% else %}
+                            <p class="d-inline small basic-font">
+                                This song is private and currently has no associated audio file.
+                            </p>
+                            {% endif %}
+                        {% endif %}
+                    <!-- if a logged in user is viewing -->
+                    {% elif user.is_authenticated %}
+                        <!-- add: if its in their Tracklist => note -->
+                        <!-- add: if it exists in one of their orders => download if audio exists -->
+                        <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
+                        <!-- else just show Add To Tracklist button like for non auth users below? -->
+                    <!-- if a none logged in user is viewing -->
+                    {% else %}
+                        {% if song.audio_file %}
+                        <a href="#" class="btn midi-l-grey" role="button">
+                            <i class="fa-solid fa-circle-plus fs-5" title="Add to Tracklist"></i>
+                            <p class="fs-5 ps-2 d-inline basic-font">Add to Tracklist</p>
+                        </a>
+                        {% else %}
+                        <p class="d-inline small basic-font midi-warning">
+                            There was an issue with this song's audio file and our team is investigating. If the issue persists, please contact an admin.
+                        </p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            
         </div>
     </div>
 
     <!-- audio player/your song will be playable here when the audio file is added msg -->
-    <div class="row"></div>
+    <div class="row">
+        <div class="col-12 py-4">
+            <hr class="hr-90-light">
+        </div>
+        <div class="col-12 midi-l-grey text-center">
+            {% if song.audio_file %}
+            <audio controls controlsList="nodownload" class="mobile-audio-ctrls">
+                <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                Your browser does not support the audio element.
+            </audio>
+            <!-- pre-made songs with missing auido file -->
+            {% elif song.user.is_superuser %}
+                {% if user.is_superuser %}
+                    {% if song.public %}
+                    <p class="basic-font midi-warning">
+                        This public song's audio will be playable once the audio file has been added or repaired.
+                    </p>
+                    {% else %}
+                    <p class="basic-font">
+                        This private song's audio will be playable once the audio file has been added or repaired.
+                    </p>
+                    {% endif %}
+                {% else %}
+                <p class="basic-font midi-warning">
+                    This song will become playable once the admin has repaired the audio file.
+                </p>
+                {% endif %}
+            <!-- custom songs without audio files => song isnt complete yet -->
+            {% else %}
+            <p class="basic-font">
+                Your song will be playable here once its complete and uploaded by the admin.
+                <br>
+                If you have been notified that your song has been completed and the file is still not available, please contact the admin. 
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    
 
     <!-- conditional testimonial row -->
     <div class="row"></div>
