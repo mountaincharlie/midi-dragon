@@ -95,11 +95,13 @@
         </div>
     </div>
 
-    <!-- audio player/your song will be playable here when the audio file is added msg -->
     <div class="row">
         <div class="col-12 py-4">
             <hr class="hr-90-light">
         </div>
+    </div>
+    <!-- audio player/your song will be playable here when the audio file is added msg -->
+    <div class="row">
         <div class="col-12 midi-l-grey text-center">
             {% if song.audio_file %}
             <audio controls controlsList="nodownload" class="mobile-audio-ctrls">
@@ -133,16 +135,92 @@
             {% endif %}
         </div>
     </div>
-    
+    <div class="row">
+        <div class="col-12 py-4">
+            <hr class="hr-90-light">
+        </div>
+    </div>
 
     <!-- conditional testimonial row -->
-    <div class="row"></div>
+    {% if song.use_as_testimonial %}
+    <div class="row">
+        <div class="col-12 midi-l-grey text-center logo-font">
+            <h3>Testimonial</h3>
+            {% if song.testimonial_text %}
+            <p>{{ testimonial_text }}</p>
+            {% else %}
+            <p>{{ song.user }} has chosen for this song to be shown as an example of what midiDRAGON is able to create for our users.</p>
+            {% endif %}
+            <p class="small">See more examples of songs created for other midiDRAGON users on our <a href="#" class="midi-teal">Testimonials page</a></p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12 py-4">
+            <hr class="hr-80 midi-teal">
+            <!-- row - project type column and bpm column -->
+            <!-- row - instruments list column and review sessions column -->
+            <!-- row - price -->
+            <!-- row - description = song_purpose + song_feel + additional_details -->
+        </div>
+    </div>
 
     <!-- song details row -->
-    <div class="row"></div>
+    <div class="row">
+        <div class="col-12 midi-l-grey text-center logo-font">
+            <h3>Song details</h3>
+        </div>
+    </div>
 
     <!-- like icon with toggle effect (LHS) and conditional edit/delete btns (RHS) for admin always and user IF they are the user and the song hasnt been purchased (not in any of their orders) or in their tracklist (msg to please remove from tracklist before edit/deleting) -->
-    <div class="row"></div>
+    <div class="row">
+        <div class="col-6 logo-font midi-l-grey text-start ps-4">
+            <!-- like button - implemented like in your Cook eBook project -->
+            {% if user.is_authenticated %}
+            <!-- if the user is logged in, the like icon is clickable and toggles between giving the song a like and taking away the user's like -->
+            <form class="d-inline" method="post" action="#">
+                {% csrf_token %}
+                <!-- if like = True then the icon has fa-solid style -->
+                {% if like %}
+                <button type="submit" name="song_id" value="{{ song.slug }}" class="btn px-1 pt-1 pb-0 midi-pink border-0" aria-label="Un-like button">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+                {% else %}
+                <!-- if like = False then the icon has fa-regular style -->
+                <button type="submit" name="song_id" value="{{ song.slug }}" class="btn px-1 pt-1 pb-0 midi-l-grey border-0" aria-label="Like button">
+                    <i class="fa-regular fa-heart fs-4"></i>
+                </button>
+                {% endif %}
+            </form>
+            <!-- if user is not logged in the icon is not a button -->
+            {% else %}
+            <i class="fa-regular fa-heart fs-4"></i>
+            {% endif %}
+
+            <p class="d-inline ps-2">Likes: {{ song.number_of_likes }}</p>
+        </div>
+
+        <div class="col-6 logo-font midi-l-grey text-end pe-4">
+            {% if user.is_superuser %}
+            <!-- edit button -->
+            <a href="#" class="btn midi-teal midi-border-teal me-2" role="button">Edit</a>
+            <!-- delete button -->
+            <a href="#" class="btn midi-warning midi-border-warning" role="button">Delete</a>
+
+            <!-- add: and song doesnt have an assocaited order no (hasnt been bought yet) and is not in their tracklist -->
+            {% elif user.username == song.user.username %}
+            <!-- edit button -->
+            <a href="#" class="btn midi-teal midi-border-teal me-2" role="button">Edit</a>
+            <!-- delete button -->
+            <a href="#" class="btn midi-warning midi-border-warning" role="button">Delete</a>
+            {% else %}
+
+            <!-- elif the song is in their tracklist -->
+            <!-- <p>You must remove {{ song.name }} from your Tracklist in order to Edit/Delete it</p> -->
+            {% endif %}
+        </div>
+    </div>
 
     
 </div>
