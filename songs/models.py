@@ -123,6 +123,7 @@ class Song(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     likes = models.ManyToManyField(User, blank=True, related_name='song_like')
     instruments = models.ManyToManyField(Instrument, blank=True, related_name='song_instrument')
+    num_of_reviews = models.CharField(max_length=4, null=True, blank=True, default='N/A')
     song_purpose = models.TextField(null=True, blank=True)
     song_feel = models.TextField(null=True, blank=True)
     additional_details = models.TextField(null=True, blank=True)
