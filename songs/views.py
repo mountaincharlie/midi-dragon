@@ -4,6 +4,8 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 from .models import Song, Genre
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+import mimetypes
 
 
 class SongsList(generic.ListView):
@@ -135,3 +137,30 @@ class SongDetailsView(View):
         }
 
         return render(request, 'songs/song_details.html', context)
+
+
+class DownloadSong(View):
+    """
+    Class based view inheriting Django's View
+    Contains the get method for downloading the audio_file
+    for a particular song
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        Gets the song by its slug.
+        Creates the filename which is the string of its audio_file name.
+        Sets the file path which is the filename in the media folder.
+        Opens the file for reading in binary (rb).
+        Uses mimetypes to guess the mime type for the file (will be .mp3 or .wav)
+        """
+        song = get_object_or_404(Song, slug=self.kwargs['slug'])
+        filename = str(song.audio_file)
+        file_path = 'media/'+filename
+        mime_type = filename.split('.')[1]
+
+        # logic for opening the file and allowing it to be downloaded from adapted from (CREDIT - https://djangoadventures.com/how-to-create-file-download-links-in-django/)
+        read_file = open(file_path, 'rb')
+        # print('mimetype:', mime_type)
+        response = HttpResponse(read_file, content_type=mime_type)
+        response['Content-Disposition'] = f"attachment; filename={filename}"
+        return response
