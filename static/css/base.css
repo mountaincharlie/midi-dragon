@@ -11,6 +11,10 @@ body{
     font-family:'BioRhyme', sans-serif;
 }
 
+.basic-font{
+    font-family:'Fira Sans', sans-serif;
+}
+
 .content-block{
     min-height: 70vh;
 }
@@ -51,6 +55,10 @@ li{
 
 .midi-l-grey {
     color: #9A9EAE !important;
+}
+
+.midi-warning {
+    color: #fc5a5a !important;
 }
 
 
@@ -129,6 +137,12 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border: 1px solid #9A9EAE;
 }
 
+.hr-90-teal {
+    margin: auto;
+    width:90%;
+    border: 1px solid #00D1CF;
+}
+
 /* .hr-full-light{
     width:100%;
     border: 1px solid #9A9EAE;
@@ -151,6 +165,11 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border-color: #00D1CF;
 }
 
+.midi-border-warning{
+    border-radius: 2px;
+    border-color: #fc5a5a;
+}
+
 .midi-border-l-grey{
     border-radius: 2px;
     border-color: #9A9EAE;
@@ -158,6 +177,10 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
 
 .midi-btm-border-teal{
     border-bottom: 1px solid #00D1CF;
+}
+
+.midi-btm-border-warning{
+    border-bottom: 1px solid #fc5a5a;
 }
 
 /* .bottom-border-dark{
@@ -204,9 +227,18 @@ a:hover, .btn:hover, i:hover, .pink-hover:hover, #mc_embed_signup{
     border-color:#FF57D2;
 }
 
-/* .square-img-large{
-    height: ;
-    width: ;
+.square-img-large{
+    /* max-height: 30vw; */
+    height:30vw;
+    width: auto;
+    border-radius: 4px;
+    /* position:relative;
+    bottom:25%; */
+    /* overflow:hidden; */
+}
+
+/* .song-details-image-row{
+    height: 30vw;
 } */
 
 
