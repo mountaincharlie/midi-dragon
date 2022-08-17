@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 # from django.db.models.signals import pre_save
 from django.utils.text import slugify
+from django.shortcuts import reverse
 
 
 class Genre(models.Model):
@@ -190,6 +191,10 @@ class Song(models.Model):
         if not self.image:
             self.image = 'placeholder.jpg'
         super().save(*agrs, **kwargs)
+
+    def get_absolute_url(self):
+        """ method for returning the reverse of the song's absolute url """
+        return reverse('song_details', kwargs={'slug': self.slug})
 
     def __str__(self):
         """ method to return the song name as a string for each song """
