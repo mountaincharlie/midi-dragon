@@ -136,18 +136,27 @@ class SongAdmin(admin.ModelAdmin):
 
     def change_public_status(self, request, queryset):
         """
-        Changes the public status of selected songs
-        Also checks if the completed status is True before it
-        allows the public status to be changed to True (this
-        prevents in-completed songs being able to be made public)
+        Changes the public status of selected songs, but only allows
+        them to be made public if certain conditions apply.
+        Checks first that the song is complete and has an audio file.
+        If it does, then it checks if either the song user is a regular 
+        user (custom song) AND the song has use_as_testimonial = True OR
+        that the song's user is the superuser (pre-made songs).
+        In either of these cases, the song can be made public.
+        This prevents in-complete songs or songs with missing audio files
+        from being made public accidetnally as well as making sure that the
+        only completed custom songs that can be public are ones that the song
+        user has approved to be used as a testimonial.
         """
+
         for song in queryset:
             if song.public:
                 song.public = False
                 song.save()
             elif song.completed and song.audio_file:
-                song.public = True
-                song.save()
+                if not song.user.is_superuser and song.use_as_testimonial or song.user.is_superuser:
+                    song.public = True
+                    song.save()
 
     def change_completed_status(self, request, queryset):
         """
