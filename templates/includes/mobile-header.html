@@ -61,7 +61,11 @@
             <!-- profile dropdown btn -->
             <div class="dropdown-toggle text-center midi-teal pink-hover fs-5" type="button" id="mobileprofiledropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-circle-user"></i>
+                {% if user.is_superuser %}
+                <p>Admin</p>
+                {% else %}
                 <p>Profile</p>
+                {% endif %}
             </div>
             <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="mobileprofiledropdownbtn">
                 {% if user.is_superuser %}
