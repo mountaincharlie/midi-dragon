@@ -7,8 +7,8 @@
     <a href="{{ song.get_absolute_url }}" class="midi-l-grey" title="Go to song details">
         <h5>{{ song.name }}</h5>
     </a>
-</div>
-<div class="col-md-5 col-lg-4 col-xl-3">
+</div> 
+<div class="col-md-4 col-lg-4 col-xl-3">
     {% if song.audio_file %}
     <audio controls controlsList="nodownload" class="">
         <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
@@ -28,14 +28,19 @@
 <div class="col-md-1 col-xl-2">
     <h5>£{{ song.price }}</h5>
 </div>
-<div class="col-md-1">
+<div class="col-md-2 col-lg-1">
     {% if user.is_superuser %}
         {% if song.public %}
             <p class="midi-teal fs-6 m-0">Public</p>
         {% else %}
             <p class="midi-l-grey fs-6 m-0">Private</p>
         {% endif %}
-        <p class="midi-l-grey small m-0">[{{ song.user }}]</p>
+        <!-- <p class="midi-l-grey small m-0">[{{ song.user }}]</p> -->
+        {% if song.user.is_superuser %}
+        <p class="midi-l-grey small m-0">[Pre-made]</p>
+        {% else %}
+        <p class="midi-l-grey small m-0">[Custom]</p>
+        {% endif %}
     {% else %}
         <a href="#" class="midi-l-grey">
             <i class="fa-solid fa-circle-plus fs-3" title="Add to Tracklist"></i>

@@ -42,11 +42,15 @@
 <div class="col-12 text-center">
     {% if user.is_superuser %}
         {% if song.public %}
-            <p class="midi-teal fs-6 m-0">Public</p>
+            <p class="midi-teal fs-6 m-0 d-inline">Public</p>
         {% else %}
-            <p class="midi-l-grey fs-6 m-0">Private</p>
+            <p class="midi-l-grey fs-6 m-0 d-inline">Private</p>
         {% endif %}
-        <p class="midi-l-grey small m-0">[{{ song.user }}]</p>
+        {% if song.user.is_superuser %}
+        <p class="midi-l-grey small m-0 d-inline">[Pre-made]</p>
+        {% else %}
+        <p class="midi-l-grey small m-0 d-inline">[Custom]</p>
+        {% endif %}
     {% else %}
         <a href="#" class="midi-l-grey btn" role="button">
             <i class="fa-solid fa-circle-plus fs-4" title="Add to Tracklist"></i>
