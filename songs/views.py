@@ -139,6 +139,36 @@ class SongDetailsView(View):
         return render(request, 'songs/song_details.html', context)
 
 
+# based on the 'chef's kisses' from my Potfolio 4 Project - Cook eBook
+# credit - https://github.com/mountaincharlie/project-four-cook-ebook/blob/main/cook_ebook/views.py
+class LikeSong(View):
+    """
+    Class based view inheriting Django's View
+    Contains the post method for changing the like icon and
+    likes count in the song's song_details page when the
+    user clicks the like button.
+    """
+
+    def post(self, request, *args, **kwargs):
+        """
+        post method for when authenticated users click on song's like button.
+        -gets the song by its unique slug
+        -if statement for finding if the user's id already exists for
+        this song's likes field
+        -if the user exists then it removes the user
+        -else it adds the user
+        -returns the redirect of the song's absolute url
+        """
+        song = get_object_or_404(Song, slug=self.kwargs['slug'])
+
+        if song.likes.filter(id=request.user.id).exists():
+            song.likes.remove(request.user)
+        else:
+            song.likes.add(request.user)
+
+        return redirect(song.get_absolute_url())
+
+
 class DownloadSong(View):
     """
     Class based view inheriting Django's View

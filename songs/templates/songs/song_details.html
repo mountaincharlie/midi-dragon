@@ -74,6 +74,7 @@
                             </p>
                             {% endif %}
                         {% endif %}
+                    <!-- add: elif for if its use_as_testimonial => if its the owning user then they see download btn else other users see blank OR link to the user's content -->
                     <!-- if a logged in user is viewing -->
                     {% elif user.is_authenticated %}
                         <!-- add: if its in their Tracklist => note -->
@@ -226,16 +227,16 @@
             <!-- like button - implemented like in your Cook eBook project -->
             {% if user.is_authenticated %}
             <!-- if the user is logged in, the like icon is clickable and toggles between giving the song a like and taking away the user's like -->
-            <form class="d-inline" method="post" action="#">
+            <form class="d-inline" method="post" action="{% url 'song_like' song.slug %}">
                 {% csrf_token %}
                 <!-- if like = True then the icon has fa-solid style -->
                 {% if like %}
-                <button type="submit" name="song_id" value="{{ song.slug }}" class="btn px-1 pt-1 pb-0 midi-pink border-0" aria-label="Un-like button">
-                    <i class="fa-solid fa-heart"></i>
+                <button type="submit" name="song_id" value="{{ song.slug }}" class="btn px-0 pt-1 pb-0 midi-pink border-0" aria-label="Un-like button">
+                    <i class="fa-solid fa-heart fs-4"></i>
                 </button>
                 {% else %}
                 <!-- if like = False then the icon has fa-regular style -->
-                <button type="submit" name="song_id" value="{{ song.slug }}" class="btn px-1 pt-1 pb-0 midi-l-grey border-0" aria-label="Like button">
+                <button type="submit" name="song_id" value="{{ song.slug }}" class="btn px-0 pt-1 pb-0 midi-l-grey border-0" aria-label="Like button">
                     <i class="fa-regular fa-heart fs-4"></i>
                 </button>
                 {% endif %}
