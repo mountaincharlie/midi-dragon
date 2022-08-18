@@ -5,8 +5,8 @@
 
 {% block content %}
 
-<!-- check that users can still view their own custom songs when private AND admin can view any private cutom songs -->
-{% if not song.public and not user.is_superuser or user != song.user.username %}
+<!-- check that users can still view their own custom songs when private -->
+{% if not user.is_superuser and not song.public or user != song.user.username and not user.is_superuser %}
 
     <!-- from the root dir templates dir -->
     {% include 'includes/user-not-authorised.html' %}
