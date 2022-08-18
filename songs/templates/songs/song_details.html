@@ -4,19 +4,18 @@
 {% block extra_title %} - {{ song.name }} song details{% endblock %}
 
 {% block content %}
+
+<!-- check that users can still view their own custom songs when private AND admin can view any private cutom songs -->
+{% if not song.public and not user.is_superuser or user != song.user.username %}
+
+    <!-- from the root dir templates dir -->
+    {% include 'includes/user-not-authorised.html' %}
+
+{% else %}
+
 <!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
-    <!-- <div class="row py-4">
-        <div class="col-12">
-            <h1 class="page-heading midi-l-grey">{{ song.name }}'s details</h1>
-            <hr class="hr-90-light">
-        </div>
-    </div> -->
 
-    <!-- basic page structure -->
-
-    <!-- img, name, genre, username, Tracklist/download btn/this is in your tarcklist msg -->
     <div class="row logo-font pt-4 align-items-center">
         <!-- image column -->
         <div class="song-details-image-row col-12 pb-4 pb-md-0 col-md-4 text-center overflow-hidden">
@@ -269,8 +268,8 @@
             {% endif %}
         </div>
     </div>
-
-    
 </div>
+{% endif %}
+
 {% endblock %}
 
