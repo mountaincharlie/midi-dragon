@@ -255,8 +255,7 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
 audio{
     border-radius: 4px;
     background-color:#9A9EAE;
-    padding-left: 10px;
-    padding-right: 10px;
+    width: 80%;
 }
 
 audio::-webkit-media-controls-panel{
