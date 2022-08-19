@@ -701,6 +701,8 @@ If the logged in user is the admin then a different view class is called wheneve
   * Fix: I added the 'blank=True' back to the ImageField and then where I was overriding the Song model's save method, I added a condition to check if the Song instance didn't have an image and if not, set it to be the 'placeholder.jpg'
 * Bug: When creating my select element for filtering searches by Genre, my if statement for setting the 'selected' attribute was not working ocrrectly, even when the Javascript and views logic was working correctly to filter search results.
   * Fix: I removed the {{  }} and ' ' I was using within the 'if selected_genre' statements, which wasn't necessary since these aren't required when already inside template tags (an if statement in this case).
+* Bug: When setting up my testimonials template, even though my views and url path were created correctly, I was still receiving a 404 error when trying to open the template in the server. 
+  * Fix: I needed to move my testimonials url path above my other urls which contained variables (slugs) since Django searches through the url paths in the order they're written and expects them in order of fewest variables first.
 * Bug: 
   * Fix:
 
