@@ -17,7 +17,13 @@ class SongsList(generic.ListView):
 
     def get(self, request, *args, **kwargs):
         """
-        Gets all of the songs which are public
+        Gets all of the songs if the user is the super user, else it finds
+        the superuser's username and gets all the songs by them (all Pre-made
+        songs).
+        Gets all of the genres from the Genres model.
+        Sets any potentially unused variables as None by default to avoid 
+        errors in the template.
+        // FINISH
         """
         # only the admin can view all of the songs
         if request.user.is_superuser:
@@ -194,3 +200,35 @@ class DownloadSong(View):
         response = HttpResponse(read_file, content_type=mime_type)
         response['Content-Disposition'] = f"attachment; filename={filename}"
         return response
+
+
+class TestimonialsList(generic.ListView):
+    """
+    Class based view inheriting Django's generic.ListView
+    Uses the Song model to find all the songs with use_as_testimonial = True
+    and returns them to the testimonials.html template.
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        Gets all of the songs which have use_as_testimonial=True.
+        If the request user is not the superuser, then all the testimonials
+        songs are filtered to only get the public ones since.
+        The 'no_testimonial_text' variable contains a short message to
+        display if the user doesn't provide any testimonial text.
+        (By passing it into the template via the context, I can use a
+        template tag filter to truncate it at a certain number of characters)
+        """
+        testimonial_songs = Song.objects.filter(use_as_testimonial=True)
+
+        if request.user.is_superuser is False:
+            testimonial_songs = testimonial_songs.filter(public=True)
+
+        no_testimonial_text = 'This song has been chosen as an example of what midiDRAGON is able to create for our users.'
+
+        context = {
+            'songs': testimonial_songs,
+            'no_testimonial_text': no_testimonial_text,
+        }
+
+        return render(request, "songs/testimonials.html", context)
