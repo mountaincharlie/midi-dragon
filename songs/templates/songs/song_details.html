@@ -5,13 +5,8 @@
 
 {% block content %}
 
-<!-- check that users can still view their own custom songs when private -->
-{% if not user.is_superuser and not song.public or user != song.user.username and not user.is_superuser %}
-
-    <!-- from the root dir templates dir -->
-    {% include 'includes/user-not-authorised.html' %}
-
-{% else %}
+<!-- check that users can still view their own custom songs when private [NEED login to work first] -->
+{% if user.is_superuser or song.public or user.username == song.user.username %}
 
 <!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
@@ -223,7 +218,7 @@
     <!-- like icon with toggle effect (LHS) and conditional edit/delete btns (RHS) for admin always and user IF they are the user and the song hasnt been purchased (not in any of their orders) or in their tracklist (msg to please remove from tracklist before edit/deleting) -->
     <div class="row">
         <div class="col-6 logo-font midi-l-grey text-start ps-4">
-            <!-- like button - implemented like in your Cook eBook project -->
+            <!-- like button - implemented like in my Cook eBook project -->
             {% if user.is_authenticated %}
             <!-- if the user is logged in, the like icon is clickable and toggles between giving the song a like and taking away the user's like -->
             <form class="d-inline" method="post" action="{% url 'song_like' song.slug %}">
@@ -269,6 +264,11 @@
         </div>
     </div>
 </div>
+{% else %}
+
+    <!-- from the root dir templates dir -->
+    {% include 'includes/user-not-authorised.html' %}
+
 {% endif %}
 
 {% endblock %}
