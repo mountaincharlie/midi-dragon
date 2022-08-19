@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Testimonials{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">TESTIMONIALS</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- bootstrap carousel showing all testimonials -->
+
+    <div class="row midi-l-grey">
+        <div class="col-12 text-center p-0 px-md-4">
+            <!-- carousel -->
+            <div id="testimonialCarousel" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
+                <!-- the indicators -->
+                <div class="carousel-indicators">
+                    {% for song in songs %}
+                        {% if forloop.counter == 1 %}
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true" aria-label="Testimonial {{ forloop.counter }}"></button>
+                        {% else %}
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Testimonial {{ forloop.counter }}"></button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- the image and text content -->
+                <div class="carousel-inner midi-l-grey">
+                    {% for song in songs %}
+                        <!-- setting active class only for the first song -->
+                        {% if forloop.counter == 1 %}
+                        <div class="carousel-item active">
+                            <img src="{{ song.image.url }}" class="d-block testimonial-carousel-img" alt="{{ song.name }} image">
+                            <!-- link to the song's details -->
+                            <a href="{{ song.get_absolute_url }}" title="Go to song details">
+                                <div class="carousel-caption d-block midi-d-grey">
+                                    <h4 class="logo-font m-0"><strong>{{ song.name }}</strong></h4>
+                                    <!-- testimonial text -->
+                                    {% if song.testimonial_text %}
+                                    <p class="m-0 p-2 d-none d-md-block">{{ song.testimonial_text|truncatechars:100 }}</p>
+                                    {% else %}
+                                    <p class="m-0 p-2 d-none d-md-block">{{ no_testimonial_text }}</p>
+                                    {% endif %}
+                                    <p class="small my-2 mt-md-0"><strong>- {{ song.user.username }} -</strong></p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- the rest of the songs -->
+                        {% else %}
+                        <div class="carousel-item">
+                            <img src="{{ song.image.url }}" class="d-block testimonial-carousel-img" alt="{{ song.name }} image">
+                            <!-- link to the song's details -->
+                            <a href="{{ song.get_absolute_url }}" title="Go to song details">
+                                <div class="carousel-caption d-block midi-d-grey">
+                                    <h4 class="logo-font m-0"><strong>{{ song.name }}</strong></h4>
+                                    <!-- testimonial text -->
+                                    {% if song.testimonial_text %}
+                                    <p class="m-0 p-2 d-none d-md-block">{{ song.testimonial_text|truncatechars:100 }}</p>
+                                    {% else %}
+                                    <p class="m-0 p-2 d-none d-md-block">{{ no_testimonial_text }}</p>
+                                    {% endif %}
+                                    <p class="small my-2 mt-md-0"><strong>- {{ song.user.username }} -</strong></p>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- prev/next btns -->
+                <button class="carousel-control-prev midi-teal pink-hover" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <i class="fa-solid fa-angle-left fs-1" aria-hidden="true"></i>
+                    <!-- written span for accessability -->
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next midi-teal pink-hover" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <i class="fa-solid fa-angle-right fs-1" aria-hidden="true"></i>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- bootstrap carousel end -->
+
+    <div class="row">
+        <div class="col-12 py-4">
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- checking if there are any testimonial songs -->
+    {% if songs %}
+        <!-- headings for med+ screens only -->
+        <div class="row d-none d-md-flex midi-l-grey mb-2 text-center">
+            {% include 'includes/desktop-testimonial-list-headings.html' %}
+        </div>
+
+        <div class="row">
+            <div class="col-12 p-0">
+                <hr class="hr-full-teal m-0 mb-2">
+            </div>
+        </div>
+
+        {% for song in songs %}
+            <!-- song list rows on mobile -->
+            <div class="row d-md-none hover-highlight-row midi-l-grey logo-font align-items-center mb-2">
+                <!-- adapt existing mobile list layout -->
+                {% include 'includes/mobile-testimonial-list.html' %}
+            </div>
+
+            <!-- song list rows on desktop -->
+            <div class="row d-none d-md-flex hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
+                <!-- adapt existing desktop list layout -->
+                {% include 'includes/desktop-testimonial-list.html' %}
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                    <hr class="hr-90-light">
+                </div>
+            </div>
+        {% endfor %}
+    <!-- if no testimonial songs for any reason, the below will display -->
+    {% else %}
+            <div class="row align-middle">
+                <div class="col-12 text-center">
+                    <p class="midi-l-grey fs-4">
+                        No testimonial songs are available to view at the moment, but check back soon!
+                    </p>
+                    <a href="{% url 'songs' %}" role="button" class="btn fs-5">
+                        <i class="fa-solid fa-circle-arrow-left"></i>
+                        <p class="m-0 d-inline ps-2">Browse Pre-made Songs</p>
+                    </a>
+                </div>
+            </div>
+    {% endif %}
+    
+</div>
+{% endblock %}
