@@ -6,6 +6,7 @@ from .models import Song, Genre
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import mimetypes
+from .forms import DesignCustomSongForm
 
 
 class SongsList(generic.ListView):
@@ -232,3 +233,32 @@ class TestimonialsList(generic.ListView):
         }
 
         return render(request, "songs/testimonials.html", context)
+
+
+# NEEDS to be 'login' decorator protected
+class DesignCustomSong(View):
+    """
+    Class based view inheriting Django's View
+    Contains the get method for displaying the form to design a custom
+    song in the Design Custom Song template.
+    Contains the post method for taking in the data submitted in the form
+    to create the instance of Song in the database if the form is valid.
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        get method for getting the forms to be displayed to the user.
+        -gets the
+
+        """
+
+        custom_song_form = DesignCustomSongForm()
+
+        context = {
+            'custom_song_form': custom_song_form,
+        }
+
+        return render(request, 'songs/design_custom_song.html', context)
+
+
+    # USE RETURN REDIRECT FOR THE GET_ABSOLUTE_URL
