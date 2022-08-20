@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Design Custom Song{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">DESIGN CUSTOM SONG</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <!-- enctype => for uploading image/video/audio files -->
+            <!-- JUST USE design_custom_song url as action? -->
+            <form id="design-custom-song-form" action="#" method="POST" enctype="multipart/form-data" class="form mb-2">
+                {% csrf_token %}
+                <!--  custom_song_form | crispy  -->
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        {{ custom_song_form.name | as_crispy_field }}
+                        {{ custom_song_form.image | as_crispy_field }}
+                        {{ custom_song_form.project_type | as_crispy_field }}
+                        {{ custom_song_form.genre | as_crispy_field }}
+                        {{ custom_song_form.bpm | as_crispy_field }}
+                        {{ custom_song_form.instruments | as_crispy_field }}
+                        {{ custom_song_form.num_of_reviews | as_crispy_field }}
+                        <!-- write the number of review sessions with JS here to display to user -->
+                        <div id="visible_num_of_reviews" class="logo-font my-1">
+                            (you must select a project type)
+                        </div>
+                        <button id="minus_num_of_reviews" class="btn btn-midi-warning pink-hover px-2 py-1" aria-label="Minus one from the current number of reviews"><i class="fa-solid fa-minus"></i></button>
+                        <button id="add_num_of_reviews" class="btn btn-teal pink-hover px-2 py-1" aria-label="Add one to the current number of reviews"><i class="fa-solid fa-plus"></i></button>
+                        <!-- insert amount by passing into the context in the view from settings.py -->
+                        <span class="ps-2 logo-font">+ £3.99</span>
+                        
+                        {{ custom_song_form.use_as_testimonial | as_crispy_field }}
+                        <!-- only visible if the above box ticked -->
+                        {{ custom_song_form.testimonial_text | as_crispy_field }}
+                        <hr class="midi-pink">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ custom_song_form.song_purpose | as_crispy_field }}
+                        {{ custom_song_form.song_feel | as_crispy_field }}
+                        {{ custom_song_form.additional_details | as_crispy_field }}
+                        <!-- note about you having creative control if insufficent details provided -->
+                        <!-- cost display -->
+                        <hr class="midi-pink">
+                    </div>
+                </div>
+                <div class="row basic-font">
+                    <div class="col-12 text-end">
+                        <a role="button" href="#" class="btn btn-l-grey me-2">Cancel</a>
+                        <button class="btn btn-teal pink-hover me-2" type="submit" aria-label="Confirm save custom song design button">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    
+</div>
+{% endblock %}
