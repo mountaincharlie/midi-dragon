@@ -105,6 +105,16 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     border-color: #9A9EAE;
 }
 
+.btn-teal {
+    color: #00D1CF;
+    border-color: #00D1CF;
+}
+
+.btn-midi-warning {
+    color: #fc5a5a;
+    border-color: #fc5a5a;
+}
+
 .btn-d-grey {
     color: #1D212E;
     border-color: #1D212E;
@@ -333,6 +343,84 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     background-color:#FF57D2 !important;
 }
 
+
+/* ---------- design custom song form */
+
+#design-custom-song-form{
+    color:#9A9EAE;
+    width: 80%;
+    margin: auto;
+}
+
+#design-custom-song-form label{
+    font-size: larger;
+    font-weight:700;
+    text-transform: uppercase;
+}
+
+#design-custom-song-form .asteriskField{
+    color:#fc5a5a;
+    padding-left: 2px;
+    font-size: medium;
+    font-weight:400;
+}
+
+#design-custom-song-form ::placeholder{
+    color: #9A9EAE;
+}
+
+#design-custom-song-form .form-control, .textInput,
+::-webkit-file-upload-button{
+    color: #9A9EAE;
+    background-color: #1D212E;
+    border-color: #00D1CF;
+    font-family:'BioRhyme', sans-serif;
+}
+
+::-webkit-file-upload-button{
+    border-radius: 4px;
+    color:#00D1CF;
+}
+
+::-webkit-file-upload-button:hover{
+    border-color: #FF57D2;
+    color: #FF57D2;
+    cursor: pointer;
+}
+
+#design-custom-song-form .form-control:hover{
+    border-color: #FF57D2;
+}
+
+#design-custom-song-form .form-group{
+    margin-top: 10px;
+}
+
+#id_project_type empty_label{
+    color:#FF57D2;
+}
+
+/* hiding the num_of_reviews input (this is populated by JS) */
+#id_num_of_reviews{
+    display:none;
+}
+
+#div_id_num_of_reviews span{
+    visibility:hidden;
+}
+
+#id_use_as_testimonial{
+    border-color:#00D1CF;
+    background-color:#1D212E;
+}
+
+#id_use_as_testimonial:hover{
+    border-color:#FF57D2;
+}
+
+#id_use_as_testimonial:checked{
+    background-color:#00D1CF;
+}
 
 /* ---------- navbar */
 
