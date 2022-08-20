@@ -755,6 +755,11 @@ If the logged in user is the admin then a different view class is called wheneve
 * [Banjer's solution on Stackoverflow](https://stackoverflow.com/a/10290401) for how to use Django's template tags to truncate values by a number of characters. I used this for my testimonials page so that long testimonials text wouldn't cause the layout to break or become mishappen.
 * [im_brian_d's solution on Stackoverflow](https://stackoverflow.com/a/26133651) for how to stop Bootstrap carousels from auto changing slides, using the data-bs-interval="false" attribute on the carousel itself.
 * [russ_ferri's solution on Stackoverflow](https://stackoverflow.com/a/11552460) and [w3schools' page on object-fit](https://www.w3schools.com/csS/css3_object-fit.asp) for how to correctly position and fit images centrally with css rules. I used this for the testimonial carousel images so that they always filled the container without being streched, but also were cetralised.  
+* [Abdul Niyas P M's solution on Stackoverflow](https://stackoverflow.com/a/56645085) for how to change the default django form labels for form fields in forms.py.  
+* [ClarkTheCoder's solution on Stackoverflow](https://stackoverflow.com/a/51351682) for how to add placeholder text to Textarea fields using django widgets in forms.py.  
+* [Daniel Roseman's solution on Stackoverflow](https://stackoverflow.com/a/55237245) for using values_list() method to get a queryset for Genre with each value by its display_name for using in the form dropdown.  
+* [Ishita Kabra's solution on Stackoverflow](https://stackoverflow.com/a/68891518) for how to add css style rules to the file-upload-button, which I used to style my image upload button in my Design Custom Song form.  
+* [Eliakin Costa's solution on Stackoverflow](https://stackoverflow.com/a/59364708) for how to apply an 'empty_label' attribute to django's ModelChoiceFields, which I used for my project_type and genre fields.  
 
 ### Content
 * Fonts:
