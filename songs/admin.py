@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Genre, Instrument, ProjectType, Song
+from .models import Genre, Instrument, ProjectType, Song, SongInstrument
 
 
 @admin.register(Genre)
@@ -19,6 +19,11 @@ class GenreAdmin(admin.ModelAdmin):
     )
 
     # actions = any methods you want to define below
+
+
+class SongInstrumentInline(admin.TabularInline):
+    """ Tabular inline of the SongInstrument table """
+    model = SongInstrument
 
 
 @admin.register(Instrument)
@@ -106,7 +111,6 @@ class SongAdmin(admin.ModelAdmin):
         'duration',
         'price',
         'likes',
-        'instruments',
         'song_purpose',
         'song_feel',
         'additional_details',
@@ -124,13 +128,14 @@ class SongAdmin(admin.ModelAdmin):
         'project_type',
         'user',
         'genre',
-        'instruments',
         'bpm',
         'created_date',
         # 'duration',
         # 'price',
         # 'likes',
     )
+
+    inlines = [SongInstrumentInline, ]
 
     actions = ['change_public_status', 'change_completed_status', 'change_testimonial_status']
 
