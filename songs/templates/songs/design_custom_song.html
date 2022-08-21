@@ -23,31 +23,132 @@
                 <!--  custom_song_form | crispy  -->
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        {{ custom_song_form.name | as_crispy_field }}
-                        {{ custom_song_form.image | as_crispy_field }}
-                        {{ custom_song_form.project_type | as_crispy_field }}
-                        {{ custom_song_form.genre | as_crispy_field }}
-                        {{ custom_song_form.bpm | as_crispy_field }}
-                        {{ custom_song_form.instruments | as_crispy_field }}
-                        {{ custom_song_form.num_of_reviews | as_crispy_field }}
-                        <!-- write the number of review sessions with JS here to display to user -->
-                        <div id="visible_num_of_reviews" class="logo-font my-1">
-                            (you must select a project type)
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.name | as_crispy_field }}
+                            </div>
                         </div>
-                        <button id="minus_num_of_reviews" class="btn btn-midi-warning pink-hover px-2 py-1" aria-label="Minus one from the current number of reviews"><i class="fa-solid fa-minus"></i></button>
-                        <button id="add_num_of_reviews" class="btn btn-teal pink-hover px-2 py-1" aria-label="Add one to the current number of reviews"><i class="fa-solid fa-plus"></i></button>
-                        <!-- insert amount by passing into the context in the view from settings.py -->
-                        <span class="ps-2 logo-font">+ £3.99</span>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.image | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.project_type | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.genre | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.bpm | as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <!-- ----------- instruments section -------------- -->
                         
-                        {{ custom_song_form.use_as_testimonial | as_crispy_field }}
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                
+                                <h5 id="form-instruments-label">Instruments</h5>
+                                <div id="visible-instruments-dropdown">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- # included-instruments-subheading => targetted by JS to remove d-none when a project type is chosen -->
+                                            <h6 id="included-instruments-subheading" class="small logo-font d-none">Included instruments:</h6>
+                                            <p class="logo-font my-1 midi-warning">(please select a project type)</p>
+                                            <!-- where the required instrument selects is insterted into with JS -->
+                                            <div id="included-instruments-container"></div>
+                                            <hr class="hr-90-teal my-2 d-none">
+                                            <h6 id="additional-instruments-subheading" class="small logo-font d-none">Additional instruments:</h6>
+                                            <!-- where the add instrument button is and any additional instrument selects with delete buttons are insterted with JS -->
+                                            <div id="additional-instruments-container"></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!-- hidden instruments dropdown, add instrumetn and delete buttons -->
+                        <div id="hidden-instrument-elements" class="d-none">
+                            <!-- select is d-none by default and JS is used to show the correct amount - on project_type selection AND on clicking the Add instrument button -->
+                            <select id="" class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font">
+                                <!-- default selected -need to change with JS? -->
+                                <option value="reset" selected>Select an Instrument </option>
+                                {% for instrument in instruments %}
+                                <option value="{{ instrument }}" class="midi-l-grey">{{ instrument }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <!-- add instrument button - inserted by JS beneath the last select in #visible-instruments-dropdown -->
+                            <button id="add-song-instrument" class="btn btn-teal" type="button" aria-label="Add another instrument button">Add An Instrument</button>
+                            <!-- insert amount by passing into the context in the view from settings.py -->
+                            <span class="ps-2 logo-font">+ £4.99</span>
+
+                            <!-- delete btn added only to additional -->
+                            <button id="new-delete-song-instrument-button" class="btn btn-midi-warning my-2" type="button" aria-label="Delete insturment button">Delete Instrument</button>
+                        </div>
+
+                        <!-- hidden song_instrument_formset used/populated by JS -->
+                        <div id="new-instrument-form" class="visually-hidden">
+                            {{ song_instrument_formset.management_form }}
+                            {{ song_instrument_formset.empty_form |crispy }}
+                            
+                        </div>
+
+                        <!-- hidden formsets being populated by the JS -->
+                        
+                        <!-- ----------- instruments section -------------- -->
+
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.num_of_reviews | as_crispy_field }}
+
+                                <!-- write the number of review sessions with JS here to display to user -->
+                                <div id="visible-num-of-reviews" class="logo-font my-1 midi-warning">
+                                    (please select a project type)
+                                </div>
+                                <button id="minus_num_of_reviews" class="btn btn-midi-warning pink-hover px-2 py-1" aria-label="Minus one from the current number of reviews"><i class="fa-solid fa-minus"></i></button>
+                                <button id="add_num_of_reviews" class="btn btn-teal pink-hover px-2 py-1" aria-label="Add one to the current number of reviews"><i class="fa-solid fa-plus"></i></button>
+                                <!-- insert amount by passing into the context in the view from settings.py -->
+                                <span class="ps-2 logo-font">+ £5.99</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.use_as_testimonial | as_crispy_field }}
+                            </div>
+                        </div>
                         <!-- only visible if the above box ticked -->
-                        {{ custom_song_form.testimonial_text | as_crispy_field }}
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.testimonial_text | as_crispy_field }}
+                            </div>
+                        </div>
                         <hr class="midi-pink">
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ custom_song_form.song_purpose | as_crispy_field }}
-                        {{ custom_song_form.song_feel | as_crispy_field }}
-                        {{ custom_song_form.additional_details | as_crispy_field }}
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.song_purpose | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.song_feel | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.additional_details | as_crispy_field }}
+                            </div>
+                        </div>
                         <!-- note about you having creative control if insufficent details provided -->
                         <!-- cost display -->
                         <hr class="midi-pink">
@@ -63,7 +164,6 @@
         </div>
     </div>
 
-    
-    
 </div>
 {% endblock %}
+
