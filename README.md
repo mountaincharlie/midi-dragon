@@ -299,6 +299,9 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 ### Final Database Schema (only if any changes made from initial)
 * Changes
   * screenshots
+  * (add quantity to SongInstrument - when refactoring the Song and Instrument modesl relationship so that songs could have multiple of any particular instrument without having to create duplicates in the Instrument model)
+  * (remove song_end_fade and audio_clip fields from Song model)
+  * (remove AdOns model - future feat?)
 
 
 ## Final Designs [TO FINISH]
