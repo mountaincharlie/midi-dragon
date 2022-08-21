@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views import generic, View
 from django.db.models import Q
 from django.db.models.functions import Lower
-from .models import Song, Genre
+from .models import Song, Genre, SongInstrument
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import mimetypes
@@ -133,6 +133,9 @@ class SongDetailsView(View):
         songs = Song.objects.all()
         song = get_object_or_404(songs, slug=self.kwargs['slug'])
 
+        # getting the song's associated instruments
+        instruments = SongInstrument.objects.filter(song=song)
+
         # setting like as False until its confirmed it has likes
         like = False
         if song.likes.filter(id=self.request.user.id).exists():
@@ -141,6 +144,7 @@ class SongDetailsView(View):
         context = {
             'song': song,
             'like': like,
+            'instruments': instruments,
         }
 
         return render(request, 'songs/song_details.html', context)
@@ -260,5 +264,4 @@ class DesignCustomSong(View):
 
         return render(request, 'songs/design_custom_song.html', context)
 
-
-    # USE RETURN REDIRECT FOR THE GET_ABSOLUTE_URL
+   
