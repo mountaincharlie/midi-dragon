@@ -47,9 +47,6 @@ class Instrument(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
-
-    def get_display_name(self):
         return self.display_name
 
 
@@ -123,12 +120,10 @@ class Song(models.Model):
     duration = models.DurationField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     likes = models.ManyToManyField(User, blank=True, related_name='song_like')
-    instruments = models.ManyToManyField(Instrument, blank=True, related_name='song_instrument')
     num_of_reviews = models.CharField(max_length=4, null=True, blank=True, default='N/A')
     song_purpose = models.TextField(null=True, blank=True)
     song_feel = models.TextField(null=True, blank=True)
     additional_details = models.TextField(null=True, blank=True)
-    # song_end_fade = models.BooleanField(default=True)  # WOULD HAVE - option for it to end on the note or fade to silence
     use_as_testimonial = models.BooleanField(default=False)
     testimonial_text = models.TextField(null=True, blank=True)
     completed = models.BooleanField(default=False)
@@ -201,3 +196,34 @@ class Song(models.Model):
         return str(self.name)
 
     # method for overriding the price with a caluclation IF the song is a custom song (project_type.min_price + every time its updated)
+
+
+class SongInstrument(models.Model):
+    """
+    Inherits Django's models.Model and represents the SongInstrument table
+    in the database
+    Used for associating instruments with a particular song and allowing for
+    the song to have multiple of an instrument (e.g. 3 pianos => 3 different
+    piano tracks in the song)
+    Contains the fields:
+    instrument - foriegn key to the instrument model
+    song - foriegn key to the song model
+    quantity - positive integer representing the number of each instrument in
+    the song (e.g. for if there are 3 Electric Guitar tracks in the song)
+    """
+    instrument = models.ForeignKey(
+        Instrument,
+        on_delete=models.SET_NULL,
+        related_name="instruments_song",
+        null=True
+    )
+    song = models.ForeignKey(
+        Song,
+        on_delete=models.CASCADE,
+        related_name="song_instruments",
+        null=True
+    )
+    quantity = models.PositiveIntegerField(default=1, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.instrument}'
