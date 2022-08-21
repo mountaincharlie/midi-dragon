@@ -187,10 +187,10 @@
             <p class="m-0">
                 <strong>Instruments:</strong>
             </p>
-            {% if song.instruments.all %}
+            {% if instruments %}
             <ul class="p-0 m-0">
-                {% for instrument in song.instruments.all %}
-                <li>{{ instrument.display_name }}</li>
+                {% for instrument in instruments %}
+                <li>{{ instrument.instrument }} {% if instrument.quantity > 1 %} x {{ instrument.quantity }} {% endif %}</li>
                 {% endfor %}
             </ul>
             {% else %}
