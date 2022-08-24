@@ -55,7 +55,7 @@
                     <li><a class="dropdown-item midi-l-grey" href="#">Projects In Progress</a></li>
                     <li><a class="dropdown-item midi-l-grey" href="#">Completed Projects</a></li>
                     <li><a class="dropdown-item midi-l-grey" href="#">Order History</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">Logout</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'account_logout' %}">Logout</a></li>
                 </ul>
                 {% else %}
                 <div class="dropdown-toggle text-center pink-hover fs-5" type="button" id="logindropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,8 +63,8 @@
                     <p>Login</p>
                 </div>
                 <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="logindropdownbtn">
-                    <li><a class="dropdown-item midi-l-grey" href="#">Login</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">Register</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'account_login' %}">Login</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'account_signup' %}">Register</a></li>
                 </ul>
                 {% endif %}
             </li>
