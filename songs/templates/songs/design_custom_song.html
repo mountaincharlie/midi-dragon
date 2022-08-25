@@ -17,8 +17,7 @@
     <div class="row">
         <div class="col-12">
             <!-- enctype => for uploading image/video/audio files -->
-            <!-- JUST USE design_custom_song url as action? -->
-            <form id="design-custom-song-form" action="#" method="POST" enctype="multipart/form-data" class="form mb-2">
+            <form id="design-custom-song-form" method="POST" enctype="multipart/form-data" class="form mb-2">
                 {% csrf_token %}
                 <!--  custom_song_form | crispy  -->
                 <div class="row">
@@ -36,6 +35,13 @@
                         <div class="row">
                             <div class="col-12 mt-2 mb-4">
                                 {{ custom_song_form.project_type | as_crispy_field }}
+                                <p id="changing-project-type-msg" class="my-1 midi-warning small d-none m-0">Changing the Project Type will reset any changes in the; Duration Range, Instrument, Review Sessions and Price sections.</p>
+                            </div>
+                        </div>
+                        <div id="project-type-duration-range-container" class="row d-none">
+                            <div class="col-12 my-1">
+                                <h5 id="form-duration-range-label">Song Duration Range:</h5>
+                                <p id="project-type-duration-range-note" class="midi-teal logo-font"></p>
                             </div>
                         </div>
                         <div class="row">
@@ -59,12 +65,13 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <!-- # included-instruments-subheading => targetted by JS to remove d-none when a project type is chosen -->
-                                            <h6 id="included-instruments-subheading" class="small logo-font d-none">Included instruments:</h6>
-                                            <p class="logo-font my-1 midi-warning">(please select a project type)</p>
+                                            <h6 id="included-instruments-subheading" class="d-none">Included with project type:</h6>
+                                            <p class="select-a-project-msg logo-font my-1 midi-warning">(please select a project type)</p>
                                             <!-- where the required instrument selects is insterted into with JS -->
                                             <div id="included-instruments-container"></div>
-                                            <hr class="hr-90-teal my-2 d-none">
-                                            <h6 id="additional-instruments-subheading" class="small logo-font d-none">Additional instruments:</h6>
+
+                                            <hr class="hr-90-light my-3 d-none">
+                                            <h6 id="additional-instruments-subheading" class="d-none">Additional instruments:</h6>
                                             <!-- where the add instrument button is and any additional instrument selects with delete buttons are insterted with JS -->
                                             <div id="additional-instruments-container"></div>
                                         </div>
@@ -74,10 +81,10 @@
                             </div> 
                         </div>
 
-                        <!-- hidden instruments dropdown, add instrumetn and delete buttons -->
+                        <!-- hidden instruments dropdown, add instrument and delete buttons -->
                         <div id="hidden-instrument-elements" class="d-none">
                             <!-- select is d-none by default and JS is used to show the correct amount - on project_type selection AND on clicking the Add instrument button -->
-                            <select id="" class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font">
+                            <select class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font my-2">
                                 <!-- default selected -need to change with JS? -->
                                 <option value="reset" selected>Select an Instrument </option>
                                 {% for instrument in instruments %}
@@ -85,54 +92,70 @@
                                 {% endfor %}
                             </select>
 
-                            <!-- add instrument button - inserted by JS beneath the last select in #visible-instruments-dropdown -->
-                            <button id="add-song-instrument" class="btn btn-teal" type="button" aria-label="Add another instrument button">Add An Instrument</button>
-                            <!-- insert amount by passing into the context in the view from settings.py -->
-                            <span class="ps-2 logo-font">+ £4.99</span>
+                            <!-- instrument select which is in container with a delete button (for additional instruments) -->
+                            <div class="additional-instruments-select-container">
+                                <select class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font my-2">
+                                    <!-- default selected -need to change with JS? -->
+                                    <option value="reset" selected>Select an Instrument </option>
+                                    {% for instrument in instruments %}
+                                    <option value="{{ instrument }}" class="midi-l-grey">{{ instrument }}</option>
+                                    {% endfor %}
+                                </select>
+                                <!-- delete btn added only to additional -->
+                                <button class="delete-instrument-select-button btn btn-midi-warning my-2" type="button" aria-label="Delete insturment button">Delete Instrument</button>
+                            </div>
 
-                            <!-- delete btn added only to additional -->
-                            <button id="new-delete-song-instrument-button" class="btn btn-midi-warning my-2" type="button" aria-label="Delete insturment button">Delete Instrument</button>
-                        </div>
-
-                        <!-- hidden song_instrument_formset used/populated by JS -->
-                        <div id="new-instrument-form" class="visually-hidden">
-                            {{ song_instrument_formset.management_form }}
-                            {{ song_instrument_formset.empty_form |crispy }}
                             
+
+                            <!-- add instrument button - inserted by JS beneath the last select in #visible-instruments-dropdown -->
+                            <div id="add-song-instrument-container">
+                                <button id="add-song-instrument" class="btn btn-teal" type="button" aria-label="Add another instrument button">Add An Instrument</button>
+                                <!-- insert amount by passing into the context in the view from settings.py -->
+                                <span class="ps-2 logo-font">+ £{{ additional_instrument_price }}</span>
+                            </div>
+                            
+
                         </div>
 
-                        <!-- hidden formsets being populated by the JS -->
+                        <!-- hidden formset management -->
+                        <div>
+                            <!-- formset management -->
+                            {{ song_instrument_formset.management_form }}
+                        </div>
+
+                        <!-- storing created instrument formsets from the JS -->
+                        <div id="instrument-formsets-container" class="visually-hidden"></div>
+
+                        <!-- empty formset useed by JS to create the instrument formsets stored above -->
+                        <div id="new-instrument-form" class="visually-hidden">
+                            <!-- the formset empty form to be cloned -->
+                            {{ song_instrument_formset.empty_form |crispy }}
+                        </div>
                         
-                        <!-- ----------- instruments section -------------- -->
+                        <!-- ----------- end of instruments section -------- -->
 
                         <div class="row">
                             <div class="col-12 mt-2 mb-4">
                                 {{ custom_song_form.num_of_reviews | as_crispy_field }}
 
                                 <!-- write the number of review sessions with JS here to display to user -->
-                                <div id="visible-num-of-reviews" class="logo-font my-1 midi-warning">
-                                    (please select a project type)
+                                <div id="visible-num-of-reviews" class="logo-font my-1">
+                                    
+                                    <p class="select-a-project-msg logo-font my-1 midi-warning">(please select a project type)</p>
+                                    <!-- where the number of review will be written in -->
+                                    <div id="num-of-reviews-container" class="d-none midi-teal fs-2 fw-bold">...</div>
                                 </div>
-                                <button id="minus_num_of_reviews" class="btn btn-midi-warning pink-hover px-2 py-1" aria-label="Minus one from the current number of reviews"><i class="fa-solid fa-minus"></i></button>
-                                <button id="add_num_of_reviews" class="btn btn-teal pink-hover px-2 py-1" aria-label="Add one to the current number of reviews"><i class="fa-solid fa-plus"></i></button>
-                                <!-- insert amount by passing into the context in the view from settings.py -->
-                                <span class="ps-2 logo-font">+ £5.99</span>
+                                
+                                <div id="review-sessions-buttons" class="d-none">
+                                    <button id="subtract-num-of-reviews" class="btn btn-midi-warning pink-hover px-2 py-1" aria-label="Minus one from the current number of reviews"><i class="fa-solid fa-minus"></i></button>
+                                    <button id="add-num-of-reviews" class="btn btn-teal pink-hover px-2 py-1" aria-label="Add one to the current number of reviews"><i class="fa-solid fa-plus"></i></button>
+                                    <!-- insert amount by passing into the context in the view from settings.py -->
+                                    <span class="ps-2 logo-font">+ £{{ additional_review_session_price }}</span>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-12 mt-2 mb-4">
-                                {{ custom_song_form.use_as_testimonial | as_crispy_field }}
-                            </div>
-                        </div>
-                        <!-- only visible if the above box ticked -->
-                        <div class="row">
-                            <div class="col-12 mt-2 mb-4">
-                                {{ custom_song_form.testimonial_text | as_crispy_field }}
-                            </div>
-                        </div>
-                        <hr class="midi-pink">
                     </div>
+
                     <div class="col-12 col-md-6">
                         <div class="row">
                             <div class="col-12 mt-2 mb-4">
@@ -149,21 +172,595 @@
                                 {{ custom_song_form.additional_details | as_crispy_field }}
                             </div>
                         </div>
+
                         <!-- note about you having creative control if insufficent details provided -->
-                        <!-- cost display -->
-                        <hr class="midi-pink">
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                <p class="midi-warning small m-0">
+                                    If you purchase a Custom Song without specifying how you want the song to feel or be structured, then you agree to give midiDRAGON creative control of the song's feel and structure.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- use as testimonial checkbox -->
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.use_as_testimonial | as_crispy_field }}
+                                <p class="midi-l-grey small m-0">
+                                    Allows your song to be visible on the <strong>Testimonials</strong> page once complete. Lets other site users appreciate your project and can be used as an opportunity to <strong>promote your content</strong>. 
+                                </p>
+                            </div>
+                        </div>
+                        <!-- only visible if the above box ticked -->
+                        <div id="testimonial-text-container" class="row d-none">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.testimonial_text | as_crispy_field }}
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- cost display -->
+                <div class="row text-end">
+                    <div class="col-12 mt-2 mb-4 text-end">
+                        <h5 id="display-price-label" class="d-inline me-2">Price estimate:</h5>
+                        <!-- replace this div's innerText with the price -->
+                        <p id="display-price-container" class="d-inline logo-font midi-teal fs-2 fw-bold">...</p>
+                        <p class="select-a-project-msg my-1 midi-warning">(please select a project type)</p>
+                        <p id="price-calculation-note" class="m-0 midi-warning small d-none">
+                            Based on the selections made. Final price calculated on saving the form.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- save and delete buttons -->
                 <div class="row basic-font">
                     <div class="col-12 text-end">
+                        <!-- cancel should send user to their profile -->
                         <a role="button" href="#" class="btn btn-l-grey me-2">Cancel</a>
-                        <button class="btn btn-teal pink-hover me-2" type="submit" aria-label="Confirm save custom song design button">Save</button>
+                        <button class="btn btn-teal pink-hover" type="submit" aria-label="Confirm save custom song design button">Save</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- hidden section for the JS to retrieve details about project_types -->
+    <div id="project-type-details" class="d-none">
+        {% for type in project_types %}
+        <div id="project-type-{{ type.name }}">{{ type.name }}</div>
+        <div id="song-length-range-{{ type.name }}">{{ type.song_length_range }}</div>
+        <div id="num-included-instruments-{{ type.name }}">{{ type.num_included_instruments }}</div>
+        <div id="num-included-reviews-{{ type.name }}">{{ type.num_included_reviews }}</div>
+        <div id="min-price-{{ type.name }}">{{ type.min_price }}</div>
+        {% endfor %}
+        <div id="max-num-review-sessions">{{ max_num_review_sessions }}</div>
+        <div id="additional-instrument-price">{{ additional_instrument_price }}</div>
+        <div id="additional-review-session-price">{{ additional_review_session_price }}</div>
+    </div>
+
 </div>
+{% endblock %}
+
+{% block postload_js %}
+    {{ block.super }}
+ 
+    <!-- PUT IN EXTERNAL JS FILE -->
+    <!-- JS for handling the instruments formsets, number of review sessions and the on-screen price calculation -->
+    <script type="text/javascript">
+ 
+        // credit for techniques you used in your P4 project?
+
+        // ---- GLOBAL VARS
+
+        // getting the 'song_instruments-TOTAL_FORMS' div so that I can update this number in the updateInstrumentFormsets(function)
+        let totalSelectedInstruments = document.getElementById('id_song_instruments-TOTAL_FORMS');
+
+        // gets the + and - buttons for review sessions section
+        let addReviewSessionButton = document.getElementById('add-num-of-reviews');
+        let subtractReviewSessionButton = document.getElementById('subtract-num-of-reviews');
+
+        // gets the max-num-review-sessions variable passed from view context
+        let maxNumReviewSessions = document.getElementById('max-num-review-sessions').innerText;
+
+        // gets the additional-instrument-price variable passed from view context
+        let additionalInstrumentPrice = document.getElementById('additional-instrument-price').innerText;
+
+        // gets the additional-review-session-price variable passed from view context
+        let additionalReviewSessionPrice = document.getElementById('additional-review-session-price').innerText;
+
+        // gets the num-of-reviews-container
+        let numOfReviewsContainer = document.getElementById('num-of-reviews-container');
+
+        // gets the form input for id_num_of_reviews
+        let numOfReviewsInput = document.getElementById('id_num_of_reviews');
+
+        // gets the select for choosing project type
+        let projectTypeDropdown = document.getElementById('id_project_type');
+
+        // gets the display-price-container
+        let displayPriceContainer = document.getElementById('display-price-container');
+
+        // gets the add-song-instrument-container
+        let addInstrumentButtonContainer = document.getElementById('add-song-instrument-container');
+
+        // gets the additional-instruments-container
+        let additionalInstrumentsContainer = document.getElementById('additional-instruments-container');
+
+        // gets the additional-instruments-select-container by class from #hidden-instrument-elements
+        let additionalInstrumentsSelectContainer = document.getElementById('hidden-instrument-elements').getElementsByClassName('additional-instruments-select-container')[0];
+
+        // gets all the instruments-select elements
+        let instrumentsSelects = document.getElementsByClassName('instruments-select');
+
+        // gets div_id_use_as_testimonial
+        let useAsTestimonialCheckboxContainer = document.getElementById('div_id_use_as_testimonial');
+            
+        // gets the div_id_use_as_testimonial checkbox
+        let useAsTestimonialCheckbox = useAsTestimonialCheckboxContainer.childNodes[1];
+
+        // gets the instrument-formsets-container 
+        let instrumentFormsetContainer = document.getElementById('instrument-formsets-container');
+
+        // gets the empty formset new-instrument-form
+        let newEmptyInstrumentForm = document.getElementById('new-instrument-form')
+
+
+        // ---- FUNCTION CALLS AND EVENT LISTENERS ON DOM LOAD
+        document.addEventListener('DOMContentLoaded', function(){
+
+            // adding event listener to + review session button
+            addReviewSessionButton.addEventListener('click', addReviewSession);
+
+            // adding event listener to - review session button
+            subtractReviewSessionButton.addEventListener('click', subtractReviewSession);
+
+            // change event listener on project_type
+            projectTypeDropdown.addEventListener('change', projectTypeChosen);
+            // console.log('projectTypeDropdown',projectTypeDropdown)
+
+            // click event listener on the Add instrument buttons
+            addInstrumentButtonContainer.childNodes[1].addEventListener('click', addInstrument);
+
+            // change event listener on the instrument dropdown
+            // when any value is chosen => checks the hidden formset management [a formset management update function used by both the dropdown and the delete button] and compares all of the displayed dropdown values with the existing formsets, for each displayed instrument, if there isnt a formset for it, it creates one, if there is then it updates the quantity and if there is a formset existing for an instrument that isnt displayed anymore then it deletes that formset
+
+
+            // click event listener on the Delete instrument buttons
+            // (only available on additional instruments)
+            // when clicked => removes its assocaited instrument dropdown (and the delete button itself) and then checks the hidden formset management [a formset management update function used by both the dropdown and the delete button] and compares all of the displayed dropdown values with the existing formsets, for each displayed instrument, if there isnt a formset for it, it creates one, if there is then it updates the quantity and if there is a formset existing for an instrument that isnt displayed anymore then it deletes that formset
+            
+            // event listener on use-as-testimonial checkbox
+            useAsTestimonialCheckbox.addEventListener('change', toggleTestimonialTextContainer)
+
+        });
+
+
+        /**
+         * @name projectTypeChosen
+         * @description 
+        */
+        // if set to nothing/empty => add d-none class to all the buttons and selects and remove d-none class from the 2 notes about needing to choose a project_type. Also resets the displayed price and all of the background formsets [just reload page? - TRY]
+        // if #id_project_type innerText == 'Mini'/'Regular'/'Pro' => un-hide the note about changing the project_type will reset the instrument/reviews/price sections, and apply d-none class to the 2 notes about choosing projeect_type, display min_num_reviews and the +/- buttons with the minus button DISABLED, remove d-none from the included/additional instruments subheadings and hr, insert into #included-instruments-container the min_num_instruments amount of instrument dropdowns and remove the d-none from the Add Instrument button in the additional instruments section. Also sets the displayed price as the min_price (from the project_type)
+        function projectTypeChosen(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+
+            // getting the index of the selected project type
+            let selectedProjectTypeIndex = ev.srcElement.options.selectedIndex;
+            let selectedProjectTypeText = ev.srcElement[selectedProjectTypeIndex].innerText;
+
+            // -------- getting all the elements which need d-none adding/removing
+
+            // gets all of the select-a-project-msg notes
+            let selectAProjectMessages = document.getElementsByClassName('select-a-project-msg');
+            
+            // gets the changing-project-type-msg note
+            let changingProjectTypeMsg = document.getElementById('changing-project-type-msg');
+
+            // gets the price-calculation-note note
+            let priceCalulationNote = document.getElementById('price-calculation-note');
+            
+            // gets the included-instruments-subheading heading
+            let includedInstrumentsSubheading = document.getElementById('included-instruments-subheading');
+
+            // gets the additional-instruments-subheading heading
+            let additionalInstrumentsSubheading = document.getElementById('additional-instruments-subheading');
+
+            // gets the visible-instruments-dropdown hr
+            let visibleInstrumentsDropdownHr = document.getElementById('visible-instruments-dropdown').getElementsByClassName('hr-90-light')[0];
+            // console.log(visibleInstrumentsDropdownHr)
+
+            // gets the review-sessions-buttons
+            let reviewSessionsButtons = document.getElementById('review-sessions-buttons');
+
+            // gets the included-instruments-container
+            let includedInstrumentsContainer = document.getElementById('included-instruments-container');
+
+            // gets project-type-duration-range-container
+            let projectTypeDurationRangeContainer = document.getElementById('project-type-duration-range-container');
+
+            // gets the project-type-duration-range-note
+            let projectTypeDurationRangeNote = document.getElementById('project-type-duration-range-note');
+
+            // clearing instrumentFormsetContainer's innerHTML since the project type has changed
+            instrumentFormsetContainer.innerHTML = '';
+
+            // resetting totalForms value
+            totalSelectedInstruments.value = 0;
+
+
+            // if ev.srcElement.options.selectedIndex = 0 => reset
+            if (selectedProjectTypeIndex == 0){
+                // ------ handling the d-none classes
+
+                // rmv d-none from select-a-project-msgs
+                for (const message of selectAProjectMessages){
+                    message.classList.remove('d-none');
+                }
+                // add d-none to changing-project-type-msg
+                changingProjectTypeMsg.classList.add('d-none');
+                // add d-none to included-instruments-subheading
+                includedInstrumentsSubheading.classList.add('d-none');
+                // add d-none to additional-instruments-subheading
+                additionalInstrumentsSubheading.classList.add('d-none');
+                // add d-none to the visible-instruments-dropdown hr
+                visibleInstrumentsDropdownHr.classList.add('d-none');
+                // add d-none to the num-of-reviews-container
+                numOfReviewsContainer.classList.add('d-none');
+                // add d-none to the review-sessions-buttons
+                reviewSessionsButtons.classList.add('d-none');
+                // add d-none to the price-calculation-note
+                priceCalulationNote.classList.add('d-none');
+                // add d-none to the project-type-duration-range-container
+                projectTypeDurationRangeContainer.classList.add('d-none');
+                // resetting the projectTypeDurationRangeNote innerText
+                projectTypeDurationRangeNote.innerText = '';
+
+                // setting blank num of reviews for displayed and the input
+                numOfReviewsContainer.innerText = '';
+                numOfReviewsInput.setAttribute('value', 'N/A')
+
+                // ------ inserting price
+                displayPriceContainer.innerText = '...';
+
+
+                // ------ clearning the included instruments container
+                includedInstrumentsContainer.innerHTML = '';
+                
+                // ------ clearing the additional instruments container
+                additionalInstrumentsContainer.innerHTML = '';
+
+            }
+            // if any other project type selected
+            else {
+                // ------ handling the d-none classes
+
+                // add d-none to select-a-project-msgs
+                for (const message of selectAProjectMessages){
+                    message.classList.add('d-none');
+                }
+                // rmv d-none from changing-project-type-msg
+                changingProjectTypeMsg.classList.remove('d-none');
+                // rmv d-none from included-instruments-subheading
+                includedInstrumentsSubheading.classList.remove('d-none');
+                // rmv d-none from additional-instruments-subheading
+                additionalInstrumentsSubheading.classList.remove('d-none');
+                // rmv d-none from the visible-instruments-dropdown hr
+                visibleInstrumentsDropdownHr.classList.remove('d-none');
+                // rmv d-none from the num-of-reviews-container
+                numOfReviewsContainer.classList.remove('d-none');
+                // rmv d-none from the review-sessions-buttons
+                reviewSessionsButtons.classList.remove('d-none');
+                // rmv d-none from the price-calculation-note
+                priceCalulationNote.classList.remove('d-none');
+
+                // gets duration range for p type
+                let projectDurationRange = document.getElementById(`song-length-range-${selectedProjectTypeText}`).innerText;
+
+                // inserting the duration range into project-type-duration-range-note
+                projectTypeDurationRangeNote.innerText = projectDurationRange;
+
+                // rmv d-none from the project-type-duration-range-container
+                projectTypeDurationRangeContainer.classList.remove('d-none');
+
+
+                // ------ handling the number of review sessions
+                let projectMinNumOfReviews = document.getElementById(`num-included-reviews-${selectedProjectTypeText}`).innerText;
+                numOfReviewsContainer.innerText = projectMinNumOfReviews;
+                numOfReviewsInput.setAttribute('value', parseInt(projectMinNumOfReviews));
+
+                // calling the check buttons function
+                checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions);
+
+
+                // ------ inserting price
+                let projectMinPrice = document.getElementById(`min-price-${selectedProjectTypeText}`).innerText;
+                displayPriceContainer.innerText = `£ ${projectMinPrice}`;
+
+                
+                // ------ clearing the included instruments container
+                includedInstrumentsContainer.innerHTML = '';
+
+                // gets the number of included instruments
+                let projectNumOfInstruments = document.getElementById(`num-included-instruments-${selectedProjectTypeText}`).innerText;
+                // console.log('projectNumOfInstruments', projectNumOfInstruments);
+
+                // ------ inserting copies of the instrument dropdowns into the included instrumnets container
+                for (var i = 0; i < projectNumOfInstruments; i++){
+                    // creates cloneNode of the hidden instruments-select
+                    let newInstrumentSelect = document.getElementById('hidden-instrument-elements').getElementsByClassName('instruments-select')[0].cloneNode(true);
+                    // appends it as a child
+                    includedInstrumentsContainer.appendChild(newInstrumentSelect);
+                }
+
+                // ------ clearing the additional instruments container
+                additionalInstrumentsContainer.innerHTML = '';
+
+                // clones the addInstrumentButton button
+                addInstrumentButtonContainer.cloneNode(true);
+                // inserts the button into the additionalInstrumentsContainer (ALWAYS last child)
+                additionalInstrumentsContainer.appendChild(addInstrumentButtonContainer);
+
+                // gets all the instrumentsSelects elements
+
+                // applies the change event listener to all the instrumentsSelects
+                for (let instrument of instrumentsSelects){
+                    instrument.addEventListener('change', updateInstrumentFormsets);
+                }
+
+            };
+        };
+
+
+        // updateInstrumentFormsets
+        /**
+         * @name updateInstrumentFormsets
+         * @description 
+        */
+        function updateInstrumentFormsets(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+            // clearing instrumentFormsetContainer's innerHTML
+            instrumentFormsetContainer.innerHTML = '';
+
+            // creates empty array to append all valid instrument selections
+            let currentInstrumentSelection = [];
+
+            // adds all selected instruments to currentInstrumentSelection
+            for(let selectElement of instrumentsSelects){
+                let selectValue = selectElement[selectElement.options.selectedIndex].value;
+                if (selectValue != 'reset'){
+                    currentInstrumentSelection.push(selectValue);
+                }
+            }
+
+            let numUniqueInstrumentSelection = new Set(currentInstrumentSelection).size;
+
+            // create dictionary
+            let currentInstrumentSelectionDict = {};
+            for (let instrument of currentInstrumentSelection){
+                // console.log('STARTING LOOP:', instrument);
+
+                if (instrument in currentInstrumentSelectionDict){
+                    // adds 1 to the value
+                    currentInstrumentSelectionDict[instrument] = currentInstrumentSelectionDict[instrument] + 1;
+                } else {
+                    // creates the key with value = 1
+                    currentInstrumentSelectionDict[instrument] = 1;
+                }
+            }
+            console.log('INSTRUMENT DICT', currentInstrumentSelectionDict);
+
+            // ---- create formsets for all unique and update quantity for duplicates [CREDIT - based on some logic i implemented in my P4 project]
+
+            // resetting the counter for the instrument ids
+            let instrumentId = 0;
+
+            // for loop iterating through the dictionary of instruments and their quantities
+            for (const [instrument, quantity] of Object.entries(currentInstrumentSelectionDict)){
+
+                let instrumentFormsetId = `instrument-form-${instrumentId}`; 
+                
+                // gets a clone of the hidden new-instrument-form
+                const clonedNewEmptyInstrumentForm = newEmptyInstrumentForm.cloneNode(true);
+                    // let newEmptyInstrumentForm = document.getElementById('new-instrument-form').cloneNode(true);
+                    // applies its id
+                    clonedNewEmptyInstrumentForm.setAttribute('id', instrumentFormsetId);
+                    // appends it to the instrumentFormsetContainer as a child
+                    instrumentFormsetContainer.appendChild(clonedNewEmptyInstrumentForm);
+
+                    // Uses a regular expression to change __prefix__ to the instrument name so that the name and id for each form input will be related and unique as more are added
+                    const regexp = new RegExp('__prefix__', 'g');clonedNewEmptyInstrumentForm.innerHTML = clonedNewEmptyInstrumentForm.innerHTML.replace(regexp, instrumentId);
+
+                    // gets the select and sets its value
+                    let newEmptyInstrumentFormSelect = document.getElementById(`id_song_instruments-${instrumentId}-instrument`);
+                    
+                    // loops through all options and selects the right one
+                    for (i = 0; i < newEmptyInstrumentFormSelect.length; i++){
+                        let optionInnerText = newEmptyInstrumentFormSelect[i].innerText;
+                        newEmptyInstrumentFormSelect[i].removeAttribute('selected');
+
+                        if (optionInnerText == instrument){
+                            newEmptyInstrumentFormSelect[i].setAttribute('selected', true);
+                        }
+                    }
+                    // checking the correct option is now selected
+                    // console.log(newEmptyInstrumentFormSelect.options[newEmptyInstrumentFormSelect.selectedIndex]);
+
+                    // getting the quantity input
+                    let existingInstrumentFormQuantityInput = document.getElementById(`id_song_instruments-${instrumentId}-quantity`);
+
+                    // sets quantity from the dict value
+                    existingInstrumentFormQuantityInput.setAttribute('value', quantity);
+                    
+                
+                // adds 1 to counter for setting the instruments id number
+                instrumentId = parseInt(instrumentId) + 1
+            }
+            // update value of totalSelectedInstruments by getting the number of unique values
+            totalSelectedInstruments.setAttribute('value', numUniqueInstrumentSelection);
+            // checking total forms value is updated
+            // console.log('totalSelectedInstruments', totalSelectedInstruments);
+        };
+
+
+
+        /**
+         * @name addInstrument
+         * @description 
+        */
+        function addInstrument(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+            // creates cloneNode of the additional-instruments-select-container
+            let newInstrumentSelect = additionalInstrumentsSelectContainer.cloneNode(true);
+
+            // appends it as a child
+            additionalInstrumentsContainer.insertBefore(newInstrumentSelect, addInstrumentButtonContainer);
+
+            // gets all of the delete-instrument-select-button buttons
+            let deleteInstrumentsSelectButtons = document.getElementsByClassName('delete-instrument-select-button');
+
+            // applies a click event listner to them all
+            for (let button of deleteInstrumentsSelectButtons){
+                button.addEventListener('click', deleteAdditionalInstrument);
+            }
+
+            // applies the change event listener to all the instrumentsSelects
+            for (let instrument of instrumentsSelects){
+                instrument.addEventListener('change', updateInstrumentFormsets);
+            }
+
+            // increases the displayed price
+            displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) + parseFloat(additionalInstrumentPrice)).toFixed(2)}`;
+        };
+
+
+        /**
+         * @name deleteAdditionalInstrument
+         * @description 
+        */
+        function deleteAdditionalInstrument(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+            // removes its parent ('additional-instruments-select-container')
+            ev.srcElement.parentElement.remove();
+
+            // decreases the displayed price
+            displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) - parseFloat(additionalInstrumentPrice)).toFixed(2)}`;
+
+            // calls function to update the formsets
+            updateInstrumentFormsets()
+        };
+
+
+        /**
+         * @name addReviewSession
+         * @description 
+        */
+        function addReviewSession(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+            // increasing the number of reviews (displayed and the input)
+            numOfReviewsContainer.innerText = parseInt(numOfReviewsContainer.innerText)+1;
+            numOfReviewsInput.setAttribute('value', parseInt(numOfReviewsInput.value)+1);
+
+            // increases the displayed price
+            displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) + parseFloat(additionalReviewSessionPrice)).toFixed(2)}`;
+
+            // checking which project was chosen and gettings its num_review_sessions
+            let selectedProjectTypeText = projectTypeDropdown[projectTypeDropdown.options.selectedIndex].innerText;
+            let projectMinNumOfReviews = document.getElementById(`num-included-reviews-${selectedProjectTypeText}`).innerText;
+
+            // calling the checkReviewSessionButtons function
+            checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions)
+        };
+
+
+        /**
+         * @name subtractReviewSession
+         * @description 
+        */
+        function subtractReviewSession(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+            // increasing the number of reviews (displayed and the input)
+            numOfReviewsContainer.innerText = parseInt(numOfReviewsContainer.innerText)-1;
+            numOfReviewsInput.setAttribute('value', parseInt(numOfReviewsInput.value)-1);
+
+            // decreases the displayed price
+            displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) - parseFloat(additionalReviewSessionPrice)).toFixed(2)}`;
+
+            // checking which project was chosen and gettings its num_review_sessions
+            let selectedProjectTypeText = projectTypeDropdown[projectTypeDropdown.options.selectedIndex].innerText;
+            let projectMinNumOfReviews = document.getElementById(`num-included-reviews-${selectedProjectTypeText}`).innerText;
+
+            // calling the checkReviewSessionButtons function
+            checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions)
+        };
+
+
+        /**
+         * @name checkReviewSessionButtons
+         * @description 
+        */
+        function checkReviewSessionButtons(currentNumReviewSessions, projectMinNumOfReviews, maxNumReviewSessions){
+
+            // if the current number of review sessions is equal to the minimum then the - button is disabled, else its enabled
+            if (numOfReviewsContainer.innerText == projectMinNumOfReviews){
+                subtractReviewSessionButton.disabled = true;
+                subtractReviewSessionButton.classList.remove('btn-midi-warning');
+                subtractReviewSessionButton.classList.add('btn-l-grey');
+            } else {
+                subtractReviewSessionButton.disabled = false;
+                subtractReviewSessionButton.classList.add('btn-midi-warning');
+                subtractReviewSessionButton.classList.remove('btn-l-grey');
+            }
+
+            // if the current number of review sessions is equal to the maximum then the + button is disabled, else its enabled
+            if (numOfReviewsContainer.innerText == maxNumReviewSessions){
+                addReviewSessionButton.disabled = true;
+                addReviewSessionButton.classList.remove('btn-teal');
+                addReviewSessionButton.classList.add('btn-l-grey');
+            } else {
+                addReviewSessionButton.disabled = false;
+                addReviewSessionButton.classList.add('btn-teal');
+                addReviewSessionButton.classList.remove('btn-l-grey');
+            }
+        }
+
+
+        /**
+         * @name toggleTestimonialTextContainer
+         * @description 
+        */
+        function toggleTestimonialTextContainer(ev){
+            if (ev){
+                ev.preventDefault();
+            }
+
+            // getting the testimonial-text-container
+            let testimonialTextContainer = document.getElementById('testimonial-text-container');
+
+            // checks if the checkbox is checked
+            if(useAsTestimonialCheckbox.checked){
+                testimonialTextContainer.classList.remove('d-none');
+            } else {
+                testimonialTextContainer.classList.add('d-none');
+            }
+
+            // useAsTestimonialCheckbox.classList.add('d-none')
+            // console.log('useAsTestimonialCheckbox', useAsTestimonialCheckbox.checked)
+
+        };
+       
+    </script>
 {% endblock %}
 
