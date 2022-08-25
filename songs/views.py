@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views import generic, View
 from django.db.models import Q
 from django.db.models.functions import Lower
-from .models import Song, Genre, SongInstrument
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.http import HttpResponse
-import mimetypes
-from .forms import DesignCustomSongForm
+from django.contrib.auth.models import User
+from .models import Song, Genre, SongInstrument, Instrument, ProjectType
+from .forms import DesignCustomSongForm, AddSongInstrumentFormSet
 
 
 class SongsList(generic.ListView):
@@ -192,7 +192,7 @@ class DownloadSong(View):
         Creates the filename which is the string of its audio_file name.
         Sets the file path which is the filename in the media folder.
         Opens the file for reading in binary (rb).
-        Uses mimetypes to guess the mime type for the file (will be .mp3 or .wav)
+        FINISH...
         """
         song = get_object_or_404(Song, slug=self.kwargs['slug'])
         filename = str(song.audio_file)
@@ -201,7 +201,6 @@ class DownloadSong(View):
 
         # logic for opening the file and allowing it to be downloaded from adapted from (CREDIT - https://djangoadventures.com/how-to-create-file-download-links-in-django/)
         read_file = open(file_path, 'rb')
-        # print('mimetype:', mime_type)
         response = HttpResponse(read_file, content_type=mime_type)
         response['Content-Disposition'] = f"attachment; filename={filename}"
         return response
@@ -239,7 +238,6 @@ class TestimonialsList(generic.ListView):
         return render(request, "songs/testimonials.html", context)
 
 
-# NEEDS to be 'login' decorator protected
 class DesignCustomSong(View):
     """
     Class based view inheriting Django's View
@@ -253,15 +251,70 @@ class DesignCustomSong(View):
         """
         get method for getting the forms to be displayed to the user.
         -gets the
+        FINISH ...
 
         """
-
         custom_song_form = DesignCustomSongForm()
+        song_instrument_formset = AddSongInstrumentFormSet()
+
+        # gets all instruments for the dropdown selection displayed to users
+        instruments = Instrument.objects.all()
+
+        # gets all the project_types to handle user's selection in the form
+        project_types = ProjectType.objects.all()
+
+        # gets the MAX_NUM_REVIEW_SESSIONS var from settings.py
+        max_num_review_sessions = settings.MAX_NUM_REVIEW_SESSIONS
+        # gets the ADDITIONAL_INSTRUMENT_PRICE var from settings.py
+        additional_instrument_price = settings.ADDITIONAL_INSTRUMENT_PRICE
+        # gets the ADDITIONAL_REVIEW_SESSION_PRICE var from settings.py
+        additional_review_session_price = settings.ADDITIONAL_REVIEW_SESSION_PRICE
 
         context = {
             'custom_song_form': custom_song_form,
+            'song_instrument_formset': song_instrument_formset,
+            'instruments': instruments,
+            'project_types': project_types,
+            'max_num_review_sessions': max_num_review_sessions,
+            'additional_instrument_price': additional_instrument_price,
+            'additional_review_session_price': additional_review_session_price,
         }
 
         return render(request, 'songs/design_custom_song.html', context)
 
-   
+    def post(self, request, *args, **kwargs):
+        """
+        post method for when users click on the save button, which
+        submits the design custom song forms.
+        -gets 
+        """
+
+        custom_song_form = DesignCustomSongForm(request.POST, request.FILES)
+
+        if custom_song_form.is_valid():
+            song = custom_song_form.save(commit=False)
+            song.user = User.objects.get(id=self.request.user.id)
+            song.save()
+
+            instruments_formset = AddSongInstrumentFormSet(
+                request.POST, instance=song
+            )
+
+            if instruments_formset.is_valid():
+                instruments_formset.save()
+
+            # messages.success(
+            #     request,
+            #     (f'{song.name} was successfully created!')
+            # )
+            return redirect(song.get_absolute_url())
+
+        else:
+            # messages.error(
+            #     request,
+            #     ('Please ensure all the required form fields have been correctly filled in.')
+            # )
+            context = {
+                'custom_song_form': custom_song_form,
+            }
+            return render(request, 'songs/design_custom_song.html', context)
