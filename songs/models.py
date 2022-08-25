@@ -2,9 +2,11 @@ import random
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-# from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.shortcuts import reverse
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Genre(models.Model):
@@ -24,9 +26,6 @@ class Genre(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
-
-    def get_display_name(self):
         return self.display_name
 
 
@@ -117,8 +116,8 @@ class Song(models.Model):
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     # audio_clip = models.FileField(null=True, blank=True)  # WOULD HAVE - for users to provide their own audio clips
     bpm = models.PositiveIntegerField(null=True, blank=True, validators=[MinValueValidator(35), MaxValueValidator(155)])
-    duration = models.DurationField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    duration = models.DurationField(null=True, blank=True)
+    price = models.DecimalField(null=True, blank=True, max_digits=6, decimal_places=2)
     likes = models.ManyToManyField(User, blank=True, related_name='song_like')
     num_of_reviews = models.CharField(max_length=4, null=True, blank=True, default='N/A')
     song_purpose = models.TextField(null=True, blank=True)
@@ -175,10 +174,13 @@ class Song(models.Model):
         (For custom songs, the song doesn't need to be public for the user
         of that song or the admin to view/edit its details)
         Calls the save method again.
+        -FINISH
         """
 
-        if not self.slug or not self.slug.split('-')[:-1] == self.name.split(' '):
+        if not self.slug or not self.slug.split('-')[:-1] == self.name.lower().split(' '):
+            print('setting the slug')
             self.slug = self.unique_slug_generator()
+            print('slug = ', self.slug)
 
         if not self.audio_file:
             self.public = False
@@ -186,6 +188,7 @@ class Song(models.Model):
         if not self.image:
             self.image = 'placeholder.jpg'
         super().save(*agrs, **kwargs)
+
 
     def get_absolute_url(self):
         """ method for returning the reverse of the song's absolute url """
@@ -226,4 +229,64 @@ class SongInstrument(models.Model):
     quantity = models.PositiveIntegerField(default=1, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.instrument}'
+        return f'song_instrument_{self.instrument}'
+
+
+# post_save signal for Song model price field when SongInstrument is saved
+@receiver(post_save, sender=SongInstrument)
+def custom_song_price_calculation(sender, instance, **kwargs):
+    """
+    Method
+    """
+    # getting the song from the SongInstrument instance
+    instance_song = instance.song.pk
+    # print('SONG pk:', instance_song)
+    # all_songs = Song.objects.all()
+    # print('ALL SONG OBJECTS', all_songs)
+    # song = all_songs.filter(pk=instance_song)[0]
+    song = Song.objects.get(pk=instance_song)
+    # print('SONG:', song)
+
+    if not song.user.is_superuser:  # OR if self.user.is_superuser == False
+        print('CALCULATING CUSTOM SONG PRICE:')
+
+        # gets the song's project type's; price, number of included reviews and number of includeed instruments
+        project_type = song.project_type
+
+        project_type_price = project_type.min_price
+        project_type_num_included_reviews = project_type.num_included_reviews
+        project_type_num_included_instruments = project_type.num_included_instruments
+
+        # gets the number of reviews and instruments that the custom song has
+        num_of_reviews = song.num_of_reviews
+
+
+        # get all the objects
+        all_song_instrument_objects = SongInstrument.objects.all()
+        num_of_instruments = 0
+        for song_instrument in all_song_instrument_objects:
+            if song_instrument.song == song:
+                quantity = int(song_instrument.quantity)
+                num_of_instruments += 1 * quantity
+                # print('num_of_instruments', num_of_instruments)
+
+        # calcualtes the number of extra reviews and instruments the user has selected
+        num_extra_reviews = int(num_of_reviews) - int(project_type_num_included_reviews)
+        num_extra_instruments = int(num_of_instruments) - int(project_type_num_included_instruments)
+
+        # if the extra numbers are greater than 0 then the extra price is calculated, else they're set to 0 (since users can have less instruments if they want)
+        if num_extra_reviews > 0:
+            extra_reviews_price = int(num_extra_reviews) * settings.ADDITIONAL_REVIEW_SESSION_PRICE
+        else:
+            extra_reviews_price = 0
+
+        if num_extra_instruments > 0:
+            extra_instruments_price = int(num_extra_instruments) * settings.ADDITIONAL_INSTRUMENT_PRICE
+        else:
+            extra_instruments_price = 0
+
+        custom_song_price = float(project_type_price) + float(extra_instruments_price) + float(extra_reviews_price)
+
+        song.price = custom_song_price
+        print('price set')
+        song.save()
