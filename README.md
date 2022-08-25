@@ -299,7 +299,7 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 ### Final Database Schema (only if any changes made from initial)
 * Changes
   * screenshots
-  * (add quantity to SongInstrument - when refactoring the Song and Instrument modesl relationship so that songs could have multiple of any particular instrument without having to create duplicates in the Instrument model)
+  * (add quantity to SongInstrument - when refactoring the Song and Instrument models relationship so that songs could have multiple of any particular instrument without having to create duplicates in the Instrument model)
   * (remove song_end_fade and audio_clip fields from Song model)
   * (remove AdOns model - future feat?)
 
@@ -763,6 +763,15 @@ If the logged in user is the admin then a different view class is called wheneve
 * [Daniel Roseman's solution on Stackoverflow](https://stackoverflow.com/a/55237245) for using values_list() method to get a queryset for Genre with each value by its display_name for using in the form dropdown.  
 * [Ishita Kabra's solution on Stackoverflow](https://stackoverflow.com/a/68891518) for how to add css style rules to the file-upload-button, which I used to style my image upload button in my Design Custom Song form.  
 * [Eliakin Costa's solution on Stackoverflow](https://stackoverflow.com/a/59364708) for how to apply an 'empty_label' attribute to django's ModelChoiceFields, which I used for my project_type and genre fields.  
+* [TLindig's solution on Stackoverflow](https://stackoverflow.com/a/14438954) for a way to get all of the unique values in a JavScript array, by creaing a new Set() from it, which I used for my Design Custom Song Form, in order to find the number of unqiue instruments the user chooses, in my updateInstrumentFormsets() function.
+* [Felix Kling's solution on Stackoverflow](https://stackoverflow.com/a/5882802) for a way to insert my additional instrument dropdowns above the Add An Instrument button in my addINstrument() function for my Design Custom Song Form.
+* [Mahesh Velaga's solution on Stackoverflow](https://stackoverflow.com/a/4435190) for how to get my displayed price to show only to 2 decimal places after using parseFloat(), with toFixed(2), in my Design Custom Song Form.
+* [GeeksforGeeks' page](https://www.geeksforgeeks.org/how-to-check-an-element-with-specific-id-exists-using-javascript/) for checking if an instrument formset id already exists in my updateInstrumentFormsets() function for my Design Custom Song Form.
+* [EDUCBA's page](https://www.educba.com/javascript-disable-button/) on how to disable buttons with JavaScript, which I used in my checkReviewSessionButtons() function for my Design Custom Song Form.
+* [JavaScript Tutorial's page](https://www.javascripttutorial.net/dom/manipulating/clone-an-element/) on how to clone an element and all its children with JavaScript, which I used in my Design Custom Song Form.
+* [Willem Van Onsem's solution on Stackoverflow](https://stackoverflow.com/a/60871659) for how to apply the 'login_required' decorator to a url path, which I used to ensure only logged in users can access the Design Custom Form.
+* [Delft Stack's solution](https://www.delftstack.com/howto/javascript/javascript-loop-through-dictionary/) for how to handle iterating through a dictionary's keys and value in a for loop, which I used in my updateInstrumentFormsets() function for my design_custom_song form.
+* [Kenny Shen's solution on Stackoverflow](https://stackoverflow.com/a/13016982) for how to use the post_save() signal, which I used my SongInstrument model inorder to trigger the price calculation for custom songs.
 
 ### Content
 * Fonts:
