@@ -205,6 +205,7 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     font-family:'BioRhyme', sans-serif;
     font-weight:bold;
     font-size: xx-large;
+    text-transform: uppercase;
 }
 
 .overlay{
@@ -352,7 +353,10 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     margin: auto;
 }
 
-#design-custom-song-form label{
+#design-custom-song-form label,
+#form-instruments-label,
+#display-price-label,
+#form-duration-range-label{
     font-size: larger;
     font-weight:700;
     text-transform: uppercase;
@@ -392,10 +396,6 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     border-color: #FF57D2;
 }
 
-#design-custom-song-form .form-group{
-    margin-top: 10px;
-}
-
 #id_project_type empty_label{
     color:#FF57D2;
 }
@@ -421,6 +421,27 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
 #id_use_as_testimonial:checked{
     background-color:#00D1CF;
 }
+
+.instruments-select{
+    padding: 6px;
+    border-radius: 4px;
+    width: 100%;
+
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+}
+
+.instruments-select:hover{
+    border-color: #FF57D2;
+}
+
+.instruments-select::-ms-expand {
+    display: none;
+}
+
+
 
 /* ---------- navbar */
 
@@ -459,6 +480,29 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
 
 #homepage-container li{
     font-size:large;
+}
+
+
+/* ---------- AllAuth */
+
+.allauth-forms form input{
+    background-color: #1D212E !important;
+    color:#9A9EAE !important;
+    width: 50%;
+    margin:auto;
+    margin-bottom: 15px;
+}
+
+.allauth-forms form input:hover{
+    border-color: #FF57D2;
+}
+
+.allauth-forms form label{
+    font-family:'BioRhyme', sans-serif;
+}
+
+#div_id_remember{
+    display:none;
 }
 
 
