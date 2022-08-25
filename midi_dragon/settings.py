@@ -183,3 +183,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# custom song form variables
+
+MAX_NUM_REVIEW_SESSIONS = 8
+ADDITIONAL_INSTRUMENT_PRICE = 4.99
+ADDITIONAL_REVIEW_SESSION_PRICE = 5.99
