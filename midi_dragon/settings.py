@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # future feat - logging in with social accounts
     'home',
     'songs',
+    'tracklist',
     'crispy_forms',
 ]
 
