@@ -222,9 +222,15 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
 }
 
 /* on med+ screens browsing */
-.square-img-small{
+.square-img-x-small{
     height: 5vw;
     width: 5vw;
+}
+
+/* in tracklist */
+.square-img-small{
+    height: 15vw;
+    width: 15vw;
 }
 
 /* on mobile screens browsing */
