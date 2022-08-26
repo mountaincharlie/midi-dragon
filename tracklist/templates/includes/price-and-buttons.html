@@ -1,0 +1,23 @@
+<!-- price -->
+<div class="row mt-4">
+    <!-- displays to the right on md+ screens and central on mobile -->
+    <div class="col-12 basic-font text-center midi-l-grey">
+        <h3 class="fw-bolder text-uppercase">Tracklist total: <span class="midi-teal">£{{ tracklist_total }}</span></h3>
+    </div>
+</div>
+
+<div class="row">
+    <!-- displays to the right on md+ screens and central on mobile -->
+    <div class="col-12 basic-font text-center">
+        <!-- browse pre-made songs -->
+        <a href="{% url 'songs' %}" role="button" class="btn btn-l-grey mt-2 me-1">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            <p class="m-0 d-inline ps-2 basic-font">Pre-made Songs</p>
+        </a>
+        <!-- secure checkout - NEEDS TO BE BUTTON? -->
+        <a href="#" role="button" class="btn btn-teal mt-2 ms-1">
+            <i class="fa-solid fa-lock"></i>
+            <p class="m-0 d-inline ps-2 basic-font">Secure Checkout</p>
+        </a>
+    </div>
+</div>
