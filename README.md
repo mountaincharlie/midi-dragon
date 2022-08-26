@@ -706,6 +706,18 @@ If the logged in user is the admin then a different view class is called wheneve
   * Fix: I removed the {{  }} and ' ' I was using within the 'if selected_genre' statements, which wasn't necessary since these aren't required when already inside template tags (an if statement in this case).
 * Bug: When setting up my testimonials template, even though my views and url path were created correctly, I was still receiving a 404 error when trying to open the template in the server. 
   * Fix: I needed to move my testimonials url path above my other urls which contained variables (slugs) since Django searches through the url paths in the order they're written and expects them in order of fewest variables first.
+* Bug: When saving custom song forms where the song had capital letters in the name, the unique_slug_generator() method kept being triggered becuase of the way that I was checking if a song's naem had been changed ( not self.slug.split('-')[:-1] == self.name.split(' ') ).
+  * Fix: Realising that the the way I was checking the song.name with the slug didn't account for capital letters, I then applied python's .lower() method ( not self.slug.split('-')[:-1] == self.name.lower().split(' ') ) 
+* Bug: When saving the custom song form, the formset manager was using the empty instrument form multiple times instead of the clones I had made with the correct values.
+  * Fix: Because I was replacing '__ prefix __' with the instrument name rather than a number, the formset manager ignored these created forms, so I had to set up a variable to countr from 0 upwards as I iterated over all the chosen instruments so that I could create their form ids correctly.
+* Bug: The formset manager used the empty instrument form as the first of its 'TOTAL_NUM_FORMS' since this hidden empty form was above where I was creating my new instrument forms.
+  * Fix: I needed to move the empty form below the container for my created forms so that the formset manager just used the created ones.
+* Bug: Trying to use .selected = true/false didn't work when I was trying to change the selected select options for instruments in my custom song form.
+  * Fix: I needed to use the .setAttribute() method.
+* Bug: When using the .setAttribute() to unselect some instrument options, I used .setAttribute('selected', 'false') but this actually just ll the options to selected and so when it was saved, the form set all the selects to have the final option selected regardless of what was actually chosen.
+  * Fix: After discovering that having any 2nd argument for .setAttribute('selected', '2nd_argument') would set the option as selected and that .removeAttribute('selected') should be used, I used the .removeAttribute() method for making sure all unchosen options were not selected, instead.
+* Bug: After changing the newly created instruments form's id '__ prefix __' to a number rather than their name, it meant that my method for checking for duplicated instruments and increasing their quantity on one form instead of creating multiple, no longer worked.
+  * Fix: I used the list of selected instruments to create a dictionary of instruments as keys with their quantities as their values. Then rather than having an if statement to check if a form already existed for an instrument, I just created the new instrument forms and straight away updated their quannity input value from the disctionary value.
 * Bug: 
   * Fix:
 
