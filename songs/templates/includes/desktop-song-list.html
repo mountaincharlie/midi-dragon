@@ -1,6 +1,6 @@
 <div class="col-md-1 col-lg-2">
     <a href="{{ song.get_absolute_url }}" title="Go to song details">
-        <img class="square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+        <img class="square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
     </a>
 </div>
 <div class="col-md-2">
@@ -42,9 +42,46 @@
         <p class="midi-l-grey small m-0">[Custom]</p>
         {% endif %}
     {% else %}
-        <a href="#" class="midi-l-grey align-items-center" title="Add to Tracklist">
-            <i class="fa-solid fa-plus fs-5"></i>
-            <i class="fa-solid fa-compact-disc fs-3"></i>
-        </a>
+        {% if tracklist_songs %}
+            <!-- checks if the current song is in the tracklist_songs list -->
+            {% if song in tracklist_songs %}
+                <p class="d-inline midi-teal" title="In your Tracklist">
+                    <i class="fa-solid fa-check fs-5"></i>
+                    <i class="fa-solid fa-compact-disc fs-3"></i>
+                </p>
+                <!-- else just show Add To Tracklist button -->
+            {% else %}
+                <!-- add to tracklist form -->
+                <form class="form" action="{% url 'add_to_tracklist' song.slug %}" method="POST">  
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-l-grey border-0" title="Add to Tracklist">
+                                <i class="fa-solid fa-plus fs-5"></i>
+                                <i class="fa-solid fa-compact-disc fs-3"></i>
+                            </button>
+                        </div>
+                        <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project-->
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                    </div>
+                </form>
+            {% endif %}
+        {% else %}
+            <!-- add to tracklist form -->
+            <form class="form" action="{% url 'add_to_tracklist' song.slug %}" method="POST">  
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-l-grey border-0" title="Add to Tracklist">
+                            <i class="fa-solid fa-plus fs-5"></i>
+                            <i class="fa-solid fa-compact-disc fs-3"></i>
+                        </button>
+                    </div>
+                    <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project-->
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                </div>
+            </form>
+        {% endif %}
     {% endif %}
 </div>
+                                
