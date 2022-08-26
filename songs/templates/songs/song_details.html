@@ -40,7 +40,13 @@
             <!-- username -->
             <div class="row">
                 <div class="col-12">
-                    <p class="midi-l-grey m-0 pb-1">{{ song.user }}</p>
+                    <p class="midi-l-grey m-0 pb-1">
+                        {% if song.user.is_superuser %}
+                            Pre-made Song
+                        {% else %}
+                            Custom Song for - {{ song.user }}
+                        {% endif %}
+                    </p>
                 </div>
             </div>
             <!-- Add to tracklist/download btn or note to user -->
@@ -71,28 +77,95 @@
                     <!-- add: elif for if its use_as_testimonial => if its the owning user then they see download btn else other users see blank OR link to the user's content -->
                     <!-- if a logged in user is viewing -->
                     {% elif user.is_authenticated %}
-                        <!-- add: if its in their Tracklist => note -->
-                        <!-- add: if it exists in one of their orders => download if audio exists -->
-                        <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
-                        <!-- else just show Add To Tracklist button like for non auth users below? -->
-                    <!-- if a none logged in user is viewing -->
+                        <!-- checking if the song is in their tracklist already -->
+                        {% if tracklist_songs %}
+                            <!-- checks if the current song is in the tracklist_songs list -->
+                            {% if song in tracklist_songs %}
+                                <p class="d-inline small basic-font midi-teal">
+                                    You have '{{ song.name }}' in your Tracklist.
+                                </p>
+                                <!-- add: if it exists in one of their orders => download if audio exists -->
+                                <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
+
+                                <!-- else just show price and Add To Tracklist button like for non auth users below? -->
+                            {% else %}
+                                <!-- price -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="m-0 pb-1 fs-4">£{{ song.price }}</p>
+                                    </div>
+                                </div>
+                                <!-- add to tracklist form -->
+                                {% include 'includes/add-to-tracklist-form.html' %}
+                            {% endif %}
+
+                            <!-- add: if it exists in one of their orders => download if audio exists -->
+                                <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
+
+                                <!-- else just show price and Add To Tracklist button like for non auth users below? -->
+                        {% else %}
+                            <!-- price -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="m-0 pb-1 fs-4">£{{ song.price }}</p>
+                                </div>
+                            </div>
+                            <!-- add to tracklist form -->
+                            {% include 'includes/add-to-tracklist-form.html' %}
+                        {% endif %}
+
+                    <!-- if a none logged in user is viewing => only public pre-made songs -->
                     {% else %}
                         {% if song.audio_file %}
-                        <p class="m-0 pb-1 fs-4">£{{ song.price }}</p>
-                        <a href="#" class="btn midi-l-grey" role="button">
-                            <i class="fa-solid fa-circle-plus fs-5" title="Add to Tracklist"></i>
-                            <p class="fs-5 ps-2 d-inline basic-font">Add to Tracklist</p>
-                        </a>
+                            <!-- cheecks if already in track list and displays correct message or buttons -->
+                            {% if tracklist_songs %}
+                                <!-- checks if the current song is in the tracklist_songs list -->
+                                {% if song in tracklist_songs %}
+                                    <p class="d-inline small basic-font midi-teal">
+                                        You have '{{ song.name }}' in your Tracklist.
+                                    </p>
+                                    <!-- else just show price and Add To Tracklist button like for non auth users below? -->
+                                {% else %}
+                                    <!-- price -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="m-0 pb-1 fs-4">£{{ song.price }}</p>
+                                        </div>
+                                    </div>
+                                    <!-- add to tracklist form -->
+                                    {% include 'includes/add-to-tracklist-form.html' %}
+                                {% endif %}
+                            {% else %}
+                                <!-- price -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="m-0 pb-1 fs-4">£{{ song.price }}</p>
+                                    </div>
+                                </div>
+                                <!-- add to tracklist form -->
+                                {% include 'includes/add-to-tracklist-form.html' %}
+                            {% endif %}
+                            
+                        <!-- if no song audio -->
                         {% else %}
-                        <p class="d-inline small basic-font midi-warning">
-                            There was an issue with this song's audio file and our team is investigating. If the issue persists, please contact an admin.
-                        </p>
+                            <p class="d-inline small basic-font midi-warning">
+                                There was an issue with this song's audio file and our team is investigating.
+                                <br>
+                                If the issue persists, please contact midiDRAGON.
+                            </p>
                         {% endif %}
                     {% endif %}
                 </div>
+                <!-- back to browsing songs button - always visible -->
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'songs' %}" role="button" class="btn btn-l-grey mt-2">
+                            <i class="fa-solid fa-circle-arrow-left"></i>
+                            <p class="m-0 d-inline ps-2 basic-font">Browse Pre-made Songs</p>
+                        </a>
+                    </div>
+                </div>
             </div>
-            
-            
         </div>
     </div>
 
