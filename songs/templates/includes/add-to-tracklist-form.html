@@ -1,0 +1,13 @@
+<form class="form" action="{% url 'add_to_tracklist' song.slug %}" method="POST">  
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="col-12">
+            <button type="submit" class="btn btn-teal">
+                <i class="fa-solid fa-plus fs-5"></i>
+                <p class="fs-5 ps-1 d-inline basic-font">Add to Tracklist</p>
+            </button>
+        </div>
+        <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project-->
+        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+    </div>
+</form>
