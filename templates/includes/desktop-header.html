@@ -70,7 +70,7 @@
             </li>
             <!-- tracklist icon -->
             <li class="list-inline-item fs-5 ps-4 pe-3">
-                <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}" title="My Tracklist">
+                <a href="{% url 'tracklist' %}" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}" title="My Tracklist">
                     <div class="text-center fs-5">
                         <i class="fa-solid fa-compact-disc"></i>
                         <p>

@@ -95,7 +95,7 @@
     <!-- tracklist icon -->
     <div class="col text-center fs-5 p-0">
         <!-- same as on meduim+ screens -->
-        <a href="#" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}" title="My Tracklist">
+        <a href="{% url 'tracklist' %}" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}" title="My Tracklist">
             <i class="fa-solid fa-compact-disc"></i>
             <p>
                 {% if tracklist_total %}
