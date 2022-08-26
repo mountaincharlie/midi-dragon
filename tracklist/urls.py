@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path('', views.view_tracklist, name='tracklist'),
+    path('add/<slug:slug>/', views.AddToTracklist.as_view(), name='add_to_tracklist'),
 ]
