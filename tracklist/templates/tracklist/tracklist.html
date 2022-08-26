@@ -24,7 +24,7 @@
         </div>
 
         <!-- desktop headings row -->
-        <div class="row  w-100d-none d-md-flex text-center">
+        <div class="row d-none d-md-flex text-center">
             <!-- desktop-tracklist-headings.html include -->
             {% include 'includes/desktop-tracklist-headings.html' %}
         </div>
@@ -44,9 +44,7 @@
 
         <!-- for loop -->
         {% for song in tracklist_songs %}
-            <!-- desktop: row for each song with 4 cols matching the heading spacing ('image', Song Info, Price, 'remove btn') -->
 
-            <!-- desktop: song details -->
             <div class="row w-100 d-flex midi-l-grey logo-font align-items-center text-center">
                 <!-- image -->
                 <div class="col-12 col-md-3">
@@ -91,15 +89,22 @@
                 </div>
                 <!-- remove song btn -->
                 <div class="col-12 col-md-2">
-                    <a href="#" role="button" class="btn btn-midi-warning border-0" title="Remove from Tracklist">
-                        <i class="fa-solid fa-trash-can fs-4"></i>
-                        <!-- written message only for mobile view -->
-                        <p class="fs-5 ps-1 d-inline d-md-none basic-font">Remove from Tracklist</p>
-                    </a>
+                    <form class="form" action="{% url 'remove_from_tracklist' song.slug %}" method="POST">  
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-midi-warning border-0">
+                                    <i class="fa-solid fa-trash-can fs-4"></i>
+                                    <!-- written message only for mobile view -->
+                                    <p class="fs-5 ps-1 d-inline d-md-none basic-font">Remove from Tracklist</p>
+                                </button>
+                            </div>
+                            <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project-->
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <!-- TRY JUST MAKE THE DESKTOP COLUMNS ADAPTABLE => ALL COL-12 ON SMALL SCREENS -->
 
             <!-- hr to seperate each song in tracklist summary -->
             <div class="row w-100 my-2">
@@ -107,7 +112,6 @@
                     <hr class="hr-90-light">
                 </div>
             </div>
-            
         {% endfor %}
 
         <!-- dekstop: price and browsing/checkout buttons -->
