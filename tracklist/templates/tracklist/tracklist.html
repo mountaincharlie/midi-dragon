@@ -7,17 +7,129 @@
 <!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
     <!-- page heading -->
-    <div class="row py-4">
+    <div class="row w-100 py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">My Tracklist</h1>
             <hr class="hr-90-light">
         </div>
     </div>
 
-    <!-- put in an includes and display it at top or bottom depending on secreen size -->
-    <!-- total price, keep browsing and secure checkout btns near top for mobile -->
-
+    {% if tracklist_songs %}
     
+        <!-- mobile: price and browsing/checkout buttons -->
+        <div class="row w-100 d-flex d-md-none">
+            <div class="col-12">
+                {% include 'includes/price-and-buttons.html' %}
+            </div>
+        </div>
+
+        <!-- desktop headings row -->
+        <div class="row  w-100d-none d-md-flex text-center">
+            <!-- desktop-tracklist-headings.html include -->
+            {% include 'includes/desktop-tracklist-headings.html' %}
+        </div>
+
+        <!-- mobile headings row -->
+        <div class="row w-100 d-flex d-md-none">
+            <div class="col-12 text-center">
+                <h4 class="mb-0 fw-bolder midi-teal mb-2 mt-4">TRACKLIST SUMMARY</h4>
+            </div>
+        </div>
+
+        <div class="row w-100">
+            <div class="col-12 p-0">
+                <hr class="hr-full-teal m-0 mb-2">
+            </div>
+        </div>
+
+        <!-- for loop -->
+        {% for song in tracklist_songs %}
+            <!-- desktop: row for each song with 4 cols matching the heading spacing ('image', Song Info, Price, 'remove btn') -->
+
+            <!-- desktop: song details -->
+            <div class="row w-100 d-flex midi-l-grey logo-font align-items-center text-center">
+                <!-- image -->
+                <div class="col-12 col-md-3">
+                    <a href="{{ song.get_absolute_url }}" title="Go to song details">
+                        <img class="square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                    </a>
+                </div>
+                <!-- song info -->
+                <div class="col-12 col-md-5">
+                    <!-- song name -->
+                    <div class="row w-100">
+                        <div class="col-12">
+                            <a href="{{ song.get_absolute_url }}" title="Go to song details" class="midi-l-grey">
+                                <h4 class="fw-bolder mt-2 mb-4">{{ song.name }}</h4>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- genre -->
+                    <div class="row w-100">
+                        <div class="col-12">
+                            {% if song.genre %}
+                                <h5>{{ song.genre }}</h5>
+                            {% else %}
+                                <p>(No assigned genre)</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- custom or pre-made song -->
+                    <div class="row w-100">
+                        <div class="col-12">
+                            {% if song.user.is_superuser %}
+                                <h6>Pre-made Song</h6>
+                            {% else %}
+                                <h6>Custom Song</h6>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- price -->
+                <div class="col-12 col-md-2">
+                    <h4>£{{ song.price }}</h4>
+                </div>
+                <!-- remove song btn -->
+                <div class="col-12 col-md-2">
+                    <a href="#" role="button" class="btn btn-midi-warning border-0" title="Remove from Tracklist">
+                        <i class="fa-solid fa-trash-can fs-4"></i>
+                        <!-- written message only for mobile view -->
+                        <p class="fs-5 ps-1 d-inline d-md-none basic-font">Remove from Tracklist</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TRY JUST MAKE THE DESKTOP COLUMNS ADAPTABLE => ALL COL-12 ON SMALL SCREENS -->
+
+            <!-- hr to seperate each song in tracklist summary -->
+            <div class="row w-100 my-2">
+                <div class="col-12">
+                    <hr class="hr-90-light">
+                </div>
+            </div>
+            
+        {% endfor %}
+
+        <!-- dekstop: price and browsing/checkout buttons -->
+        <div class="row w-100 d-none d-md-flex">
+            <div class="col-12 align-self-center text-center">
+                {% include 'includes/price-and-buttons.html' %}
+            </div>
+        </div>
+
+    {% else %}
+        <div class="row d-flex w-100 mt-4">
+            <div class="col-12 text-center">
+                <p class="midi-l-grey fs-4">
+                    You don't have any songs in your Tracklist right now.
+                </p>
+                <a href="{% url 'songs' %}" role="button" class="btn fs-5">
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                    <p class="m-0 d-inline ps-2">Browse Pre-made Songs</p>
+                </a>
+            </div>
+        </div>
+    {% endif %}
     
 </div>
 {% endblock %}
