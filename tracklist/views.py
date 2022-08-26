@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
+from songs.models import Song
 
 
 def view_tracklist(request):
@@ -6,10 +8,46 @@ def view_tracklist(request):
 
     return render(request, 'tracklist/tracklist.html')
 
-# class TracklistView(View):
-#     """
-#     Class based view inheriting Django's View
-#     Contains the get method for displaying the songs that the user has
-#     in their tracklist
-#     """
-#     def get(self, request, *args, **kwargs):
+
+class AddToTracklist(View):
+    """
+    Class based view inheriting Django's View
+    Contains the post
+    """
+    def post(self, request, *args, **kwargs):
+        """
+        View to add a song to the tracklist and redirect to the
+        same song_details url or song search results
+        """
+
+        # getting the song by its pk inorder to include its name in messages
+        song = get_object_or_404(Song, slug=self.kwargs['slug'])
+        #  gets url to redirect to
+        redirect_url = request.POST.get('redirect_url')
+
+        # storing the tracklist in a http session so that the contents of the tracklist is not overwritten or lost while browsing the site until the browser is closed
+        # get the var if it exists or assign it an empty list
+        tracklist = request.session.get('tracklist', [])
+        # tracklist = request.session.get('tracklist', {})
+
+        # the song's slug is used as its key in the tracklist dict
+        song_slug = song.slug
+
+        # additional check if its already in their tracklist it displays message and doesnt add to tracklist
+        if song_slug in tracklist:
+            # messages.error(request, f"You already have {song.name} in your tracklist")
+            print(f"You already have {song.name} in your tracklist")
+        else:
+            # add the song_slug to the tracklist list
+            tracklist.append(song_slug)
+            print(f'{song.name} added to tracklist')
+            # messages.success(request, f"{song.name} has been added to your tracklist")
+
+        # updating the tracklist var in the session dict
+        request.session['tracklist'] = tracklist
+
+        # to check the session thing works
+        print(request.session['tracklist'])
+
+        # calls the hidden redirect_url input
+        return redirect(redirect_url)
