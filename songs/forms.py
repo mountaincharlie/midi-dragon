@@ -41,6 +41,10 @@ class DesignCustomSongForm(forms.ModelForm):
         label="Song Genre", required=True, queryset=Genre.objects.all(), empty_label="Select a genre"
     )
 
+    bpm = forms.IntegerField(
+        label='Beats Per Minute [between: 35-155]', min_value=35, max_value=155, required=False
+    )
+
     num_of_reviews = forms.CharField(label="Number of Review Sessions", required=False)
 
     class Meta:
@@ -69,7 +73,6 @@ class DesignCustomSongForm(forms.ModelForm):
         }
 
         labels = {
-            'bpm': 'Beats Per Minute [35-155]',
             'testimonial_text': 'Testimonial Review',
             'song_purpose': 'Song Purpose',
             'song_feel': 'Song Feel',
@@ -93,7 +96,8 @@ class AddSongInstrumentForm(forms.ModelForm):
         exclude = ('song',)
 
     instrument = forms.ModelChoiceField(
-        label="Instrument", queryset=Instrument.objects.all(), empty_label="Select an instrument"
+        label="Instrument", queryset=Instrument.objects.all(), empty_label="Select an instrument",
+        required=False
     )
 
 
