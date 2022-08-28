@@ -325,14 +325,20 @@
 
             <!-- add: and song doesnt have an assocaited order no (hasnt been bought yet) and is not in their tracklist -->
             {% elif user.username == song.user.username %}
-            <!-- edit button -->
-            <a href="{% url 'edit_custom_song' song.slug %}" class="btn midi-teal midi-border-teal me-2 basic-font" role="button">Edit</a>
-            <!-- delete button -->
-            <a href="{% url 'delete_confirmation' song.slug %}" class="btn midi-warning midi-border-warning basic-font" role="button">Delete</a>
+                <!-- { if tracklist_songs  } -->
+                <!-- checks if the current song is in the tracklist_songs list -->
+                {% if song in tracklist_songs %}
+                    <p class="d-inline small basic-font midi-teal">
+                        You must remove {{ song.name }} from your Tracklist in order to Edit/Delete it.
+                    </p>
+                {% else %}
+                    <!-- edit button -->
+                    <a href="{% url 'edit_custom_song' song.slug %}" class="btn btn-teal me-2 basic-font" role="button">Edit</a>
+                    <!-- delete button -->
+                    <a href="{% url 'delete_confirmation' song.slug %}" class="btn btn-midi-warning basic-font" role="button">Delete</a>
+                {% endif %}
             {% else %}
-
-            <!-- elif the song is in their tracklist -->
-            <!-- <p>You must remove {{ song.name }} from your Tracklist in order to Edit/Delete it</p> -->
+                <!-- no buttons or messages -->
             {% endif %}
         </div>
     </div>
