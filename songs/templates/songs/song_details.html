@@ -319,16 +319,16 @@
         <div class="col-6 logo-font midi-l-grey text-end pe-4">
             {% if user.is_superuser %}
             <!-- edit button -->
-            <a href="#" class="btn midi-teal midi-border-teal me-2" role="button">Edit</a>
+            <a href="{% url 'edit_custom_song' song.slug %}" class="btn midi-teal midi-border-teal me-2 basic-font" role="button">Edit</a>
             <!-- delete button -->
-            <a href="#" class="btn midi-warning midi-border-warning" role="button">Delete</a>
+            <a href="{% url 'delete_confirmation' song.slug %}" class="btn midi-warning midi-border-warning basic-font" role="button">Delete</a>
 
             <!-- add: and song doesnt have an assocaited order no (hasnt been bought yet) and is not in their tracklist -->
             {% elif user.username == song.user.username %}
             <!-- edit button -->
-            <a href="#" class="btn midi-teal midi-border-teal me-2" role="button">Edit</a>
+            <a href="{% url 'edit_custom_song' song.slug %}" class="btn midi-teal midi-border-teal me-2 basic-font" role="button">Edit</a>
             <!-- delete button -->
-            <a href="#" class="btn midi-warning midi-border-warning" role="button">Delete</a>
+            <a href="{% url 'delete_confirmation' song.slug %}" class="btn midi-warning midi-border-warning basic-font" role="button">Delete</a>
             {% else %}
 
             <!-- elif the song is in their tracklist -->
