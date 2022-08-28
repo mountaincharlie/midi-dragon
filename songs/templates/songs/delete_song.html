@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Edit Custom Song{% endblock %}
+
+{% block content %}
+<div class="container pt-2 pb-4 overlay d-flex">
+  <!-- make into an includes? to use across pages (e.g for user profile and site management page) -->
+  <div class="row w-100">
+      <div class="col-12 midi-l-grey align-self-center text-center">
+          <h1 class="mb-4 page-heading">
+            Are you sure you want to delete
+            <br>
+            <span class="text-capitalize fw-normal">"{{ song.name }}"</span>?
+          </h1>
+          <hr class="hr-90-light mb-4">
+          <div class="row">
+            <div class="col-12">
+                <!-- warning message -->
+                <div class="row">
+                    <div class="col-12 midi-warning text-center p-2 mb-2 logo-font">
+                        <h4>This action cannot be undone</h4>
+                    </div>
+                </div>
+    
+
+                <!-- delete and cancel buttons -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <form method="post">
+                            {% csrf_token %}
+            
+                            <!-- cancel button to return the user to their My eBook page without deleting the recipe -->
+                            <a class="btn btn-l-grey me-1" href="#" role="button" aria-label="Cancel and return to profile button">Cancel</a>
+            
+                            <!-- delete button to return the user to their My eBook page after deleting the recipe -->
+                            <button class="btn btn-midi-warning ms-1" type="submit" name="confirm_delete" aria-label="Delete recipe confirmation button">Delete Song</button>
+            
+                        </form>
+                    </div>
+                </div>
+    
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
