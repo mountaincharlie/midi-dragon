@@ -786,6 +786,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * [Willem Van Onsem's solution on Stackoverflow](https://stackoverflow.com/a/60871659) for how to apply the 'login_required' decorator to a url path, which I used to ensure only logged in users can access the Design Custom Form.
 * [Delft Stack's solution](https://www.delftstack.com/howto/javascript/javascript-loop-through-dictionary/) for how to handle iterating through a dictionary's keys and value in a for loop, which I used in my updateInstrumentFormsets() function for my design_custom_song form.
 * [Kenny Shen's solution on Stackoverflow](https://stackoverflow.com/a/13016982) for how to use the post_save() signal, which I used my SongInstrument model inorder to trigger the price calculation for custom songs.
+* [JP Silvashy's solution on Stackoverflow](https://stackoverflow.com/a/2003831) for how to use .shift() in javascript in order to get the first item from an array whilst also removing it from the list. I used this in the Javascript for my edit custom song template when pre-populating each instrument select with the existing instruments.
 
 ### Content
 * Fonts:
@@ -803,6 +804,7 @@ If the logged in user is the admin then a different view class is called wheneve
 * My JavaScript for implementing my Genres select in the All Pre-made Songs browsing page, was based on and adapted from the logic for the Sort Select described above, but the html and python in the views.py was custom made for this project.
 * The views logic for my 'like' button on the song_details pages was adapted from my [RecipeChefsKissView view](https://github.com/mountaincharlie/project-four-cook-ebook/blob/main/cook_ebook/views.py) in my Cook eBook project.
 * Testimonials Carousel made with [Bootstrap 5 carousels](https://getbootstrap.com/docs/5.0/components/carousel/) with controls, indicators and captions. I adapted this code quite a bit to fit how I was creating the slides with a for loop and for how I styled it to fit with the rest of the site.
+* In order to keep the user on their current page when adding/removing items to their Tracklist I used [Code Institute's method](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/products/templates/products/product_detail.html) of having a hidden input with; name="redirect_url" value="{{ request.path }}, and then getting the redirect_url in the View in order to redirect the user to the correct url after adding/removing a song to their Tracklist. I used this on my song_details pages as well as when browsing songs.
 
 ### Media
 * Images:
