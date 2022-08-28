@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Edit Custom Song{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">EDIT CUSTOM SONG</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <!-- enctype => for uploading image/video/audio files -->
+            <form id="design-custom-song-form" method="POST" enctype="multipart/form-data" class="form mb-2">
+                {% csrf_token %}
+                <!--  custom_song_form | crispy  -->
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.name | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.image | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.genre | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.bpm | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.project_type | as_crispy_field }}
+                                <p id="changing-project-type-msg" class="my-1 midi-warning small d-none m-0">Changing the Project Type will reset any changes in the; Duration Range, Instrument, Review Sessions and Price sections.</p>
+                            </div>
+                        </div>
+                        <div id="project-type-duration-range-container" class="row d-none">
+                            <div class="col-12 my-1">
+                                <h5 id="form-duration-range-label">Song Duration Range</h5>
+                                <p id="project-type-duration-range-note" class="midi-teal logo-font"></p>
+                            </div>
+                        </div>
+                        
+
+                        <!-- ----------- instruments section -------------- -->
+                        
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                
+                                <h5 id="form-instruments-label">Instruments</h5>
+                                <div id="visible-instruments-dropdown">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- # included-instruments-subheading => targetted by JS to remove d-none when a project type is chosen -->
+                                            <h6 id="included-instruments-subheading" class="d-none">Included with project type:</h6>
+                                            <p class="select-a-project-msg logo-font my-1 midi-warning">(please select a project type)</p>
+                                            <!-- where the required instrument selects is insterted into with JS -->
+                                            <div id="included-instruments-container"></div>
+
+                                            <hr class="hr-90-light my-3 d-none">
+                                            <h6 id="additional-instruments-subheading" class="d-none">Additional instruments:</h6>
+                                            <!-- where the add instrument button is and any additional instrument selects with delete buttons are insterted with JS -->
+                                            <div id="additional-instruments-container"></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!-- hidden instruments dropdown, add instrument and delete buttons -->
+                        <div id="hidden-instrument-elements" class="d-none">
+                            <!-- select is d-none by default and JS is used to show the correct amount - on project_type selection AND on clicking the Add instrument button -->
+                            <select class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font my-2">
+                                <!-- default selected -need to change with JS? -->
+                                <option value="reset" selected>Select an Instrument </option>
+                                {% for instrument in instruments %}
+                                <option value="{{ instrument }}" class="midi-l-grey">{{ instrument }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <!-- instrument select which is in container with a delete button (for additional instruments) -->
+                            <div class="additional-instruments-select-container">
+                                <select class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font my-2">
+                                    <!-- default selected -need to change with JS? -->
+                                    <option value="reset" selected>Select an Instrument </option>
+                                    {% for instrument in instruments %}
+                                    <option value="{{ instrument }}" class="midi-l-grey">{{ instrument }}</option>
+                                    {% endfor %}
+                                </select>
+                                <!-- delete btn added only to additional -->
+                                <button class="delete-instrument-select-button btn btn-midi-warning my-2" type="button" aria-label="Delete insturment button">Delete Instrument</button>
+                            </div>
+
+                            
+
+                            <!-- add instrument button - inserted by JS beneath the last select in #visible-instruments-dropdown -->
+                            <div id="add-song-instrument-container">
+                                <button id="add-song-instrument" class="btn btn-teal" type="button" aria-label="Add another instrument button">Add An Instrument</button>
+                                <!-- insert amount by passing into the context in the view from settings.py -->
+                                <span class="ps-2 logo-font">+ £{{ additional_instrument_price }}</span>
+                            </div>
+                            
+
+                        </div>
+
+                        <!-- hidden formset management -->
+                        <div>
+                            <!-- formset management -->
+                            {{ song_instrument_formset.management_form }}
+                        </div>
+
+                        <!-- storing created instrument formsets from the JS -->
+                        <div id="instrument-formsets-container" class="visually-hidden">
+                            {% for instrument in song_instruments %}
+                                <div class="existing-instrument">
+                                    {{ instrument.quantity }}-{{ instrument.instrument }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- empty formset useed by JS to create the instrument formsets stored above -->
+                        <div id="new-instrument-form" class="visually-hidden">
+                            <!-- the formset empty form to be cloned -->
+                            {{ song_instrument_formset.empty_form |crispy }}
+                        </div>
+                        
+                        <!-- ----------- end of instruments section -------- -->
+
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.num_of_reviews | as_crispy_field }}
+
+                                <!-- write the number of review sessions with JS here to display to user -->
+                                <div id="visible-num-of-reviews" class="logo-font my-1">
+                                    
+                                    <p class="select-a-project-msg logo-font my-1 midi-warning">(please select a project type)</p>
+                                    <!-- where the number of review will be written in -->
+                                    <div id="num-of-reviews-container" class="d-none midi-teal fs-2 fw-bold">...</div>
+
+                                    <div id="num-of-existing-reviews-container" class="d-none">
+                                        {{ num_existing_review_sessions }}
+                                    </div>
+                                </div>
+                                
+                                <div id="review-sessions-buttons" class="d-none">
+                                    <button id="subtract-num-of-reviews" class="btn btn-midi-warning pink-hover px-2 py-1" aria-label="Minus one from the current number of reviews"><i class="fa-solid fa-minus"></i></button>
+                                    <button id="add-num-of-reviews" class="btn btn-teal pink-hover px-2 py-1" aria-label="Add one to the current number of reviews"><i class="fa-solid fa-plus"></i></button>
+                                    <!-- insert amount by passing into the context in the view from settings.py -->
+                                    <span class="ps-2 logo-font">+ £{{ additional_review_session_price }}</span>
+                                </div>
+
+                                <!-- explanatory text for review sessions -->
+                                <div>
+                                    <p class="small mt-3 mb-0 midi-l-grey">
+                                        A Review Session involves midiDRAGON sending you a draft of your custom song, for you to give feedback on and request any adjustments which would not require further cost.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.song_purpose | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.song_feel | as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.additional_details | as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <!-- note about you having creative control if insufficent details provided -->
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                <p class="midi-warning small m-0">
+                                    If you purchase a Custom Song without specifying how you want the song to feel or be structured, then you agree to give midiDRAGON creative control of the song's feel and structure.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- use as testimonial checkbox -->
+                        <div class="row">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.use_as_testimonial | as_crispy_field }}
+                                <p class="midi-l-grey small m-0">
+                                    Allows your song to be visible on the <strong>Testimonials</strong> page once complete. Lets other site users appreciate your project and can be used as an opportunity to <strong>promote your content</strong>. [You will still be the only user who can download your song]
+                                </p>
+                            </div>
+                        </div>
+                        <!-- only visible if the above box ticked -->
+                        <div id="testimonial-text-container" class="row d-none">
+                            <div class="col-12 mt-2 mb-4">
+                                {{ custom_song_form.testimonial_text | as_crispy_field }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- cost display -->
+                <div class="row text-end">
+                    <div class="col-12 mt-2 mb-4 text-end">
+                        <h5 id="display-price-label" class="d-inline me-2">Price estimate:</h5>
+                        <!-- replace this div's innerText with the price -->
+                        <p id="display-price-container" class="d-inline logo-font midi-teal fs-2 fw-bold">...</p>
+                        <p class="select-a-project-msg my-1 midi-warning">(please select a project type)</p>
+                        <p id="price-calculation-note" class="m-0 midi-warning small d-none">
+                            Based on the selections made. Final price calculated on saving the form.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- save and delete buttons -->
+                <div class="row basic-font">
+                    <div class="col-12 text-end">
+                        <!-- cancel should send user to their profile -->
+                        <a role="button" href="#" class="btn btn-l-grey me-2">Cancel</a>
+                        <button class="btn btn-teal pink-hover" type="submit" aria-label="Confirm save custom song design button">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- hidden section for the JS to retrieve details about project_types -->
+    <div id="project-type-details" class="d-none">
+        {% for type in project_types %}
+        <div id="project-type-{{ type.name }}">{{ type.name }}</div>
+        <div id="song-length-range-{{ type.name }}">{{ type.song_length_range }}</div>
+        <div id="num-included-instruments-{{ type.name }}">{{ type.num_included_instruments }}</div>
+        <div id="num-included-reviews-{{ type.name }}">{{ type.num_included_reviews }}</div>
+        <div id="min-price-{{ type.name }}">{{ type.min_price }}</div>
+        {% endfor %}
+        <div id="max-num-review-sessions">{{ max_num_review_sessions }}</div>
+        <div id="additional-instrument-price">{{ additional_instrument_price }}</div>
+        <div id="additional-review-session-price">{{ additional_review_session_price }}</div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block postload_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'songs/js/customSong.js' %}"></script>
+{% endblock %}
