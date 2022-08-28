@@ -718,6 +718,8 @@ If the logged in user is the admin then a different view class is called wheneve
   * Fix: After discovering that having any 2nd argument for .setAttribute('selected', '2nd_argument') would set the option as selected and that .removeAttribute('selected') should be used, I used the .removeAttribute() method for making sure all unchosen options were not selected, instead.
 * Bug: After changing the newly created instruments form's id '__ prefix __' to a number rather than their name, it meant that my method for checking for duplicated instruments and increasing their quantity on one form instead of creating multiple, no longer worked.
   * Fix: I used the list of selected instruments to create a dictionary of instruments as keys with their quantities as their values. Then rather than having an if statement to check if a form already existed for an instrument, I just created the new instrument forms and straight away updated their quannity input value from the disctionary value.
+* Bug: When submitting the form in the edit_custom_song template, the formset kept returning as invalid, causing it to keep the old data instead of saving any changes to the instruments. On inspecting the invalid formsets in the terminal, I could see that some of the instruments had error notes saying that they were a requireed field even though they contained the right data.
+  * Fix: Setting the value of the formset management div with id="id_song_instruments-INITIAL_FORMS" to zero, since the whole formset was being recreated anytime the user made any changes to the formset, so it wasn't necessary to be tracking the number of initial forms.
 * Bug: 
   * Fix:
 
