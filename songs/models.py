@@ -218,7 +218,8 @@ class SongInstrument(models.Model):
         Instrument,
         on_delete=models.SET_NULL,
         related_name="instruments_song",
-        null=True
+        null=True,
+        blank=True
     )
     song = models.ForeignKey(
         Song,
