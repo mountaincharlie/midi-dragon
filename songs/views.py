@@ -426,3 +426,43 @@ class EditCustomSong(View):
                 'custom_song_form': custom_song_form,
             }
             return render(request, 'songs/edit_custom_song.html', context)
+
+
+class DeleteSong(generic.DeleteView):
+    """
+    DeleteSong class based view inheriting Django's
+    generic.DeleteView
+    FINISH ...
+    """
+    model = Song
+    template_name = "songs/delete_song.html"
+
+    def post(self, request, *args, **kwargs):
+        """
+        post method for when users click on the Delete button in the Delete
+        Song page, which is for confirming the user wants to delete the
+        song.
+        -gets the song by its unique slug
+        -deletes the song from the database
+        -a custom success message is passed into django messages.success along
+        with request
+        -the user is then redirected to their profile
+        """
+        song = get_object_or_404(Song, slug=self.kwargs['slug'])
+
+        # if request.user.is_superuser => delete
+        if request.user.is_superuser:
+            song.delete()
+            # messages.success(request, (f'{song.name} was successfully deleted'))
+            return render(request, 'home/index.html')
+            # return redirect()  # REDIRECT TO PROFILE once app created
+
+        # ADD --- AND doesnt exist in an order (hasnt been bought yet) => delete
+        elif request.user.username == song.user.username:
+            song.delete()
+            # messages.success(request, (f'{song.name} was successfully deleted'))
+            return render(request, 'home/index.html')
+            # return redirect()  # REDIRECT TO PROFILE once app created
+        else:
+            # messages.error(request, ('You do not have permission to make this action'))
+            return render(request, 'home/index.html')
