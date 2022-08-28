@@ -318,3 +318,111 @@ class DesignCustomSong(View):
                 'custom_song_form': custom_song_form,
             }
             return render(request, 'songs/design_custom_song.html', context)
+
+
+class EditCustomSong(View):
+    """
+    Class based view inheriting Django's View
+    Contains the get method for displaying the form to edit a custom
+    song in the edit Custom Song template.
+    FINISH ...
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        get method for getting the prepopulated forms to be displayed to the
+        user
+        -gets the
+        FINISH ...
+        """
+
+        # gets the song to be edited
+        song = get_object_or_404(Song, slug=self.kwargs['slug'])
+
+        # gets all associated song instruments 
+        song_instruments = SongInstrument.objects.filter(song=song)
+
+
+        # gets the forms and pre-populates them with the song instance
+        custom_song_form = DesignCustomSongForm(instance=song)
+        song_instrument_formset = AddSongInstrumentFormSet(instance=song)
+        # print(song_instrument_formset)
+
+        # gets all instruments for the dropdown selection displayed to users
+        instruments = Instrument.objects.all()
+
+        # gets all the project_types to handle user's selection in the form
+        project_types = ProjectType.objects.all()
+
+        # gets the MAX_NUM_REVIEW_SESSIONS var from settings.py
+        max_num_review_sessions = settings.MAX_NUM_REVIEW_SESSIONS
+        # gets the ADDITIONAL_INSTRUMENT_PRICE var from settings.py
+        additional_instrument_price = settings.ADDITIONAL_INSTRUMENT_PRICE
+        # gets the ADDITIONAL_REVIEW_SESSION_PRICE var from settings.py
+        additional_review_session_price = settings.ADDITIONAL_REVIEW_SESSION_PRICE
+
+        # getting the existing number of reviews to pre-pop the form
+        num_existing_review_sessions = song.num_of_reviews
+
+        context = {
+            'custom_song_form': custom_song_form,
+            'song_instrument_formset': song_instrument_formset,
+            'instruments': instruments,
+            'project_types': project_types,
+            'max_num_review_sessions': max_num_review_sessions,
+            'additional_instrument_price': additional_instrument_price,
+            'additional_review_session_price': additional_review_session_price,
+            'song_instruments': song_instruments,
+            'num_existing_review_sessions': num_existing_review_sessions,
+        }
+
+        return render(request, 'songs/edit_custom_song.html', context)
+
+    def post(self, request, *args, **kwargs):
+        """
+        post method for when users click on the save button, which
+        submits the design custom song forms.
+        -gets 
+        FINISH ...
+        """
+        # gets the song which has been edited
+        song = get_object_or_404(Song, slug=self.kwargs['slug'])
+
+        # gets the form with the song instance
+        custom_song_form = DesignCustomSongForm(request.POST, request.FILES, instance=song)
+
+        # if request.FILES.get('upload_image'):
+        #     song.image = request.FILES.get('upload_image')
+        #     song.save()
+
+        if custom_song_form.is_valid():
+            song = custom_song_form.save(commit=False)
+            song.user = User.objects.get(id=self.request.user.id)
+            # check if image stays correct
+            song.save()
+
+            instruments_formset = AddSongInstrumentFormSet(
+                request.POST, instance=song
+            )
+
+            if instruments_formset.is_valid():
+                # removing existing song instruments for this song so that only the new are applied
+                instruments_to_delete = SongInstrument.objects.filter(song=song).delete()
+
+                instruments_formset.save()
+
+            # messages.success(
+            #     request,
+            #     (f'{song.name} was successfully updated!')
+            # )
+            return redirect(song.get_absolute_url())
+
+        else:
+            # messages.error(
+            #     request,
+            #     ('Please ensure all the required form fields have been correctly filled in.')
+            # )
+            context = {
+                'custom_song_form': custom_song_form,
+            }
+            return render(request, 'songs/edit_custom_song.html', context)
