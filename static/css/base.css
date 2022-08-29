@@ -351,7 +351,7 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
 }
 
 
-/* ---------- design custom song form */
+/* ---------- design/edit custom song form */
 
 #design-custom-song-form{
     color:#9A9EAE;
@@ -428,6 +428,20 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     background-color:#00D1CF;
 }
 
+
+#image-clear_id{
+    border-color:#00D1CF;
+    background-color:#1D212E;
+}
+
+#image-clear_id:hover{
+    border-color:#FF57D2;
+}
+
+#image-clear_id:checked{
+    background-color:#00D1CF;
+}
+
 .instruments-select{
     padding: 6px;
     border-radius: 4px;
@@ -447,6 +461,73 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     display: none;
 }
 
+
+/* ---------- order form */
+
+#payment-form{
+    color:#9A9EAE;
+    width: 80%;
+    margin: auto;
+}
+
+#div_id_full_name label,
+#div_id_email label{
+    font-size: larger;
+    font-weight:700;
+    font-family:'Fira Sans', sans-serif;
+    /* text-transform: uppercase; */
+}
+
+#payment-form .asteriskField{
+    color:#fc5a5a;
+    padding-left: 2px;
+    font-size: medium;
+    font-weight:400;
+}
+
+#payment-form ::placeholder{
+    color: #9A9EAE;
+}
+
+#payment-form .form-control, .textInput,
+::-webkit-file-upload-button{
+    color: #9A9EAE;
+    background-color: #1D212E;
+    border-color: #00D1CF;
+    font-family:'BioRhyme', sans-serif;
+}
+
+#payment-form .form-control:focus,
+#payment-form .form-control:hover {
+    border-color: #FF57D2;
+}
+
+
+/* ---------- Stripe */
+
+#card-element {
+    /* font-family:'BioRhyme', sans-serif !important; */
+    background-color: #1D212E;
+    border: 1px solid #00D1CF;
+    border-radius: 4px;
+    padding: 10px 12px;
+    height: 40px;
+}
+
+#card-element:focus,
+#card-element:hover {
+    border-color: #FF57D2;
+}
+
+#card-errors{
+    font-size: 14px;
+    color:#fc5a5a !important;
+    font-family:'Fira Sans', sans-serif;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #1D212E !important;
+}
 
 
 /* ---------- navbar */
