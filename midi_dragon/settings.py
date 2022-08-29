@@ -189,7 +189,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # custom song form variables
-
 MAX_NUM_REVIEW_SESSIONS = 8
 ADDITIONAL_INSTRUMENT_PRICE = 4.99
 ADDITIONAL_REVIEW_SESSION_PRICE = 5.99
+
+
+# stripe vars
+STRIPE_CURRENCY = 'gbp'
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+# STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET', '')
