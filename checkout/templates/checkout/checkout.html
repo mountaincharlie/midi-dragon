@@ -37,12 +37,12 @@
                 </div>
                 <div class="row">
                     <div class="col-12 p-0">
-                        <hr class="hr-90-teal mb-2">
+                        <hr class="hr-90-teal">
                     </div>
                 </div>
                 <!-- creating each row of the overview -->
                 {% for song in tracklist_songs %}
-                    <div class="row d-flex align-items-center mb-2">
+                    <div class="row d-flex align-items-center my-4 my-md-2">
                         <div class="col-3">
                             <img class="d-block d-md-none square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
                             <img class="d-none d-md-block square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
@@ -58,7 +58,7 @@
 
                 <div class="row">
                     <div class="col-12 p-0">
-                        <hr class="hr-80 my-2">
+                        <hr class="hr-80 mb-4">
                     </div>
                 </div>
 
@@ -107,19 +107,46 @@
                                 </div>
                             </div>
                             <!-- Payment details row -->
+                            <h2 class="mt-4">
+                                Payment Details
+                            </h2>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 mt-2">
                                     <!-- TO BE POPULATED WITH STRIPE PAYMENT FUNCTIONALITY -->
                                     <!-- div for all card details -->
-                                    <!-- <div class="mb-3" id="card-element"></div> -->
+                                    <div class="mb-2" id="card-element"></div>
                                     <!-- div for displaying any form errors -->
-                                    <!-- <div class="mb-3 text-danger" id="card-errors" role="alert"></div> -->
+                                    <div class="text-danger" id="card-errors" role="alert"></div>
                                     <!-- hidden input with client_secret to pass to the view -->
-                                    <!-- <input type="hidden" value="{{ client_secret }}" name="client_secret"> -->
+                                    <input type="hidden" value="{{ client_secret }}" name="client_secret">
                                 </div>
                             </div>
                             
                             <!-- submit (handlled with JS since the payment_intent status needs to be confrimed as succeeded before the form can be saved) and back to tracklist buttons -->
+                            <!-- class submit-button -->
+                            <div class="text-center text-md-end mt-3 mt-md-5 mb-2">
+                                <!-- back to bag button to make adjustments -->
+                                <a href="{% url 'tracklist' %}" role="button" class="btn btn-l-grey basic-font me-0 me-md-1 mb-1 mb-md-0">
+                                    <i class="fa-solid fa-circle-arrow-left"></i>
+                                    <p class="m-0 d-inline ps-2">Back to Tracklist</p>
+                                </a>
+                                <!-- submit button with id that JS can access to submit the form -->
+                                <button id="payment-submit-button" class="btn btn-teal ms-0 ms-md-1 mt-1 mt-md-0">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                    <!-- <i class="fa-solid fa-lock"></i> -->
+                                    <p class="m-0 d-inline ps-2 basic-font">Complete Order</p>
+                                </button>
+                                <!-- notification of card going to be charged -->
+                                <p class="small midi-warning mt-2 mb-0 basic-font">
+                                    <span>
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </span>
+                                    <span>
+                                        Your card will be charged <strong>£{{ tracklist_total|floatformat:2 }}</strong>
+                                    </span>
+                                </p>
+                            </div>
+                    
                         </form>
                         
                     </div>
@@ -147,3 +174,11 @@
 </div>
 {% endblock %}
 
+{% block postload_js %}
+    {{ block.super }}
+    <!-- using json_script to create the vars to be used in the external JS - CREDIT CI WALKTHROUGH -->
+    <!-- for passing vars from the checkout view function context dict to the external JS -->
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script type="text/javascript" src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}
