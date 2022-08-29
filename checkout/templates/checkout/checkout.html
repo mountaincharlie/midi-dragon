@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Checkout{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4 text-center">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">Checkout</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    {% if tracklist_songs %}
+    
+        <!-- contains the order overview and Details columns -->
+        <div class="row">
+            <!-- order overview -->
+            <div class="col-12 col-md-6 midi-l-grey logo-font text-center">
+                <h2 class="mb-3">
+                    Order Overview
+                    <span class="fs-4">({{ tracklist_songs|length }} song{% if tracklist_songs|length != 1 %}s{% endif %})</span>
+                </h2>
+
+                <!-- headings row -->
+                <div class="row basic-font">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <h4 class="mb-0 fw-bolder midi-teal">SONG</h4>
+                    </div>
+                    <div class="col-3">
+                        <h4 class="mb-0 fw-bolder midi-teal">PRICE</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-0">
+                        <hr class="hr-90-teal mb-2">
+                    </div>
+                </div>
+                <!-- creating each row of the overview -->
+                {% for song in tracklist_songs %}
+                    <div class="row d-flex align-items-center mb-2">
+                        <div class="col-3">
+                            <img class="d-block d-md-none square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                            <img class="d-none d-md-block square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                        </div>
+                        <div class="col-6">
+                            <h5>{{ song.name }}</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>£{{ song.price }}</h5>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="row">
+                    <div class="col-12 p-0">
+                        <hr class="hr-80 my-2">
+                    </div>
+                </div>
+
+                <div class="row basic-font">
+                    <div class="col-12">
+                        <h4 class="mb-0 fw-bolder">
+                            Order Total:
+                            <span class="midi-teal ms-2">£{{ tracklist_total }}</span>
+                        </h4>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12 d-block d-md-none p-0">
+                <hr class="hr-full-teal my-4">
+            </div>
+
+            <!-- details -->
+            <div class="col-12 col-md-6 midi-l-grey logo-font text-center">
+                <!-- Your details row -->
+                <div class="row">
+                    <div class="col-12">
+                        <form method="POST" id="payment-form" action="{% url 'checkout' %}">
+                            {% csrf_token %}
+                            <h2>
+                                Your Details
+                            </h2>
+                            <div class="row">
+                                <div class="col-12 mt-2 mb-2 text-start">
+                                    {{ order_form.full_name | as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mt-2 mb-2 text-start">
+                                    {{ order_form.email | as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="midi-warning small m-0 text-start basic-font">
+                                        Please ensure that your email is correct!
+                                        <br>
+                                        This is the email that your Order Confirmation will be sent to, which is where you will be able to access the downloadable versions of your purchased song.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Payment details row -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- TO BE POPULATED WITH STRIPE PAYMENT FUNCTIONALITY -->
+                                    <!-- div for all card details -->
+                                    <!-- <div class="mb-3" id="card-element"></div> -->
+                                    <!-- div for displaying any form errors -->
+                                    <!-- <div class="mb-3 text-danger" id="card-errors" role="alert"></div> -->
+                                    <!-- hidden input with client_secret to pass to the view -->
+                                    <!-- <input type="hidden" value="{{ client_secret }}" name="client_secret"> -->
+                                </div>
+                            </div>
+                            
+                            <!-- submit (handlled with JS since the payment_intent status needs to be confrimed as succeeded before the form can be saved) and back to tracklist buttons -->
+                        </form>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    {% else %}
+        <div class="row d-flex w-100 mt-4">
+            <div class="col-12 text-center">
+                <p class="midi-l-grey fs-4">
+                    You don't have any songs in your Tracklist right now.
+                </p>
+                <a href="{% url 'songs' %}" role="button" class="btn fs-5">
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                    <p class="m-0 d-inline ps-2">Browse Pre-made Songs</p>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- container for the loading overlay which is displayed on form submission -->
+    
+</div>
+{% endblock %}
+
