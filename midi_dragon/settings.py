@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'home',
     'songs',
     'tracklist',
+    'checkout',
     'crispy_forms',
 ]
 
