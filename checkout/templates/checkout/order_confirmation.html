@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Order Confirmation{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4 text-center">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">Order Confirmation</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- use the order.fullname and order.email in your messages (NOT user.username or user.email since its what they input on the form that matters) -->
+
+    <h2 class="midi-l-grey">Order place by: {{ order.full_name }} and confirmation email sent to {{ order.email }}</h2>
+
+    <!-- copy the order overview from checkout.html BUT USING: order.field to populate it - and centralise it on this page - ALSO make it obvious that each song is a clickable link to download it -->
+
+    <!-- ALSO - for authenticated users - add the check to song_details for if they have already purchased the song -->
+
+    <!-- ALSO in songs list you ned to disbale add to tracklist button for users who are authenticated and have the song in one of their orders -->
+
+    <!-- button to browse songs -->
+    
+</div>
+{% endblock %}
+
