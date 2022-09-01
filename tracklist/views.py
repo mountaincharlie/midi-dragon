@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views import View
 from songs.models import Song
+from tracklist.contexts import tracklist_contents
 
 
 def view_tracklist(request):
@@ -46,6 +47,9 @@ class AddToTracklist(View):
         # updating the tracklist var in the session dict
         request.session['tracklist'] = tracklist
 
+        # setting the updating_tracklist var to 'true' in the session so that in toast_success.html it creates the message with the tracklist view displayed
+        request.session['updating_tracklist'] = 'true'
+
         # to check the session thing works
         print(request.session['tracklist'])
 
@@ -86,6 +90,9 @@ class RemoveFromTracklist(View):
 
         # updating the tracklist var in the session list
         request.session['tracklist'] = tracklist
+
+        # setting the updating_tracklist var to 'true' in the session so that in toast_success.html it creates the message with the tracklist view displayed
+        request.session['updating_tracklist'] = 'true'
 
         # to check the session thing works
         print(request.session['tracklist'])
