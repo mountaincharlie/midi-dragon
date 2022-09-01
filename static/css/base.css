@@ -88,6 +88,10 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     background-color: #9A9EAE !important;
 }
 
+.midi-warning-bg {
+    background-color: #fc5a5a !important;
+}
+
 
 /* ---------- midi dragon btns */
 
@@ -183,6 +187,11 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
 .midi-border-l-grey{
     border-radius: 2px;
     border-color: #9A9EAE;
+}
+
+.midi-border-pink{
+    border-radius: 2px;
+    border-color: #FF57D2;
 }
 
 .midi-btm-border-teal{
@@ -527,6 +536,59 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
 
 .StripeElement--webkit-autofill {
   background-color: #1D212E !important;
+}
+
+
+/* ---------- toasts/django messages */
+
+/* positioning the toasts and keeping them on top layer */
+.messages-container{
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 99999;
+}
+
+.custom-toast{
+    overflow: visible;
+}
+
+.toast-header{
+    justify-content: space-between;
+}
+
+.toast-body{
+    border-radius: 4px;
+    border-top-color: #1D212E !important;
+}
+
+/* from CSS-tricks.com: https://css-tricks.com/snippets/css/css-triangle/ */
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent; 
+    border-bottom: 10px solid black;
+    position: absolute;
+    top: -10px;
+    right: 36px;
+}
+
+
+.arrow-teal {
+    border-bottom-color: #00D1CF !important;
+}
+
+.arrow-pink {
+    border-bottom-color: #FF57D2 !important;
+}
+
+.arrow-l-grey {
+    border-bottom-color: #9A9EAE !important;
+}
+
+.arrow-midi-warning {
+    border-bottom-color: #fc5a5a !important;
 }
 
 
