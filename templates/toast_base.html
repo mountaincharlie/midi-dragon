@@ -1,0 +1,21 @@
+<!-- adapting Bootstraps Toasts - https://getbootstrap.com/docs/5.0/components/toasts/ -->
+<!-- values for the blocks defined in each specific Toast message type in the includes/toasts/ dir -->
+
+<div class="toast rounded show custom-toast midi-border-{% block toast_border %}{% endblock %} midi-{% block text_color %}{% endblock %}" data-autohide="false">
+    <div class="arrow-up arrow-{% block arrow_type %}{% endblock %}"></div>
+    <!-- header -->
+    <div class="toast-header justify-space-between midi-d-grey-bg">
+        <strong class="logo-font text-uppercase midi-{% block header_text_color %}{% endblock %}">{% block toast_type %}{% endblock %}</strong>
+        <!-- button for user to close -->
+        <button type="button" class="btn btn-l-grey p-0 border-0 close-toast close fs-5" data-dismiss="toast" aria-label="Close">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
+    </div>
+    <!-- body -->
+    {% block toast_body %}
+    <div class="toast-body basic-font midi-d-grey-bg">
+        <!-- Django messages -->
+        {{ message }}
+    </div>
+    {% endblock %}
+</div>
