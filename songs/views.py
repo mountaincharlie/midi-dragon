@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib import messages
 from django.views import generic, View
 from django.db.models import Q
 from django.db.models.functions import Lower
@@ -74,6 +75,7 @@ class SongsList(generic.ListView):
             # handling blank search with django message and redirect
             if not query:
                 # include error message with django messages
+                messages.error(request, "Your query is empty")
                 # reverse here just reloads the page
                 return redirect(reverse('songs'))
 
@@ -303,17 +305,17 @@ class DesignCustomSong(View):
             if instruments_formset.is_valid():
                 instruments_formset.save()
 
-            # messages.success(
-            #     request,
-            #     (f'{song.name} was successfully created!')
-            # )
+            messages.success(
+                request,
+                (f'"{song.name}" project was successfully created!')
+            )
             return redirect(song.get_absolute_url())
 
         else:
-            # messages.error(
-            #     request,
-            #     ('Please ensure all the required form fields have been correctly filled in.')
-            # )
+            messages.error(
+                request,
+                ('Please ensure all the required form fields have been correctly filled in.')
+            )
             context = {
                 'custom_song_form': custom_song_form,
             }
@@ -411,17 +413,17 @@ class EditCustomSong(View):
 
                 instruments_formset.save()
 
-            # messages.success(
-            #     request,
-            #     (f'{song.name} was successfully updated!')
-            # )
+            messages.success(
+                request,
+                (f'"{song.name}" project was successfully updated!')
+            )
             return redirect(song.get_absolute_url())
 
         else:
-            # messages.error(
-            #     request,
-            #     ('Please ensure all the required form fields have been correctly filled in.')
-            # )
+            messages.error(
+                request,
+                ('Please ensure all the required form fields have been correctly filled in.')
+            )
             context = {
                 'custom_song_form': custom_song_form,
             }
@@ -453,16 +455,16 @@ class DeleteSong(generic.DeleteView):
         # if request.user.is_superuser => delete
         if request.user.is_superuser:
             song.delete()
-            # messages.success(request, (f'{song.name} was successfully deleted'))
+            messages.success(request, (f'"{song.name}" was successfully deleted'))
             return render(request, 'home/index.html')
             # return redirect()  # REDIRECT TO PROFILE once app created
 
         # ADD --- AND doesnt exist in an order (hasnt been bought yet) => delete
         elif request.user.username == song.user.username:
             song.delete()
-            # messages.success(request, (f'{song.name} was successfully deleted'))
+            messages.success(request, (f'"{song.name}" was successfully deleted'))
             return render(request, 'home/index.html')
             # return redirect()  # REDIRECT TO PROFILE once app created
         else:
-            # messages.error(request, ('You do not have permission to make this action'))
+            messages.error(request, ('You do not have permission to make this action'))
             return render(request, 'home/index.html')

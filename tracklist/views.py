@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.views import View
 from songs.models import Song
 
@@ -34,13 +35,13 @@ class AddToTracklist(View):
 
         # additional check if its already in their tracklist it displays message and doesnt add to tracklist
         if song_slug in tracklist:
-            # messages.error(request, f"You already have {song.name} in your tracklist")
+            messages.error(request, f"You already have {song.name} in your tracklist")
             print(f"You already have {song.name} in your tracklist")
         else:
             # add the song_slug to the tracklist list
             tracklist.append(song_slug)
             print(f'{song.name} added to tracklist')
-            # messages.success(request, f"{song.name} has been added to your tracklist")
+            messages.success(request, f"{song.name} has been added to your tracklist")
 
         # updating the tracklist var in the session dict
         request.session['tracklist'] = tracklist
@@ -76,11 +77,12 @@ class RemoveFromTracklist(View):
         # checking if the song is in the list and removing it
         if song_slug in tracklist:
             tracklist.remove(song_slug)
-            # messages.success(request, f"{song.name} was removed from your tracklist")
-            print(f"removed {song.name} from tracklist")
+            if len(tracklist) == 0:
+                messages.success(request, f"{song.name} was removed from your tracklist. \n Your Tracklist is now empty.")
+            else:
+                messages.success(request, f"{song.name} was removed from your tracklist.")
         else:
-            print(f'There was an error while trying to remove {song.name} from the tracklist')
-            # messages.error(request, f"There was an error while trying to remove {song.name} from your tracklist")
+            messages.error(request, f"There was an error while trying to remove {song.name} from your tracklist.")
 
         # updating the tracklist var in the session list
         request.session['tracklist'] = tracklist
@@ -90,31 +92,3 @@ class RemoveFromTracklist(View):
 
         # calls the hidden redirect_url input
         return redirect(redirect_url)
-
-# def remove_from_bag(request, item_id):
-#     """
-#     View to remove an item from the bag if the remove button is clicked
-#     Dont need to get the quantity sincec they will want it to be 0
-#     Using a Try Except block to catch any errors since this is posted to via JS
-#     Always redirects to the shopping bag
-#     """
-
-#     product = get_object_or_404(Product, pk=item_id)
-
-#     try:
-#         # get the session if it exists or assign empty dict
-#         bag = request.session.get('bag', {})
-
-#         # removing the item from the bag dict
-#         bag.pop(item_id)
-#         messages.success(request, f"{product.name} has been removed from your bag")
-
-#         # updating the bag var in the session dict
-#         request.session['bag'] = bag
-
-#         # posted to via a JS function therefore need to use HttpResponse
-#         return HttpResponse(status=200)
-#     except Exception as e:
-#         # print(e)
-#         messages.error(request, f'There was an error when removing {product.name}. {e}')
-#         return HttpResponse(status=500)
