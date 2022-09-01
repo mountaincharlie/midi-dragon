@@ -598,6 +598,28 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
 }
 
 
+/* ---------- payment processing overlay */
+
+/* CREDIT CI walkthrough for the overlay filling the screen and being centralised - https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/static/checkout/css/checkout.css */
+#payment-processing-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 209, 207, 0.8);
+    /* above everything except stripe pop-ups */
+    z-index: 9999;
+}
+
+/* for custom JS for processing overlay */
+.circle-highlight{
+    color:#FF57D2 !important;
+    font-size: small;
+}
+
+
 /* ---------- navbar */
 
 #profiledropdownbtn::after,
