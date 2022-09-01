@@ -126,12 +126,12 @@
                             <!-- class submit-button -->
                             <div class="text-center text-md-end mt-3 mt-md-5 mb-2">
                                 <!-- back to bag button to make adjustments -->
-                                <a href="{% url 'tracklist' %}" role="button" class="btn btn-l-grey basic-font me-0 me-md-1 mb-1 mb-md-0">
+                                <a href="{% url 'tracklist' %}" role="button" class="btn btn-l-grey basic-font m-1">
                                     <i class="fa-solid fa-circle-arrow-left"></i>
                                     <p class="m-0 d-inline ps-2">Back to Tracklist</p>
                                 </a>
                                 <!-- submit button with id that JS can access to submit the form -->
-                                <button id="payment-submit-button" class="btn btn-teal ms-0 ms-md-1 mt-1 mt-md-0">
+                                <button id="payment-submit-button" class="btn btn-teal m-1">
                                     <i class="fa-solid fa-credit-card"></i>
                                     <!-- <i class="fa-solid fa-lock"></i> -->
                                     <p class="m-0 d-inline ps-2 basic-font">Complete Order</p>
@@ -169,7 +169,20 @@
         </div>
     {% endif %}
 
-    <!-- container for the loading overlay which is displayed on form submission -->
+    <!-- container for the #payment-processing-overlay which is displayed on form submission -->
+    <div id="payment-processing-overlay" class="text-uppercase logo-font midi-d-grey text-center">
+        <div class="row w-100">
+            <div class="col-12 align-self-center text-center">
+                <h1 class="m-4 fw-bolder">Processing your order</h1>
+                <span>
+                    <i id="circle-1" class="fa-solid fa-circle mx-2 circle-highlight"></i>
+                    <i id="circle-2" class="fa-solid fa-circle mx-2"></i>
+                    <i id="circle-3" class="fa-solid fa-circle mx-2"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
     
 </div>
 {% endblock %}
