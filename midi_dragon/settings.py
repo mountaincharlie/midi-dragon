@@ -91,6 +91,9 @@ TEMPLATES = [
     },
 ]
 
+# storing the messages in the session
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 # ALLAUTH
 
 AUTHENTICATION_BACKENDS = [
