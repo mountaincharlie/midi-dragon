@@ -1,27 +1,25 @@
 // jshint esversion: 6
 
 /**
- * CREDITS
+ * CREDITS:
+ * Setup Stripe.js and Submit the payment to Stripe sections used for setting
+ * up the stripe and elements vars, styling the card element:
+ * [https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=elements]
  * 
- * [Setup Stripe.js and Submit the payment to Stripe section] https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=elements
- * Stripe.js creating and mounting the card element and form submit event listner [https://stripe.com/docs/payments/accept-card-payments?platform=web&ui=elements]
+ * Stripe.js creating and mounting the card element and form submit event
+ * listner:
+ * [https://stripe.com/docs/payments/accept-card-payments?platform=web&ui=elements]
  * 
- * Logic adapted from CI walkthrough
- * https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/static/checkout/js/stripe_elements.js
+ * 'change' event listener and form 'submit' event listener logic adapted to fit this project, from Code Institute's walkthrough:
+ * [https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/static/checkout/js/stripe_elements.js]
  */
 
 
-// ---- GLOBAL VARS
+// ------ GLOBAL VARS
 
-// getting stripe_public_key and client_secret text without first and last chars (the '')
+// gets stripe_public_key and client_secret text without the ' '
 let stripePublicKey = document.getElementById('id_stripe_public_key').innerText.slice(1, -1);
 let clientSecret = document.getElementById('id_client_secret').innerText.slice(1, -1);
-
-// console.log('stripePublicKey', stripePublicKey)
-// console.log('clientSecret', clientSecret)
-
-// let clientSecret = $('#id_client_secret').text().slice(1, -1);
-// let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 
 // using stripe's builtin JS to setup Stripe with our stripePublicKey
 let stripe = Stripe(stripePublicKey);
@@ -31,49 +29,49 @@ let elements = stripe.elements();
 // defines the highlightInterval to be used later to set and stop the interval for highlightCircle() call
 let highlightInterval = 0;
 
-// the card element can accept a style argument [syntax from stripe styles docs]
+// gets the 'card-errors' div for creating and displaying potential errors
+let errorDiv = document.getElementById('card-errors');
+
+// gets the 'payment-submit-button' button to disable it after submission to prevent multiple form submissions
+let formSubmitButton = document.getElementById('payment-submit-button');
+
+// the card element can accept a style argument [syntax from stripe styles docs but with custom styles to fit the site style]
 var style = {
     base: {
         color: '#9A9EAE',
         backgroundColor: '#1D212E',
         iconColor: '#00D1CF',
-        fontFamily: '"BioRhyme", sans-serif',
         fontSize: '16px',
         '::placeholder': {
             color: '#9A9EAE',
-            // fontFamily: '"BioRhyme", sans-serif',
         }
     },
     invalid: {
-        // using midi-warning class color
         color: '#fc5a5a',
-        iconColor: '#fc5a5a'
+        iconColor: '#fc5a5a',
     }
 };
 
 // creates, styles and mounts the Stripe card element
 let card = elements.create('card', {style: style});
-// using stripe's method to mount the card to the #card-element div 
 card.mount('#card-element');
 
+// gets the card-element element
 let cardElement = document.getElementById('card-element');
-console.log('cardElement', cardElement)
 
 
-// ------ Event Listener - handling real-time errors on card element
+// ------ EVENT LISTENER - handling real-time errors on card element
 /**
- * Applying a 'change' event listener to the card element
+ * Adapted from Code Institue's walkthrough [link in file docstring]
+ * Applies 'change' event listener to the card element
  * Checks for errors everytime the card elements input changes
- * -gets the card-errors div (near card div on checkout page)
+ * Gets the card-errors div (near card div on checkout page)
  * so that if there are errors they can be displayed to the user
  * through this
- * -if theres an error in the event, the message is created and put into
+ * If theres an error in the event, the message is created and put into
  * the card-errors div
 */
-
 card.addEventListener('change', function(ev) {
-    let errorDiv = document.getElementById('card-errors');
-    // console.log('errorDiv', errorDiv)
     if (ev.error) {
         let error_msg_html = `
             <span role="alert">
@@ -84,81 +82,75 @@ card.addEventListener('change', function(ev) {
         errorDiv.innerHTML = error_msg_html;
     } else {
         errorDiv.innerText = '';
-    }
+    };
 });
 
 
-// ------ Event Listener - handling the form submit with 'submit' Ev Listener
-/*
-    -gets the 'payment-form' form element
-    -applies Ev Listener to this element
-    -the default action (POST) is prevented
-    -disables the card element and submit button to prevent mutiple
-    submissions
-    -calls the fadeToggle on 'payment-form' and 'payment-processing-overlay'
-    -gets the csrf token generated by django on our form
-    -creates an object to contain this data to pass to the webhook_handler.py
-    view
-    -creates a url var for the new /checkout/cache_checkout_data/
-    -posts all this data to the cache_checkout_data view
-    -adding the .done method with callback function to check that the
-    payment intent is successfully updated before calling the confirmed
-    payment method
-    -the callback function contain sthe below:
-    -uses stripe's confirmCardPayment method to securely send
-    the card details to stripe with the clientSecret
-    -then checks if there is an error
-    -if there is, it gets the card-errors div, creates
-    the error message and then puts it in the div
-    -then it calls the fadeToggle on 'payment-form' and 'payment-processing-overlay'
-    and turns off the disable on the card element and submit
-    button so the user could correct the error and when the submit
-    button is clicked again, the Ev Listener would eb called again
-    -if there are no errors, the paymentIntent's status is set to
-    'succeeded' and the form is submitted
-    -at the end of the done method call, the fail method is applied to
-    handle when a 400 response is returned, reloading the window for the
-    current url
+// ------ EVENT LISTENER - handling the form submit with 'submit' Ev Listener
+/**
+ * Adapted from Code Institue's walkthrough [link in file docstring]
+ * 
+ * Gets the 'payment-form' form element and applies the 'submit' Event Listener
+ * to it.
+ * The default action (POST) is prevented so that other actions can be taken
+ * first
+ * Applies the 'disabled' attribute (setting any value will set disabled as
+ * True) to the card elememt and submit button to prevent mutiple submissions.
+ * 
+ * Calls jquery's fadeToggle method on 'payment-form' and
+ * 'payment-processing-overlay' to hide one and reveal the other.
+ * Applies the 'd-flex' class to the 'payment-processing-overlay' so that it
+ * displays centrally.
+ * Calls highlightCircle() custom function with Javascript's setInterval()
+ * method (calls highlightCircle() every 300 miliseconds)
+ * Gets the csrf token generated by django on our form and passes it into the
+ * postFormData dictionary along with 'client_secret' and defines the url to 
+ * the cache_checkout_data view function, so that these variables can be passed
+ * into jquery's asynchronous post method.
+ * Calls jquery's asynchronous post method with done method triggering the 
+ * callback function which checks that the payment intent is successfully
+ * updated before calling the confirmed payment method.
+ * The callback function contains the below:
+ * -Uses stripe's confirmCardPayment method to securely send the card details
+ * to stripe with the clientSecret
+ * -Then checks if there is an error and if there is, it constructs the message
+ * and applies it as the innerHTML of the errorDiv
+ * -Then it calls the fadeToggle on 'payment-form' and
+ * 'payment-processing-overlay' again to reveal the form and hide the overlay,
+ * removes the 'd-flex' class from the overlay, calls Javascript's
+ * clearInterval() method to stop the highlightCircle() being called and
+ * removes the disabled attributes from the cardElement and formSubmitButton so
+ * that the user can fix the error and resubmit the form.
+ * -If there are no errors, the paymentIntent's status is set to
+ * 'succeeded' and the form is submitted
+ * -At the end of the done method call, the fail method is applied to
+ * handle when a 400 response is returned, calling Javascript's
+ * clearInterval() method to stop the highlightCircle() being called reloading
+ * the window for the current url.
 */
 let form = document.getElementById('payment-form');
-
-console.log('form', form)
 
 form.addEventListener('submit', function(ev) {
     ev.preventDefault();
 
-    console.log('form being submitted')
+    cardElement.setAttribute('disabled', 'true');  
+    formSubmitButton.setAttribute('disabled', 'true');
 
-    // disabling cardElement and submit button to prevent multiple payments
-    // console.log('cardElement', cardElement)
-    cardElement.setAttribute('disabled', 'true');  // sets true
-    
-    // gets the payment-submit-button button to disable it
-    let formSubmitButton = document.getElementById('payment-submit-button');
-    formSubmitButton.setAttribute('disabled', 'true');  // passing any value sets it to true
-    // console.log('payment-submit-button', formSubmitButton)
-
-    // uses jquery fadeToggle method to hide payment form and show processing overlay [CREDIT - CI walkthrough]
     $('#payment-form').fadeToggle(100);
     $('#payment-processing-overlay').fadeToggle(100);
     $('#payment-processing-overlay').addClass('d-flex');
-    // calling the set highlightCircle function in JS setInterval method with 200ms
     highlightInterval = setInterval(highlightCircle, 300);
 
     let csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-    // console.log('csrfToken', csrfToken)
 
-    // gets the csrfmiddlewaretoken and client_secret to pass into the asynchronous post method as postFormData and the url for the cache_checkout_data view method
     let postFormData = {
         'csrfmiddlewaretoken': csrfToken,
         'client_secret': clientSecret,
     };
     let url = '/checkout/cache_checkout_data/';
 
-    // using jquery .post() method to send asynchronous http post request [CREDIT - CI walkthrough CREDIT in docstring]
     $.post(url, postFormData).done(function() {
 
-        // confirms card payment and sends securely to Stripe
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: card,
@@ -169,9 +161,6 @@ form.addEventListener('submit', function(ev) {
             },
         }).then(function(result) {
             if (result.error) {
-
-                let errorDiv = document.getElementById('card-errors');  // make global var?
-
                 let error_msg_html = `
                         <span role="alert">
                             <i class="fa-solid fa-circle-xmark"></i>
@@ -179,49 +168,46 @@ form.addEventListener('submit', function(ev) {
                         <span>${result.error.message}</span>
                     `
                     errorDiv.innerHTML = error_msg_html;
-    
-                // using jquery fadeToggle method [CREDIT - CI walkthrough]
 
-                // reveals payment form again and hides processing overlay if there are errors with the card (e.g. not authorised or insufficient funds)
                 $('#payment-form').fadeToggle(100);
                 $('#payment-processing-overlay').fadeToggle(100);
-                // removes the d-flex class so it will be hidden
                 $('#payment-processing-overlay').removeClass('d-flex');
-                // clears the interval calling circleHighlight()
-                clearInterval(highlightInterval)
+                clearInterval(highlightInterval);
     
-                // removes the disabled attricute from the card element
                 cardElement.removeAttribute('disabled');
-    
-                // gets the payment-submit-button button and removes its disabled attribute
-                let formSubmitButton = document.getElementById('payment-submit-button');
-                formSubmitButton.removeAttribute('disabled');  // make GLOBAL var?
+                formSubmitButton.removeAttribute('disabled');  
 
             } else {
-                // submitting the form if the payment intent succeeds
                 if (result.paymentIntent.status === 'succeeded') {
                     form.submit();
                     console.log('PAYMENT SUCCESS - form submitted')
-                }
-            }
+                };
+            };
         });
     }).fail(function() {
-        // clear circleHighlight interval
-        clearInterval(highlightInterval)
-        // just reloads the page and the error message will be displayed
-        // and the user wont be charged
-        // [CREDIT - linehammer on https://dev.to/mmeurer00/location-reload-a55]
+        clearInterval(highlightInterval);
         window.location = document.URL;
         console.log('PAYMENT FAILED')
     });
-    
 });
 
 
-// CUSTOM highlightCircle method
 /**
  * @name highlightCircle
- * @description 
+ * @description custom method
+ * Called in the setInterval() method when
+ * the payment-processing-overlay is displayed on screen
+ * while the payment is being processed.
+ * Gets each of the circle icons from the overlay's div
+ * and stroes them as circleOne/Two/Three.
+ * If circleOne contains the 'circle-highlight' class,
+ * then it is removed from circleOne and added to circleTwo.
+ * Similarly if CircleTwo or CircleThree have the class then
+ * it is removed from them and added to the next circle.
+ * If none of these conditions are satisfied then the
+ * clearInterval() method is called to cancel the setInterval()
+ * but the payment-processing-overlay will still be visible for
+ * as long as its required.
 */
 function highlightCircle(){
     
@@ -242,6 +228,6 @@ function highlightCircle(){
         circleOne.classList.add('circle-highlight');
         console.log('three to one')
     } else {
-        console.log('SOMETHING WENT WRONG')
+        clearInterval(highlightInterval);
     };
 };
