@@ -45,11 +45,11 @@ class Order(models.Model):
         default=0
     )
 
-    # THE BELOW MAY BE REQUIRED LATER WHEN SETTING UP STRIPE
-    # original_bag = models.TextField(null=False, blank=False, default='')
-    # stripe_pid = models.CharField(
-    #     max_length=254, null=False, blank=False, default=''
-    #     )
+    # required when checking if an order exists in webhook_handler.py
+    original_tracklist = models.TextField(null=False, blank=False, default='')
+    stripe_pid = models.CharField(
+        max_length=254, null=False, blank=False, default=''
+        )
 
     class Meta:
         """ meta data for how to order orders """
@@ -79,6 +79,10 @@ class Order(models.Model):
         Uses the 'orderitems' related_name
         """
 
+        print('ORDER TOTAL:', self.order_total)
+        print('ORDER TOTAL TYPE:', type(self.order_total))
+        print('SONG PRICE:', song_price)
+        print('SONG PRICE TYPE:', type(song_price))
         self.order_total += song_price
         self.save()  # saves the instance
 
@@ -145,6 +149,8 @@ def update_on_save(sender, instance, created, **kwargs):
     """
     song_price = instance.song.price
 
+    print('UPDATE ON SAVE CALLED')
+
     instance.order.update_total(song_price)
 
 
@@ -161,5 +167,7 @@ def update_on_delete(sender, instance, **kwargs):
     be subtracting from the total).
     """
     song_price = (instance.song.price) * -1
+
+    print('UPDATE ON DELETE CALLED')
 
     instance.order.update_total(song_price)
