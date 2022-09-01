@@ -236,6 +236,11 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     width: 5vw;
 }
 
+.square-img-smaller{
+    height: 10vw;
+    width: 10vw;
+}
+
 /* in tracklist */
 .square-img-small{
     height: 15vw;
@@ -547,6 +552,7 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     top: 72px;
     right: 15px;
     z-index: 99999;
+    max-width: 80vw;
 }
 
 .custom-toast{

@@ -29,14 +29,17 @@
             <div class="bag-notification-wrapper">
                 {% for song in tracklist_songs %}
                     <div class="row d-flex align-items-center my-4 my-md-2">
-                        <div class="col-3">
-                            <img class="d-block d-md-none square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
-                            <img class="d-none d-md-block square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                        <!-- col-s-4 col-md-3 -->
+                        <div class="col-3 col-md-4">
+                            <img class="d-block d-lg-none square-img-smaller img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                            <img class="d-none d-lg-block square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
                         </div>
-                        <div class="col-6">
+                        <!-- col-s-4 col-md-6 -->
+                        <div class="col-6 col-md-5">
                             <h5>{{ song.name }}</h5>
                         </div>
-                        <div class="col-3">
+                        <!-- col-s-4 col-md-3 -->
+                        <div class="col-3 col-md-3">
                             <h5>£{{ song.price }}</h5>
                         </div>
                     </div>
