@@ -1,0 +1,66 @@
+{% extends "toast_base.html" %}
+
+{% block toast_border %}teal{% endblock %}
+
+{% block text_color %}teal{% endblock %}
+
+{% block arrow_type %}teal{% endblock %}
+
+{% block bg_type %}teal{% endblock %}
+
+{% block header_text_color %}teal{% endblock %}
+
+{% block toast_type %}Success{% endblock %}
+
+{% block toast_body %}
+    <div class="toast-body midi-d-grey-bg midi-l-grey">
+        <div class="row">
+            <div class="col">
+                {{ message }}
+            </div>
+        </div>
+
+        <!-- if statement to only render tracklist overview if the prompting action causes the tracklist to be updated - in the methods using the sucess messages, pass in the context - 'tracklist_updated': 'true', -->
+        {% if updating_tracklist == 'true' %}
+        {% if tracklist_total %}
+            <hr class="mt-1 mb-3">
+            <p class="logo-font midi-d-grey-bg midi-l-grey py-1">Your Tracklist ({{ tracklist_songs|length }} song{% if tracklist_songs|length != 1 %}s{% endif %})</p>
+            <!-- STYLE in base.css to prevent the toast being too long -->
+            <div class="bag-notification-wrapper">
+                {% for song in tracklist_songs %}
+                    <div class="row d-flex align-items-center my-4 my-md-2">
+                        <div class="col-3">
+                            <img class="d-block d-md-none square-img-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                            <img class="d-none d-md-block square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
+                        </div>
+                        <div class="col-6">
+                            <h5>{{ song.name }}</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>£{{ song.price }}</h5>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <!-- total bag cost -->
+                    <strong>
+                        <p class="mt-3 mb-1">
+                            Tracklist Total:
+                            <span>£{{ tracklist_total|floatformat:2 }}</span>
+                        </p>
+                    </strong>
+                    <!-- button to checkout -->
+                    <a href="{% url 'checkout' %}" role="button" class="btn btn-teal mt-2 ms-1">
+                        <i class="fa-solid fa-lock"></i>
+                        <p class="m-0 d-inline ps-2 basic-font">Secure Checkout</p>
+                    </a>
+                </div>
+            </div>
+            
+        {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
