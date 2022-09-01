@@ -17,7 +17,7 @@
     {% if tracklist_songs %}
     
         <!-- mobile: price and browsing/checkout buttons -->
-        <div class="row w-100 d-flex d-md-none">
+        <div class="row d-flex d-md-none">
             <div class="col-12">
                 {% include 'includes/price-and-buttons.html' %}
             </div>
@@ -30,13 +30,13 @@
         </div>
 
         <!-- mobile headings row -->
-        <div class="row w-100 d-flex d-md-none">
+        <div class="row d-flex d-md-none">
             <div class="col-12 text-center">
                 <h4 class="mb-0 fw-bolder midi-teal mb-2 mt-4">TRACKLIST SUMMARY</h4>
             </div>
         </div>
 
-        <div class="row w-100">
+        <div class="row">
             <div class="col-12 p-0">
                 <hr class="hr-full-teal m-0 mb-2">
             </div>
@@ -45,7 +45,7 @@
         <!-- for loop -->
         {% for song in tracklist_songs %}
 
-            <div class="row w-100 d-flex midi-l-grey logo-font align-items-center text-center">
+            <div class="row d-flex midi-l-grey logo-font align-items-center text-center">
                 <!-- image -->
                 <div class="col-12 col-md-3">
                     <a href="{{ song.get_absolute_url }}" title="Go to song details">
@@ -55,7 +55,7 @@
                 <!-- song info -->
                 <div class="col-12 col-md-5">
                     <!-- song name -->
-                    <div class="row w-100">
+                    <div class="row">
                         <div class="col-12">
                             <a href="{{ song.get_absolute_url }}" title="Go to song details" class="midi-l-grey">
                                 <h4 class="fw-bolder mt-2 mb-4">{{ song.name }}</h4>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <!-- genre -->
-                    <div class="row w-100">
+                    <div class="row">
                         <div class="col-12">
                             {% if song.genre %}
                                 <h5>{{ song.genre }}</h5>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <!-- custom or pre-made song -->
-                    <div class="row w-100">
+                    <div class="row">
                         <div class="col-12">
                             {% if song.user.is_superuser %}
                                 <h6>Pre-made Song</h6>
@@ -107,7 +107,7 @@
             </div>
 
             <!-- hr to seperate each song in tracklist summary -->
-            <div class="row w-100 my-2">
+            <div class="row my-2">
                 <div class="col-12">
                     <hr class="hr-90-light">
                 </div>
@@ -115,14 +115,14 @@
         {% endfor %}
 
         <!-- dekstop: price and browsing/checkout buttons -->
-        <div class="row w-100 d-none d-md-flex">
+        <div class="row d-none d-md-flex">
             <div class="col-12 align-self-center text-center">
                 {% include 'includes/price-and-buttons.html' %}
             </div>
         </div>
 
     {% else %}
-        <div class="row d-flex w-100 mt-4">
+        <div class="row d-flex mt-4">
             <div class="col-12 text-center">
                 <p class="midi-l-grey fs-4">
                     You don't have any songs in your Tracklist right now.
