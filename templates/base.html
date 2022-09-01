@@ -77,7 +77,28 @@
         </header>
 
         <!-- if statement for displaying any django messages -->
+        <!-- using Django's built in levels values CREDIT - https://docs.djangoproject.com/en/4.1/ref/contrib/messages/#creating-custom-message-levels -->
+        <!-- implementing the messages in an if statement as demonstrated in CI walkthrough CREDIT - https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/templates/base.html -->
         {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    {% with message.level as level %}
+                        <!-- django level 40 => error -->
+                        {% if level == 40 %}
+                            {% include 'includes/toasts/toast_error.html' %}
+                        <!-- django level 30 => warning -->
+                        {% elif level == 30 %}
+                            {% include 'includes/toasts/toast_warning.html' %}
+                        <!-- django level 25 => success -->
+                        {% elif level == 25 %}
+                            {% include 'includes/toasts/toast_success.html' %}
+                        <!-- default to info -->
+                        {% else %}
+                            {% include 'includes/toasts/toast_info.html' %}
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
         {% endif %}
 
         <main class="content-block midi-btm-border-teal">
@@ -114,6 +135,18 @@
                 ftypes[5]='birthday';
             }(jQuery));
             var $mcj = jQuery.noConflict(true);
+        </script>
+        <!-- closing toasts custom JS -->
+        <script type="text/javascript">
+            // gets the close button of any toasts
+            let hideToastsButtons = document.getElementsByClassName('close-toast');
+            // adds the click event listner to each button
+            for (let button of hideToastsButtons){
+                button.addEventListener('click', function(){ 
+                    // the function closes the toast belonging to the button
+                    this.parentElement.parentElement.remove();
+                });
+            };
         </script>
         {% endblock %}
 
