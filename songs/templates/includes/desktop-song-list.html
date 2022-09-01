@@ -8,7 +8,7 @@
         <h5>{{ song.name }}</h5>
     </a>
 </div> 
-<div class="col-md-4 col-lg-4 col-xl-3">
+<div class="col-md-4 col-lg-4 col-xl-3 mt-2">
     {% if song.audio_file %}
     <audio controls controlsList="nodownload" class="">
         <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
@@ -56,7 +56,7 @@
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-l-grey border-0" title="Add to Tracklist">
+                            <button type="submit" class="btn btn-l-grey border-0 p-1" title="Add to Tracklist">
                                 <i class="fa-solid fa-plus fs-5"></i>
                                 <i class="fa-solid fa-compact-disc fs-3"></i>
                             </button>

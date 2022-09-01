@@ -1,4 +1,4 @@
-<div class="col-4 px-0 text-center">
+<div class="col-4 px-0 text-center mt-2">
     <a href="{{ song.get_absolute_url }}" title="Go to song details">
         <img class="square-img-med img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
     </a>
@@ -81,7 +81,7 @@
             <form class="form" action="{% url 'add_to_tracklist' song.slug %}" method="POST">  
                 {% csrf_token %}
                 <div class="form-row">
-                    <div class="col-12">
+                    <div class="col-12 mb-2">
                         <button type="submit" class="btn btn-l-grey" title="Add to Tracklist">
                             <i class="fa-solid fa-plus fs-4"></i>
                             <p class="fs-5 ps-1 d-inline basic-font">Add to Tracklist</p>
