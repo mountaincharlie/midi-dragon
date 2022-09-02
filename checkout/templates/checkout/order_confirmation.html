@@ -20,6 +20,11 @@
             <h4 class="mb-2">Thank you <strong class="midi-teal basic-font">{{ order.full_name }}</strong> for ordering from midiDRAGON!</h4>
             <hr class="hr-50-light my-4">
             <h4 class="mb-2">
+                Order date:
+                <br>
+                <strong title="{{ order.date }}" class="midi-teal basic-font">{{ order.date|date:"d-m-Y" }}</strong>
+            </h4>
+            <h4 class="mb-2">
                 Your order number is:
                 <br>
                 <strong title="{{ order.order_number }}" class="midi-teal basic-font">{{ order.order_number }}</strong>
@@ -49,8 +54,6 @@
             <h2 class="mb-3">
                 Order Overview
                 <span class="fs-4">({{ songs|length }} song{% if songs|length != 1 %}s{% endif %})</span>
-
-                {{ songs.song }}
             </h2>
 
             <!-- headings row -->
