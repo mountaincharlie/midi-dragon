@@ -236,8 +236,10 @@
                 <div class="row basic-font">
                     <div class="col-12 text-end">
                         <!-- cancel should send user to their profile -->
-                        <a role="button" href="#" class="btn btn-l-grey me-2">Cancel</a>
-                        <button class="btn btn-teal pink-hover" type="submit" aria-label="Confirm save custom song design button">Save</button>
+                        <a role="button" href="{% url 'home' %}" class="btn btn-l-grey me-1">Cancel</a>
+                        <!-- delete button -->
+                        <a href="{% url 'delete_confirmation' song.slug %}" class="btn btn-midi-warning basic-font mx-1" role="button">Delete</a>
+                        <button class="btn btn-teal pink-hover ms-1" type="submit" aria-label="Confirm save custom song design button">Save</button>
                     </div>
                 </div>
             </form>
