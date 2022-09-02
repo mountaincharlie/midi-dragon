@@ -55,10 +55,12 @@
 
                 <!-- add: OR song is in any of the user's orders -->
                 <div class="col-12 midi-l-grey">
-                    <!-- if the admin is viewing -->
+
+                    <!-- ---- IF the admin is viewing -->
                     {% if user.is_superuser %}
+                    <!-- always downloadable if audio file exists -->
                         {% if song.audio_file %}
-                        <a href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
+                        <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
                             <i class="fa-solid fa-download fs-3"></i>
                             <p class="d-inline fs-5 ps-2 basic-font">Download</p>
                         </a>
@@ -74,17 +76,23 @@
                             </p>
                             {% endif %}
                         {% endif %}
-                    <!-- add: elif for if its use_as_testimonial => if its the owning user then they see download btn else other users see blank OR link to the user's content -->
-                    <!-- if a logged in user is viewing -->
+                    <!-- ADD: elif for if its use_as_testimonial => if its the owning user then they see download if the audio exists (either in tracklist, order or neither) btn else other users see blank OR link to the user's content -->
+
+                    <!-- ---- ELIF a logged in user is viewing -->
                     {% elif user.is_authenticated %}
                         <!-- checking if the song is in their tracklist already -->
-                        {% if tracklist_songs %}
+                        <!-- add: if it exists in one of their orders => download if audio exists -->
+                        {% if user_has_bought_song %}
+                            <p class="d-inline small basic-font midi-teal">
+                                You have already purchased '{{ song.name }}'.
+                            </p>
+                        {% elif tracklist_songs %}
                             <!-- checks if the current song is in the tracklist_songs list -->
                             {% if song in tracklist_songs %}
                                 <p class="d-inline small basic-font midi-teal">
                                     You have '{{ song.name }}' in your Tracklist.
                                 </p>
-                                <!-- add: if it exists in one of their orders => download if audio exists -->
+
                                 <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
 
                                 <!-- else just show price and Add To Tracklist button like for non auth users below? -->
@@ -98,8 +106,6 @@
                                 <!-- add to tracklist form -->
                                 {% include 'includes/add-to-tracklist-form.html' %}
                             {% endif %}
-
-                            <!-- add: if it exists in one of their orders => download if audio exists -->
                                 <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
 
                                 <!-- else just show price and Add To Tracklist button like for non auth users below? -->
@@ -199,12 +205,25 @@
                     This song will become playable once the admin has repaired the audio file.
                 </p>
                 {% endif %}
-            <!-- custom songs without audio files => song isnt complete yet -->
-            {% else %}
+            
+            {% elif not song.user.is_superuser and song in tracklist_songs %}
+            <p class="basic-font m-0">
+                Purchase your custom song in order for midiDRAGON to begin work on your project.
+                <br>
+                Once, its complete and you've been notified of this, your song will be playable here.
+            </p>
+            <!-- bought custom songs without audio files => song isnt complete yet -->
+            <!-- FINISH ONCE ORDER MODEL IS CONNECTED TO USER PROFILE -->
+            {% elif not song.user.is_superuser and song in users_orders %}
             <p class="basic-font m-0">
                 Your song will be playable here once its complete and uploaded by the admin.
                 <br>
                 If you have been notified that your song has been completed and the file is still not available, please contact the admin. 
+            </p>
+            <!-- standard message if its a custom song not in tracklist or bought before -->
+            {% else %}
+            <p class="basic-font m-0">
+                Purchased custom songs will be playable here once they're complete and uploaded by midiDRAGON.
             </p>
             {% endif %}
         </div>
@@ -323,7 +342,7 @@
             <!-- delete button -->
             <a href="{% url 'delete_confirmation' song.slug %}" class="btn midi-warning midi-border-warning basic-font" role="button">Delete</a>
 
-            <!-- add: and song doesnt have an assocaited order no (hasnt been bought yet) and is not in their tracklist -->
+            <!-- ADD: and song doesnt have an assocaited order no (hasnt been bought yet) -->
             {% elif user.username == song.user.username %}
                 <!-- { if tracklist_songs  } -->
                 <!-- checks if the current song is in the tracklist_songs list -->
