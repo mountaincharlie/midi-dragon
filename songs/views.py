@@ -6,6 +6,7 @@ from django.db.models.functions import Lower
 from django.conf import settings
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from checkout.models import Order, OrderSong
 from .models import Song, Genre, SongInstrument, Instrument, ProjectType
 from .forms import DesignCustomSongForm, AddSongInstrumentFormSet
 
@@ -101,6 +102,22 @@ class SongsList(generic.ListView):
             # print('selected genre:', genre.pk)
             songs = songs.filter(genre=genre.pk)
 
+        all_users_bought_songs = []
+        if self.request.user.is_authenticated:
+            # gets all of the user's Orders
+            users_orders = Order.objects.filter(user_profile=self.request.user.id)
+            # loops through all orders and appends all order songs to the list
+            for order in users_orders:
+                order_songs = OrderSong.objects.filter(order=order)
+                print('order_songs', order_songs)
+                for song in order_songs:
+                    the_songs = list(Song.objects.filter(id=song.song.id))
+                    print('the_songs', the_songs)
+                    for song in the_songs:
+                        all_users_bought_songs.append(song)
+                        print('all_users_bought_songs', all_users_bought_songs)
+
+
         context = {
             'songs': songs,
             'song_search': query,
@@ -108,6 +125,7 @@ class SongsList(generic.ListView):
             'genres': genres,
             'selected_genre': selected_genre,
             'selected_genre_display_name': selected_genre_display_name,
+            'all_users_bought_songs': all_users_bought_songs,
         }
 
         return render(request, "songs/songs.html", context)
@@ -143,10 +161,31 @@ class SongDetailsView(View):
         if song.likes.filter(id=self.request.user.id).exists():
             like = True
 
+        # if the user is logged in, then it checks if they have already ordered a song
+        user_has_bought_song = False
+        if self.request.user.is_authenticated:
+            # getting all the OrderSong instance for the song
+            all_songs_orders = OrderSong.objects.filter(song=song)
+            print('all of the songs order', all_songs_orders)
+
+            # gets all of the user's Orders
+            users_orders = Order.objects.filter(user_profile=self.request.user.id)
+            print('all of the users_orders users_orders', list(users_orders))
+
+            # loop through their orders
+            for order in users_orders:
+                print('order:', order)
+                if all_songs_orders.filter(order=order).exists():
+                    print('theyve ordered the song before')
+                    user_has_bought_song = True
+                else:
+                    print('theyve NOT bought the song')
+
         context = {
             'song': song,
             'like': like,
             'instruments': instruments,
+            'user_has_bought_song': user_has_bought_song,
         }
 
         return render(request, 'songs/song_details.html', context)
