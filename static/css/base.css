@@ -482,6 +482,17 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
 }
 
 
+/* ---------- preventing white background on input autofills */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #1D212E inset !important;
+    -webkit-text-fill-color: #9A9EAE !important;
+}
+
+
 /* ---------- order form */
 
 #payment-form{
