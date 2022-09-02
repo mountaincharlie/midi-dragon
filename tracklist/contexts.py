@@ -20,12 +20,12 @@ def tracklist_contents(request):
     tracklist_total = 0
     # get the var if it exists or assign empty list
     tracklist = request.session.get('tracklist', [])
-    # variable for the toasts to check if the tracklist is being updated
+    # storing in the updating_tracklist variable, wether the tracklist is being updated in the session
     updating_tracklist = request.session.get('updating_tracklist', 'false')
-    # storing the value of updating_tracklist in a new variable which is used in toast_success.html to determine wether to display the tracklist overview in the success message
-    show_tracklist_overview_in_message = updating_tracklist
-    # resetting updating_tracklist so that it will be set to 'false' by default unless the AddToTracklist() or RemoveFromTracklist() views set it to 'true'
-    updating_tracklist = None
+    # if 'true' the toast_success html snippet will display the tracklist overview in the message, else it will only show the message text (e.g. when logging in/out or creating a new song design project)
+
+    # resetting updating_tracklist in the SESSION so that it will be set to 'false' by default unless the AddToTracklist() or RemoveFromTracklist() views set it to 'true' again
+    request.session['updating_tracklist'] = 'false'
 
     # song_slug is the key and the song object is its value
     for song_slug in tracklist:
@@ -42,7 +42,7 @@ def tracklist_contents(request):
     context = {
         'tracklist_songs': tracklist_songs,
         'tracklist_total': tracklist_total,
-        'updating_tracklist': show_tracklist_overview_in_message,
+        'updating_tracklist': updating_tracklist,
 
         # 'grand_total': grand_total,  # only need if you use discounts later
     }
