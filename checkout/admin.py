@@ -22,23 +22,23 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_display = (
         'order_number',
-        # 'user_profile',
+        'user_profile',
         'full_name',
-        'date',
         'order_total',
+        'date',
     )
 
     ordering = ('-date',)
 
     search_fields = (
         'order_number',
-        # 'user_profile',
+        'user_profile',
         'full_name',
         'date',
     )
 
     list_filter = (
-        # 'user_profile',
+        'user_profile',
         'full_name',
         'email',
         'date',

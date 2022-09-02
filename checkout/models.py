@@ -1,12 +1,18 @@
-import uuid  # for generating the order numbers
+"""
+
+CREDITS
+Order model is based on and adapted from Code Institute's walkthrough
+[https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/models.py]
+"""
+
+import uuid
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.db import models
 from songs.models import Song
 
-from django.db.models.signals import post_save, post_delete
-from django.dispatch import receiver
 
-
-# BASED ON CI WALKTHROUGH MODEL - ADAPTED FOR THIS PROJECT
 class Order(models.Model):
     """
     Representing the entire contents of the user's Tracklist
@@ -31,9 +37,13 @@ class Order(models.Model):
     order_number = models.CharField(max_length=32, null=False, editable=False)
 
     # related_name => could call user.user_profile.my_orders
-    # user_profile = models.ForeignKey(
-    #     UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='my_orders'
-    #     )
+    user_profile = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='my_orders'
+    )
 
     full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
@@ -131,7 +141,7 @@ class OrderSong(models.Model):
 
     def __str__(self):
         """ Returns the song name and order_number it belongs to """
-        return f'SKU {self.song.name} on order {self.order.order_number}'
+        return f'{self.song.name} on order {self.order.order_number}'
 
 
 # MOVE SIGNALS INTO A SEPERATE signals.py file
