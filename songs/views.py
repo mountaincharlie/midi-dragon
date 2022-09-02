@@ -367,6 +367,7 @@ class EditCustomSong(View):
         num_existing_review_sessions = song.num_of_reviews
 
         context = {
+            'song': song,
             'custom_song_form': custom_song_form,
             'song_instrument_formset': song_instrument_formset,
             'instruments': instruments,
