@@ -787,6 +787,9 @@ If the logged in user is the admin then a different view class is called wheneve
 * [Delft Stack's solution](https://www.delftstack.com/howto/javascript/javascript-loop-through-dictionary/) for how to handle iterating through a dictionary's keys and value in a for loop, which I used in my updateInstrumentFormsets() function for my design_custom_song form.
 * [Kenny Shen's solution on Stackoverflow](https://stackoverflow.com/a/13016982) for how to use the post_save() signal, which I used my SongInstrument model inorder to trigger the price calculation for custom songs.
 * [JP Silvashy's solution on Stackoverflow](https://stackoverflow.com/a/2003831) for how to use .shift() in javascript in order to get the first item from an array whilst also removing it from the list. I used this in the Javascript for my edit custom song template when pre-populating each instrument select with the existing instruments.
+* [linehammer's solution](https://dev.to/mmeurer00/location-reload-a55) for how to reload my checkout page without charging the user if the payment fails for any reason. Used in my submit event listener on the form in my stripe_elements.js.
+* [Python docs - uuid](https://docs.python.org/3/library/uuid.html) for how to use UUID objects, which I used to generate my order_number for my Order model.
+
 
 ### Content
 * Fonts:
@@ -794,7 +797,7 @@ If the logged in user is the admin then a different view class is called wheneve
   * Google Font's [Fira Sans](https://fonts.google.com/specimen/Fira+Sans) for the rest of the site's text content.
 
 ### Code
-* (installed django extensions if any)
+* (FINISH ... installed django extensions if any)
 * Expandable navbar made with [Bootstrap 5 navbars](https://getbootstrap.com/docs/5.0/components/navbar/#external-content)
 * Dropdown menus made with [Bootstrap 5 dropdowns](https://getbootstrap.com/docs/5.0/components/dropdowns/)
 * Email Subscription form created with [Mailchimp's](https://mailchimp.com/en-gb/) Embedded Form Builder
@@ -805,6 +808,16 @@ If the logged in user is the admin then a different view class is called wheneve
 * The views logic for my 'like' button on the song_details pages was adapted from my [RecipeChefsKissView view](https://github.com/mountaincharlie/project-four-cook-ebook/blob/main/cook_ebook/views.py) in my Cook eBook project.
 * Testimonials Carousel made with [Bootstrap 5 carousels](https://getbootstrap.com/docs/5.0/components/carousel/) with controls, indicators and captions. I adapted this code quite a bit to fit how I was creating the slides with a for loop and for how I styled it to fit with the rest of the site.
 * In order to keep the user on their current page when adding/removing items to their Tracklist I used [Code Institute's method](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/products/templates/products/product_detail.html) of having a hidden input with; name="redirect_url" value="{{ request.path }}, and then getting the redirect_url in the View in order to redirect the user to the correct url after adding/removing a song to their Tracklist. I used this on my song_details pages as well as when browsing songs.
+* Stripe's [Setup Stripe.js and Submit the payment to Stripe](https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=elements) sections used for setting up the stripe and elements vars, styling the card element in stripe_elements.js.
+* [Stripe.js](https://stripe.com/docs/payments/accept-card-payments?platform=web&ui=elements) used for creating and mounting the card element and form submit event
+listner in stripe_elements.js.
+* [Code Institute's walkthrough](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/static/checkout/js/stripe_elements.js) used for the 'change' event listener and form 'submit' event listener logic which I adapted for this project, in stripe_elements.js.
+* [Code Institute's walkthrough](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/webhooks.py) used for the webhook function logic adapted for this project in webhooks.py.
+* The logic from the above credit is also originally from Stripe's documentation for [handling webhooks](https://stripe.com/docs/payments/handling-payment-events#create-webhook).
+* [Code Institute's walkthrough](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/webhook_handler.py) used for the StripeWH_Handler logic adapted for this project in webhook_handler.py.
+* [Code Institute's walkthrough](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/views.py) used when creating my checkout app view classes and functions - logic adapted for this project, from Code Institute's walkthrough.
+* Using [auto payment menthods in python from the Stripe docs](https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=elements) to create the PaymentIntent in checkout/views.py CheckoutView.
+* [Code Institute's walkthrough](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/models.py) for the structure that I based my Order model from, adapted for this project.
 
 ### Media
 * Images:
