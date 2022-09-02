@@ -145,6 +145,12 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     border: 1px solid #1D212E;
 } */
 
+.hr-50-light {
+    margin: auto;
+    width:50%;
+    border: 1px solid #9A9EAE;
+}
+
 .hr-90-light {
     margin: auto;
     width:90%;
