@@ -219,6 +219,9 @@ class OrderConfirmation(View):
         """
         order = get_object_or_404(Order, order_number=self.kwargs['order_number'])
 
+        # getting the order's associated songs
+        songs = OrderSong.objects.filter(order=order)
+
         # checking if the user is authenticated before ataching the users profile to the order [when profile app created]
         # if request.user.is_authenticated:
         #     profile = UserProfile.objects.get(user=request.user)
@@ -233,6 +236,7 @@ class OrderConfirmation(View):
 
         context = {
             'order': order,
+            'songs': songs,
         }
 
         return render(request, 'checkout/order_confirmation.html', context)
