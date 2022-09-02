@@ -14,6 +14,7 @@ import json
 import stripe
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views import View
 from django.conf import settings
@@ -79,7 +80,7 @@ class CheckoutView(View):
         -Sets stripe.api_key as our stripe_secret_key
         -Creates the PaymentIntent (dictionary of details about the payment)
         credit in this file's docstring
-        -If the user is logged in, their instance of the Profile model is used
+        -If the user is logged in, their instance of the User model is used
         to prepopulate the full_name and email fields (they're still editable)
         otherwise just an empty instance of OrderForm is sent to the template
         """
@@ -102,18 +103,17 @@ class CheckoutView(View):
 
         # FINISH ONCE PROFILES APP CREATED
         # checking if the user is authenticated and prepoping their data if
-        # their profile can be found (USERPROFILE MODEL TO BE ADDED SOON)
         if request.user.is_authenticated:
-            print('UserProfile data will be accessed once the app is created')
-            order_form = OrderForm()
-            # try:
-            #     profile = UserProfile.objects.get(user=request.user)
-            #     order_form = OrderForm(initial={
-            #         'full_name': profile.user.get_full_name(),
-            #         'email': profile.user.email,
-            #     })
-            # except UserProfile.DoesNotExist:
-            #     order_form = OrderForm()
+            # order_form = OrderForm()
+            try:
+                # profile = User.objects.get(id=request.user.id)
+                profile = User.objects.get(id=self.request.user.id)
+                order_form = OrderForm(initial={
+                    'full_name': profile.get_full_name(),
+                    'email': profile.email,
+                })
+            except User.DoesNotExist:
+                order_form = OrderForm()
         else:
             order_form = OrderForm()
 
@@ -222,11 +222,11 @@ class OrderConfirmation(View):
         # getting the order's associated songs
         songs = OrderSong.objects.filter(order=order)
 
-        # checking if the user is authenticated before ataching the users profile to the order [when profile app created]
-        # if request.user.is_authenticated:
-        #     profile = UserProfile.objects.get(user=request.user)
-        #     order.user_profile = profile
-        #     order.save()
+        # checking if the user is authenticated before connecting them to the order instance via user_profile
+        if request.user.is_authenticated:
+            profile = User.objects.get(id=request.user.id)
+            order.user_profile = profile
+            order.save()
 
         messages.success(request, f'Your order was successful placed! \n Order number: {order.order_number}. \n A confirmation email will be sent to {order.email}')
 
