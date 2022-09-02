@@ -1,4 +1,4 @@
-<div class="col-md-1 col-lg-2">
+<div class="col-md-1 col-lg-2 my-2">
     <a href="{{ song.get_absolute_url }}" title="Go to song details">
         <img class="square-img-x-small img-border-light" src="{{ song.image.url }}" alt="{{ song.name }} image">
     </a>
@@ -42,7 +42,12 @@
         <p class="midi-l-grey small m-0">[Custom]</p>
         {% endif %}
     {% else %}
-        {% if tracklist_songs %}
+        {% if song in all_users_bought_songs %}
+            <p class="d-inline midi-teal" title="You purchased this song already">
+                <i class="fa-solid fa-check fs-5"></i>
+                <i class="fa-solid fa-credit-card fs-3"></i>
+            </p>
+        {% elif tracklist_songs %}
             <!-- checks if the current song is in the tracklist_songs list -->
             {% if song in tracklist_songs %}
                 <p class="d-inline midi-teal" title="In your Tracklist">
