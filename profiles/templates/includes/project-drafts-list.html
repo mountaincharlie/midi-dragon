@@ -1,0 +1,46 @@
+{% if unpurchased_users_custom_songs %}
+<!-- headings row -->
+<div class="row basic-font text-center">
+    <div class="col-6">
+        <h4 class="mb-0 fw-bolder midi-teal">SONG</h4>
+    </div>
+    <div class="col-3">
+        <h4 class="mb-0 fw-bolder midi-teal">CREATED DATE</h4>
+    </div>
+    <div class="col-3">
+        <h4 class="mb-0 fw-bolder midi-teal">PRICE</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 p-0">
+        <hr class="hr-90-teal">
+    </div>
+</div>
+<!-- each row is the details for a song -->
+{% for song_obj in unpurchased_users_custom_songs %}
+    <div class="row d-flex text-center my-4 my-md-2 midi-l-grey hover-highlight-row">
+        <div class="col-6">
+            <h5 class="my-1">
+                <a href="{{ song_obj.get_absolute_url }}" class="midi-l-grey" title="Go to song details">
+                    {{ song_obj.name }}
+                </a>
+            </h5>
+        </div>
+        <div class="col-3">
+            <h5 class="my-1">{{ song_obj.created_date|date:"d-m-Y" }}</h5>
+        </div>
+        <div class="col-3">
+            <h5 class="my-1">£{{ song_obj.price }}</h5>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
+<hr class="hr-90-teal d-block d-md-none">
+<div class="row d-flex">
+    <div class="col-12 midi-l-grey text-center align-items-center mt-4">
+        <h2 class="my-4">You don't currently have any projects drafts.</h2>
+        <h6 class="my-4">(custom song designs)</h6>
+        <h4 class="my-4">Why not try <a title="Go to Design Custom Song form" href="{% url 'design_custom_song' %}" class="midi-teal">Design A Custom Song</a>?</h4>
+    </div>
+</div>
+{% endif %}
