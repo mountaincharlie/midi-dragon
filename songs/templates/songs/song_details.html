@@ -65,27 +65,52 @@
                             <p class="d-inline fs-5 ps-2 basic-font">Download</p>
                         </a>
                         <!-- for pre-made songs w/o audio_file -->
-                        {% elif song.user.is_superuser %}
-                            {% if song.public %}
+                        {% elif song.public %}
                             <p class="d-inline small basic-font midi-warning">
                                 This song is public, but it's audio file could not be found.
                             </p>
-                            {% else %}
+                        {% else %}
                             <p class="d-inline small basic-font">
                                 This song is private and currently has no associated audio file.
                             </p>
-                            {% endif %}
                         {% endif %}
                     <!-- ADD: elif for if its use_as_testimonial => if its the owning user then they see download if the audio exists (either in tracklist, order or neither) btn else other users see blank OR link to the user's content -->
 
                     <!-- ---- ELIF a logged in user is viewing -->
                     {% elif user.is_authenticated %}
                         <!-- checking if the song is in their tracklist already -->
-                        <!-- add: if it exists in one of their orders => download if audio exists -->
-                        {% if user_has_bought_song %}
+                        <!-- if theyre not the owner of the song -->
+                        {% if user.username != song.user.username %}
                             <p class="d-inline small basic-font midi-teal">
-                                You have already purchased '{{ song.name }}'.
+                                Show your appreciation by giving this song a 'like', at the bottom of the page.
                             </p>
+                        {% elif user_has_bought_song %}
+                        <!-- custom songs -->
+                            {% if song.user.username == user.username and not song.audio_file %}
+                                <p class="d-inline small basic-font midi-teal">
+                                    You have already purchased '{{ song.name }}'.
+                                    <br>
+                                    It will become downloadable once complete.
+                                </p>
+                            {% elif song.user.username == user.username and song.audio_file %}
+                                <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
+                                    <i class="fa-solid fa-download fs-3"></i>
+                                    <p class="d-inline fs-5 ps-2 basic-font">Download</p>
+                                </a>
+                            <!-- pre-made songs -->
+                            {% elif song.user.username != user.username and song.audio_file %}
+                                <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
+                                    <i class="fa-solid fa-download fs-3"></i>
+                                    <p class="d-inline fs-5 ps-2 basic-font">Download</p>
+                                </a>
+                            {% elif song.user.username != user.username and not song.audio_file %}
+                            <p class="d-inline small basic-font midi-warning">
+                                There was an issue with the audio for '{{ song.name }}'.
+                                <br>
+                                Please contact midiDRAGON if the issue persists.
+                            </p>
+                            {% endif %}
+                            
                         {% elif tracklist_songs %}
                             <!-- checks if the current song is in the tracklist_songs list -->
                             {% if song in tracklist_songs %}
@@ -122,7 +147,12 @@
 
                     <!-- if a none logged in user is viewing => only public pre-made songs -->
                     {% else %}
-                        {% if song.audio_file %}
+                        <!-- checks if its a custom song (testimonial) -->
+                        {% if not song.user.is_superuser %}
+                            <p class="d-inline small basic-font midi-l-grey">
+                                If you would like a custom song made for you, register an account to checkout our <a class="midi-teal" href="{% url 'design_custom_song' %}">Design Custom Song</a> feature
+                            </p>
+                        {% elif song.audio_file %}
                             <!-- cheecks if already in track list and displays correct message or buttons -->
                             {% if tracklist_songs %}
                                 <!-- checks if the current song is in the tracklist_songs list -->
@@ -346,7 +376,10 @@
             {% elif user.username == song.user.username %}
                 <!-- { if tracklist_songs  } -->
                 <!-- checks if the current song is in the tracklist_songs list -->
-                {% if song in tracklist_songs %}
+                {% if user_has_bought_song %}
+                            <p class="d-inline small basic-font midi-teal"> Custom songs cannot be edited or deleted once they have been purchased.
+                            </p>
+                {% elif song in tracklist_songs %}
                     <p class="d-inline small basic-font midi-teal">
                         You must remove {{ song.name }} from your Tracklist in order to Edit/Delete it.
                     </p>
