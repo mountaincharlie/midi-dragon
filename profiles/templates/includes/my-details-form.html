@@ -1,0 +1,31 @@
+<form id="my-details-form" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12 mt-2 mb-2 text-center">
+            <h5 id="username-label" class="d-inline">Username:</h5>
+            <p class="m-0 ps-2 d-inline midi-teal fs-5 logo-font">{{ user.username }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-2 mb-4">
+            {{ my_details_form.first_name | as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-2 mb-4">
+            {{ my_details_form.last_name | as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-2 mb-4">
+            {{ my_details_form.email | as_crispy_field }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-2 mb-4 text-center">
+            <button class="btn btn-teal pink-hover" type="submit" aria-label="Update my details button">
+                Update Details
+            </button>
+        </div>
+    </div>
+</form>

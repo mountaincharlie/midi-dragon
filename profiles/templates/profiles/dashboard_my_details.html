@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - My Details{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">
+                {{ user.username }}'{% if user.username|slice:"::-1"|slice:":1" != 's' %}s
+                {% endif %}
+                Dashboard
+            </h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div class="row d-flex d-md-none">
+        <!-- MAKE THIS AN INCLUDES SINCE THE DROPDOWN USES AN ID AND THE WHOLE THING IS THE SAME ON ALL SCREENS -->
+        <div class="col-1 d-inline mobiledropdowncontainer text-center fs-1 p-0">
+            <!-- burger icon is the dropdown-toggle -->
+            <!-- unordered list is in the dropdown-menu -->
+            <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="dashboarddropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="dashboarddropdownbtn">
+                <li class="dropdown-item midi-l-grey pink-hover">
+                    <a class="midi-l-grey" role="button" href="{% url 'my_details' %}">My Details</a>
+                </li>
+                <li class="dropdown-item pink-hover">
+                    <a class="midi-l-grey" href="{% url 'project_drafts' %}">Project Drafts</a>
+                </li>
+                <li class="dropdown-item pink-hover">
+                    <a class="midi-l-grey" role="button" href="{% url 'projects_in_progress' %}">Projects In Progress</a>
+                </li>
+                <li class="dropdown-item pink-hover">
+                    <a class="midi-l-grey" role="button" href="{% url 'completed_projects' %}">Completed Projects</a>
+                </li>
+                <li class="dropdown-item pink-hover">
+                    <a class="midi-l-grey" role="button" href="{% url 'order_history' %}">Order History</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-11 midi-l-grey text-center p-0">
+            <h2 class="mt-1 me-4 pe-4 fw-bolder"> | MY DETAILS | </h2>
+        </div>
+        <hr class="hr-90-teal my-4">
+    </div>
+
+    <!-- desktop view: row holding the dashboard content -->
+    <div class="row d-flex ">
+        <!-- menu -->
+        <div class="dashboard-options d-none d-md-block col-12 col-md-3 text-center text-md-start">
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'my_details' %}" class="midi-l-grey" title="My Details screen">
+                        <h4 class="pink-hover d-inline dashboard-option-highlight">My Details</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'project_drafts' %}" class="midi-l-grey" title="Project Drafts screen">
+                        <h4 class="pink-hover d-inline">Project Drafts</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'projects_in_progress' %}" class="midi-l-grey" title="Projects In Progress screen">
+                        <h4 class="pink-hover d-inline">Projects In Progress</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'completed_projects' %}" class="midi-l-grey" title="Completed Projects screen">
+                        <h4 class="pink-hover d-inline">Completed Projects</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'order_history' %}" class="midi-l-grey" title="Order History screen">
+                        <h4 class="pink-hover d-inline">Order History</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- rendering html snippets -->
+        <div class="col-12 col-md-9">
+            <div class="row">
+                <div class="col-12">
+                    <!-- snippet here -->
+                    {% include 'includes/my-details-form.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
