@@ -1,0 +1,100 @@
+{% if users_orders_dict %}
+<!-- headings row -->
+<div class="row basic-font text-center">
+    <div class="col-6 col-md-7">
+        <h4 class="mb-0 fw-bolder midi-teal">ORDER NUMBER</h4>
+    </div>
+    <div class="col-3">
+        <h4 class="mb-0 fw-bolder midi-teal">ORDER DATE</h4>
+    </div>
+    <div class="col-3 col-md-2">
+        <h4 class="mb-0 fw-bolder midi-teal">ORDER TOTAL</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 p-0">
+        <hr class="hr-90-teal">
+    </div>
+</div>
+<!-- each row is the details for an order -->
+{% for order, order_songs in users_orders_dict.items %}
+    <div class="row d-flex text-center my-4 my-md-2 midi-l-grey hover-highlight-row">
+        <div class="col-6 col-md-7">
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'order_confirmation' order.order_number %}" class="midi-l-grey" title="Go to Order Confirmation page">
+                        <h5 class="my-1 d-none d-md-block">{{ order.order_number }}</h5>
+                        <h5 title="{{ order.order_number }}" class="my-1 d-block d-md-none">{{ order.order_number|truncatechars:10 }}</h5>
+                    </a>
+                    <hr class="hr-50-light">
+                </div>
+            </div>
+            {% for song in order_songs %}
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="d-none d-md-block m-0">
+                            {{ song.song.name }} |
+                            £{{ song.song.price }}
+                            {% if song.song.audio_file %}
+                                | <a role="button" href="{% url 'download_song' song.song.slug %}" class="midi-l-grey btn border-0">
+                                    <i class="fa-solid fa-download fs-6"></i>
+                                </a>
+                            <!-- custom songs with no audio -->
+                            {% elif user.username == song.song.user.username %}
+                                <p class="d-none d-md-inline small basic-font midi-teal">
+                                    This custom song will become downloadable once complete.
+                                </p>
+                            <!-- pre-made songs with no audio -->
+                            {% else %}
+                            <p class="d-none d-md-inline small basic-font midi-warning">
+                                There was an issue with this pre-made song's audio.
+                                <br>
+                                Please contact midiDRAGON if the issue persists.
+                            </p>
+                            {% endif %}
+                        </p>
+                        <p class="d-block d-md-none m-0">
+                            {{ song.song.name }}
+                            <br>
+                            £{{ song.song.price }}
+                            <br>
+                            {% if song.song.audio_file %}
+                                <a role="button" href="{% url 'download_song' song.song.slug %}" class="midi-l-grey btn border-0">
+                                    <i class="fa-solid fa-download fs-6"></i>
+                                </a>
+                            <!-- custom songs with no audio -->
+                            {% elif user.username == song.song.user.username %}
+                                <p class="d-inline d-md-none small basic-font midi-teal">
+                                    This custom song will become downloadable once complete.
+                                </p>
+                            <!-- pre-made songs with no audio -->
+                            {% else %}
+                            <p class="d-inline d-md-none small basic-font midi-warning">
+                                There was an issue with this pre-made song's audio.
+                                <br>
+                                Please contact midiDRAGON if the issue persists.
+                            </p>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-3">
+            <h5 class="my-1">{{ order.date|date:"d-m-Y" }}</h5>
+        </div>
+        <div class="col-3 col-md-2">
+            <h5 class="my-1">£{{ order.order_total }}</h5>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
+<hr class="hr-90-teal d-block d-md-none">
+<div class="row d-flex">
+    <div class="col-12 midi-l-grey text-center align-items-center mt-4">
+        <h2 class="my-4">You don't currently have any completed orders.</h2>
+        <h6 class="my-4">(purchased custom or pre-made songs)</h6>
+        <h4 class="my-4">Why not checkout midiDRAGON's <a title="Go to all pre-made songs list" href="{% url 'songs' %}" class="midi-teal">Pre-made Songs</a>?</h4>
+    </div>
+</div>
+{% endif %}
