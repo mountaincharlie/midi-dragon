@@ -1,0 +1,52 @@
+{% if users_complete_purchased_custom_songs %}
+<!-- headings row -->
+<div class="row basic-font text-center">
+    <div class="col-4">
+        <h4 class="mb-0 fw-bolder midi-teal">SONG</h4>
+    </div>
+    <div class="col-2">
+        <h4 class="mb-0 fw-bolder midi-teal">ORDER DATE</h4>
+    </div>
+    <div class="col-4">
+        <h4 class="mb-0 fw-bolder midi-teal">ORDER NUMBER</h4>
+    </div>
+    <div class="col-2">
+        <h4 class="mb-0 fw-bolder midi-teal">DOWNLOAD</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 p-0">
+        <hr class="hr-90-teal">
+    </div>
+</div>
+<!-- each row is the details for a song -->
+{% for song, order in users_complete_purchased_custom_songs.items %}
+    <div class="row d-flex text-center my-4 my-md-2 midi-l-grey hover-highlight-row">
+        <div class="col-4">
+            <a href="{{ song.get_absolute_url }}" class="midi-l-grey" title="Go to song details">
+                <h5 class="my-1">{{ song.name }}</h5>
+            </a>
+        </div>
+        <div class="col-2">
+            <h5 class="my-1">{{ order.date|date:"d-m-Y" }}</h5>
+        </div>
+        <div class="col-4">
+            <h5 class="my-1">{{ order.order_number }}</h5>
+        </div>
+        <div class="col-2">
+            <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn border-0">
+                <i class="fa-solid fa-download fs-3"></i>
+            </a>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
+<hr class="hr-90-teal d-block d-md-none">
+<div class="row d-flex">
+    <div class="col-12 midi-l-grey text-center align-items-center mt-4">
+        <h2 class="my-4">You don't currently have any completed projects.</h2>
+        <h6 class="my-4">(purchased custom songs which midiDRAGON has notified you are complete and downloadable)</h6>
+        <h4 class="my-4">Why not checkout midiDRAGON's <a title="Go to all pre-made songs list" href="{% url 'songs' %}" class="midi-teal">Pre-made Songs</a>?</h4>
+    </div>
+</div>
+{% endif %}
