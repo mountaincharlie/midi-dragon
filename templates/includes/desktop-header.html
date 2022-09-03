@@ -49,12 +49,12 @@
                     {% if user.is_superuser %}
                         <li><a class="dropdown-item midi-l-grey" href="#">Site Management</a></li>
                     {% endif %}
-                    <li><a class="dropdown-item midi-l-grey" href="#">Dashboard</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">My Details</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">Project Drafts</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">Projects In Progress</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">Completed Projects</a></li>
-                    <li><a class="dropdown-item midi-l-grey" href="#">Order History</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'my_details' %}">Dashboard</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'my_details' %}">My Details</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'project_drafts' %}">Project Drafts</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'projects_in_progress' %}">Projects In Progress</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'completed_projects' %}">Completed Projects</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'order_history' %}">Order History</a></li>
                     <li><a class="dropdown-item midi-l-grey" href="{% url 'account_logout' %}">Logout</a></li>
                 </ul>
                 {% else %}
