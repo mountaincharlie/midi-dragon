@@ -96,7 +96,7 @@
         </div>
         <div class="col-3 col-md-2">
             <h5 class="d-none d-md-block my-1 midi-{% if song.user.is_superuser %}teal{% else %}l-grey{% endif %}">{{ song.user }}</h5>
-            <h5 class="d-block d-md-none my-1 midi-{% if song.user.is_superuser %}teal{% else %}l-grey{% endif %}" title="View {{ song.name }} details">{{ song.user|truncatechars:8 }}</h5>
+            <h5 class="d-block d-md-none my-1 midi-{% if song.user.is_superuser %}teal{% else %}l-grey{% endif %}" title="{{ song.user }}">{{ song.user|truncatechars:8 }}</h5>
         </div>
         <div class="col-3 col-md-2">
             <h5 class="my-1">
