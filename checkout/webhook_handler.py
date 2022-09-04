@@ -2,18 +2,23 @@
 Contains a class for handling Stripe's different webhook events
 
 CREDITS
-Logic for the StripeWH_Handler adapted for this project, from CI walkthrough:
+Logic for the StripeWH_Handler adapted for this project, as well as
+how to send emails with gmail SMTP service and how to populate the 
+email from within Django, from CI walkthrough:
 https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/webhook_handler.py
+
+, from Code Institute walkthrough:
+
 """
 import json
 import time
 from django.http import HttpResponse
-# from django.core.mail import send_mail
-# from django.template.loader import render_to_string
-# from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.contrib.auth.models import User
 from .models import Order, OrderSong
 from songs.models import Song
-# from profiles.models import UserProfile
 
 
 class StripeWH_Handler:
@@ -25,6 +30,38 @@ class StripeWH_Handler:
         every time a new instance is created
         """
         self.request = request
+
+    def _send_confirmation_email(self, order):
+        """ Sends the user the order confirmation email """
+
+        # gets the songs in the order
+        order_songs = OrderSong.objects.filter(order=order)
+
+        # gets the user's email
+        customer_email = order.email
+
+        # rendering the txt files to strings and passing a dict lie a context
+        subject = render_to_string(
+            'checkout/confirmation_emails/confirmation_email_subject.txt',
+            {'order': order}
+        )
+
+        context = {
+            'order': order,
+            'contact_email': settings.DEFAULT_FROM_EMAIL,
+            'order_songs': order_songs,
+        }
+        body = render_to_string(
+            'checkout/confirmation_emails/confirmation_email_body.txt',
+            context
+        )
+        # sending the email (subjec, body, from email, to email)
+        send_mail(
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,  # from
+            [customer_email]  # to
+        )
 
     def handle_event(self, event):
         """
@@ -47,8 +84,9 @@ class StripeWH_Handler:
         -Gets the intent and extracts the pid (payment intent id) and
         tracklist data from it
         -Stores billing and tracklist_total details
-        -If the user is logged in then it gets the Profile to be updated,
-        otherwise the user is an AnonymousUser
+        -If the user is logged in then it gets the User to be updated
+        on the Order model otherwise the user is an AnonymousUser and
+        appear as null in the order.user_profile field
         -Sets the order_exists variable to False by default until the
         database has been checked
         -Sets the while loop's 'atempts' to 1
@@ -88,8 +126,9 @@ class StripeWH_Handler:
         profile = None
         username = intent.metadata.username
         # checking if the user is authenticated (can use request.user.is_authenticated aswell)
-        # if username != 'AnonymousUser':
-            # profile = UserProfile.objects.get(user__username=username)
+        if username != 'AnonymousUser':
+            profile = User.objects.get(username=username)  # SEE IF STILL STRIPE 500 ERROR
+        print('profile:', profile)
 
         order_exists = False
         attempt = 1
@@ -104,6 +143,7 @@ class StripeWH_Handler:
                     stripe_pid=pid,
                 )
                 order_exists = True
+                print('ORDER EXISTS')
                 break
             except Order.DoesNotExist:
                 attempt += 1
@@ -112,7 +152,7 @@ class StripeWH_Handler:
         if order_exists:
             # ADD SENDING REAL EMAILS WITH DJANGO - send confirmation email
             print('SENDING CONFIRMATION EMAIL...')  # REMOVE when done
-            # self._send_confirmation_email(order)
+            self._send_confirmation_email(order)
 
             return HttpResponse(
                 content=f'Webhook recieved: {event["type"]} | SUCCESS: Verified order already in database',
@@ -120,7 +160,9 @@ class StripeWH_Handler:
         else:
             order = None
             try:
+                print('CREATING ORDER')
                 order = Order.objects.create(
+                    user_profile=profile,
                     full_name=billing_details.name,
                     email=billing_details.email,
                     original_tracklist=tracklist,
@@ -142,7 +184,7 @@ class StripeWH_Handler:
 
         # send confirmation email
         print('SENDING CONFIRMATION EMAIL....')
-        # self._send_confirmation_email(order)
+        self._send_confirmation_email(order)
 
         return HttpResponse(
             content=f'Webhook recieved: {event["type"]} | SUCCESS: Created order in webhook',

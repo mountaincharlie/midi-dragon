@@ -1,0 +1,23 @@
+Hello {{ order.full_name }}!
+
+This is a confirmation of your order with midiDRAGON. Your order information is below:
+
+Order Number: {{ order.order_number }}
+Order Date: {{ order.date|date:"d-m-Y" }}
+{% for song_obj in order_songs %}
+Song: {{ song_obj.song.name }} | Price: £{{ song_obj.song.price }}
+{% endfor %}
+Order Total: £{{ order.order_total }}
+
+You can download your songs from the Order Confirmation page:
+https://8000-mountaincha-projectfive-hwk7011xcah.ws-eu63.gitpod.io/checkout/order_confirmation/{{ order.order_number }} 
+
+https://midi-dragon.herokuapp.com/checkout/order_confirmation/{{ order.order_number }} 
+
+If you have any questions, feel free to contact us at {{ contact_email }}.
+
+Thank you for your order!
+
+Sincerely,
+
+The midiDRAGON team
