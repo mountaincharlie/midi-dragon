@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-12 mt-2 mb-2 text-center midi-l-grey">
+        <h5 class="d-inline">Admin Username:</h5>
+        <p class="m-0 ps-2 d-inline midi-teal fs-5 logo-font">{{ user.username }}</p>
+    </div>
+</div>
+
+{% if all_songs %}
+<!-- filter dropdowns - adapted from the ones in song.html which have CI CREDIT -->
+
+
+<!-- headings row -->
+<div class="row basic-font text-center">
+    <div class="col-3 col-md-3">
+        <h4 class="mb-0 fw-bolder midi-teal">SONG</h4>
+    </div>
+    <div class="col-3 col-md-2">
+        <h4 class="mb-0 fw-bolder midi-teal">USER</h4>
+    </div>
+    <div class="col-3 col-md-2">
+        <h4 class="mb-0 fw-bolder midi-teal">DONE</h4>
+    </div>
+    <div class="col-3 col-md-2">
+        <h4 class="mb-0 fw-bolder midi-teal">PUBLIC</h4>
+    </div>
+    <div class="d-none d-md-block col-3">
+        <h4 class="mb-0 fs-5 fw-bolder midi-teal">TESTIMONIAL</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 p-0">
+        <hr class="hr-90-teal">
+    </div>
+</div>
+<!-- each row is the details for a song -->
+{% for song in all_songs %}
+    <div class="row d-flex text-center my-4 my-md-2 midi-l-grey hover-highlight-row">
+        <div class="col-3 col-md-3">
+            <a href="{{ song.get_absolute_url }}" class="midi-l-grey" title="Go to song details">
+                <h5 class="d-none d-md-block my-1">{{ song.name }}</h5>
+                <h5 class="d-block d-md-none my-1" title="View {{ song.name }} details">{{ song.name|truncatechars:8 }}</h5>
+            </a>
+        </div>
+        <div class="col-3 col-md-2">
+            <h5 class="d-none d-md-block my-1 midi-{% if song.user.is_superuser %}teal{% else %}l-grey{% endif %}">{{ song.user }}</h5>
+            <h5 class="d-block d-md-none my-1 midi-{% if song.user.is_superuser %}teal{% else %}l-grey{% endif %}" title="View {{ song.name }} details">{{ song.user|truncatechars:8 }}</h5>
+        </div>
+        <div class="col-3 col-md-2">
+            <h5 class="my-1">
+                {% if song.completed %}
+                    <i class="fa-solid fa-circle-check midi-teal"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle-xmark midi-warning"></i>
+                {% endif %}
+            </h5>
+        </div>
+        <div class="col-3 col-md-2">
+            <h5 class="my-1">
+                {% if song.public %}
+                    <i class="fa-solid fa-circle-check midi-teal"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle-xmark midi-warning"></i>
+                {% endif %}
+            </h5>
+        </div>
+        <div class="d-none d-md-block col-3">
+            <h5 class="my-1">
+                {% if song.use_as_testimonial %}
+                    <i class="fa-solid fa-circle-check midi-teal"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle-xmark midi-warning"></i>
+                {% endif %}
+            </h5>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
+<hr class="hr-90-teal d-block d-md-none">
+<div class="row d-flex">
+    <div class="col-12 midi-l-grey text-center align-items-center mt-4 midi-warning">
+        <h2 class="my-4">No songs were found in the database.</h2>
+    </div>
+</div>
+{% endif %}
