@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - Order Overview{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4 text-center">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">Order Overview</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- order number and email message row -->
+    <div class="row py-4">
+        <div class="col-12 text-center midi-l-grey logo-font">
+
+            {% if user.is_superuser %}
+                <h4 class="mb-2">
+                    Order placed by user:
+                    <strong class="midi-teal basic-font">
+                        {% if order.user_profile.username == None %}
+                            Anonymous
+                        {% else %}
+                            {{ order.user_profile.username }}
+                        {% endif %}
+                    </strong></h4>
+            {% endif %}
+
+            <hr class="hr-50-light my-4">
+            <h4 class="mb-2">
+                Full Name:
+                <br class="d-block d-md-none">
+                <strong title="{{ order.date }}" class="midi-teal basic-font">{{ order.full_name }}</strong>
+            </h4>
+            <h4 class="mb-2">
+                Order date:
+                <br class="d-block d-md-none">
+                <strong title="{{ order.date }}" class="midi-teal basic-font">{{ order.date|date:"d-m-Y" }}</strong>
+            </h4>
+            <h4 class="mb-2">
+                Order number:
+                <br class="d-block d-md-none">
+                <strong title="{{ order.order_number }}" class="midi-teal basic-font">{{ order.order_number }}</strong>
+            </h4>
+            <h4 class="mb-2">
+                Confirmation email sent to:
+                <br class="d-block d-md-none">
+                <strong class="midi-teal basic-font">{{ order.email }}</strong>
+            </h4>
+            <hr class="hr-50-light my-4">
+        </div>
+    </div>
+
+    <!-- ALSO - for authenticated users - add the check to song_details for if they have already purchased the song -->
+
+    <!-- ALSO in songs list you ned to disbale add to tracklist button for users who are authenticated and have the song in one of their orders -->
+
+    <!-- contains the order overview and Downloads/song_details Links columns -->
+    <div class="row pt-4">
+        <!-- order overview -->
+        <div class="col-12 col-md-6 midi-l-grey logo-font text-center">
+            <h2 class="mb-3">
+                Order Overview
+                <span class="fs-4">({{ order_songs|length }} song{% if order_songs|length != 1 %}s{% endif %})</span>
+            </h2>
+
+            <!-- headings row -->
+            <div class="row basic-font">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <h4 class="mb-0 fw-bolder midi-teal">SONG</h4>
+                </div>
+                <div class="col-3">
+                    <h4 class="mb-0 fw-bolder midi-teal">PRICE</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 p-0">
+                    <hr class="hr-90-teal">
+                </div>
+            </div>
+            <!-- creating each row of the overview -->
+            {% for song_obj in order_songs %}
+                <div class="row d-flex align-items-center my-4 my-md-2">
+                    <div class="col-3">
+                        <img class="d-block d-md-none square-img-small img-border-light" src="{{ song_obj.song.image.url }}" alt="{{ song_obj.song.name }} image">
+                        <img class="d-none d-md-block square-img-x-small img-border-light" src="{{ song_obj.song.image.url }}" alt="{{ song_obj.song.name }} image">
+                    </div>
+                    <div class="col-6">
+                        <h5>{{ song_obj.song.name }}</h5>
+                    </div>
+                    <div class="col-3">
+                        <h5>£{{ song_obj.song.price }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="col-12 p-0">
+                    <hr class="hr-80 mb-4">
+                </div>
+            </div>
+
+            <div class="row basic-font">
+                <div class="col-12">
+                    <h4 class="mb-0 fw-bolder">
+                        Order Total:
+                        <span class="midi-teal ms-2">£{{ order.order_total }}</span>
+                    </h4>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 d-block d-md-none p-0">
+            <hr class="hr-full-teal my-4">
+        </div>
+
+        <!-- download buttons and links to the songs_details -->
+        <div class="col-12 col-md-6 midi-l-grey logo-font text-center align-items-center">
+            <h2 class="mb-3">
+                Links and Downloads
+            </h2>
+            <!-- headings row -->
+            <div class="row basic-font">
+                <div class="col-6">
+                    <h4 class="mb-0 fw-bolder midi-teal">VIEW SONG</h4>
+                </div>
+                <div class="col-6">
+                    <h4 class="mb-0 fw-bolder midi-teal">DOWNLOAD</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 p-0">
+                    <hr class="hr-90-teal">
+                </div>
+            </div>
+            <!-- Your details row -->
+            {% for song_obj in order_songs %}
+                <div class="row">
+                    <!-- link to the song_details -->
+                    <div class="col-6 midi-l-grey my-2">
+                        <a class="midi-l-grey" href="{% url 'song_details' song_obj.song.slug %}">
+                            <p class="d-inline fs-4">{{ song_obj.song.name }}</p>
+                        </a>
+                    </div>
+                    <div class="col-6 my-2">
+                        {% if song_obj.song.audio_file %}
+                            <a role="button" href="{% url 'download_song' song_obj.song.slug %}" class="midi-l-grey btn border-0">
+                                <i class="fa-solid fa-download fs-3"></i>
+                            </a>
+                        <!-- message to admin for all songs with no audio -->
+                        {% elif user.is_superuser %}
+                            <p class="d-inline small basic-font midi-warning">
+                                This song doesn't currently have an associated audio file.
+                            </p>
+                        <!-- custom songs with no audio -->
+                        {% elif user.username == song_obj.song.user.username %}
+                            <p class="d-inline small basic-font midi-teal">
+                                This custom song will become downloadable once complete.
+                            </p>
+                        <!-- pre-made songs with no audio -->
+                        {% else %}
+                            <p class="d-inline small basic-font midi-warning">
+                                There was an issue with this pre-made song's audio.
+                                <br>
+                                Please contact midiDRAGON if the issue persists.
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            {% if user.is_superuser %}
+                <a href="{% url 'all_orders' %}" role="button" class="btn fs-5">
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                    <p class="m-0 d-inline ps-2">Back To All Orders</p>
+                </a>
+            {% else %}
+                <a href="{% url 'order_history' %}" role="button" class="btn fs-5">
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                    <p class="m-0 d-inline ps-2">Back To Order History</p>
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+
