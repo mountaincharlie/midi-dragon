@@ -5,9 +5,62 @@
     </div>
 </div>
 
-{% if all_songs %}
 <!-- filter dropdowns - adapted from the ones in song.html which have CI CREDIT -->
+<div class="row mt-2 mb-4">
+    <div class="col-12 text-center mb-4">
+        <div id="all-songs-filter-reset" role="button" class="btn btn-teal p-1">Reset Filters</div>
+    </div>
+    <!-- custom or pre-made filter -->
+    <div class="col-12 col-lg-3 text-center my-1">
+        <select id="admin-song-type-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_song_type != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_song_type == None %}selected{% endif %}>Song Type: </option>
+            <option value="pre-made" {% if selected_song_type == 'pre-made' %}selected{% endif %}>Pre-made</option>
+            <option value="custom" {% if selected_song_type == 'custom' %}selected{% endif %}>Custom</option>
+        </select>
+    </div>
 
+    <!-- filtering by user -->
+    {% if all_users %}
+    <div class="col-12 col-lg-2 text-center my-1">
+        <select id="admin-all-users-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_user != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_user == None %}selected{% endif %}>Users: </option>
+            {% for user in all_users %}
+            <option value="{{ user.username }}" {% if selected_user == user.username %}selected{% endif %}>{{ user.username }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+
+    <!-- completed or not filter -->
+    <div class="col-12 col-lg-2 text-center my-1">
+        <select id="admin-done-status-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_done_status != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_done_status == None %}selected{% endif %}>Done Status: </option>
+            <option value="done" {% if selected_done_status == 'done' %}selected{% endif %}>Done</option>
+            <option value="not-done" {% if selected_done_status == 'not-done' %}selected{% endif %}>Not Done</option>
+        </select>
+    </div>
+
+    <!-- public or not filter -->
+    <div class="col-12 col-lg-2 text-center my-1">
+        <select id="admin-public-status-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_public_status != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_public_status == None %}selected{% endif %}>Public Status: </option>
+            <option value="public" {% if selected_public_status == 'public' %}selected{% endif %}>Public</option>
+            <option value="private" {% if selected_public_status == 'private' %}selected{% endif %}>Private</option>
+        </select>
+    </div>
+
+    <!-- testimonial or not filter NOT visible on mobile screens -->
+    <div class="col-12 col-lg-3 d-none d-md-block text-center my-1">
+        <select id="admin-testimonial-status-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_testimonial_status != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_testimonial_status == None %}selected{% endif %}>Testimonial Status: </option>
+            <option value="testimonial" {% if selected_testimonial_status == 'testimonial' %}selected{% endif %}>Use As</option>
+            <option value="not-testimonial" {% if selected_testimonial_status == 'not-testimonial' %}selected{% endif %}>Don't Use As</option>
+        </select>
+    </div>
+
+</div>
+<!-- --------------------------------- END OF FILTERS SECTION -->
+{% if all_songs %}
 
 <!-- headings row -->
 <div class="row basic-font text-center">

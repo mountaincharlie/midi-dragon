@@ -26,13 +26,13 @@
             </div>
             <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="sitemanagementdropdownbtn">
                 <li class="dropdown-item midi-l-grey pink-hover">
-                    <a class="midi-l-grey" role="button" href="#">All Songs</a>
+                    <a class="midi-l-grey" role="button" href="{% url 'all_songs' %}">All Songs</a>
                 </li>
                 <li class="dropdown-item pink-hover">
                     <a class="midi-l-grey" href="#">All Orders</a>
                 </li>
                 <li class="dropdown-item pink-hover">
-                    <a class="midi-l-grey" role="button" href="#">Dango Admin Panel</a>
+                    <a class="midi-l-grey" role="button" href="{% url 'admin:index' %}">Dango Admin Panel</a>
                 </li>
             </ul>
         </div>
@@ -79,4 +79,196 @@
     </div>
 
 </div>
+{% endblock %}
+
+
+<!-- PUT IN EXTERNAL JS FILE -->
+{% block postload_js %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+    
+        // ------- custom selectors based on logic from CI walkthrough - CREDIT
+
+        // ------- GLOBAL VARS
+
+        // gets the song-type selector by its ID
+        let songTypeSelect = document.getElementById('admin-song-type-select');
+        // gets the user selector by its ID
+        let allUsersSelect = document.getElementById('admin-all-users-select');
+        // gets the done status selector by its ID
+        let doneStatusSelect = document.getElementById('admin-done-status-select');
+        // gets the public status selector by its ID
+        let publicStatusSelect = document.getElementById('admin-public-status-select');
+        // gets the testimonial status selector by its ID
+        let testimonialStatusSelect = document.getElementById('admin-testimonial-status-select');
+        // gets the reset filters button by its ID
+        let resetFiltersButton = document.getElementById('all-songs-filter-reset');
+
+
+        // ------- EVENT LISTENERS
+
+        songTypeSelect.addEventListener("change", filterBySongType);
+        allUsersSelect.addEventListener("change", filterByUser);
+        doneStatusSelect.addEventListener("change", filterByDoneStatus);
+        publicStatusSelect.addEventListener("change", filterByPublicStatus);
+        testimonialStatusSelect.addEventListener("change", filterByTestimonialStatus);
+        resetFiltersButton.addEventListener("click", resetAllSongsFilters);
+
+
+        // ------- CALLBACK FUNCTIONS
+
+        /**
+         * @name filterBySongType
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedSongType is set as the 'songtype' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'songtype' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterBySongType(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedSongType = songTypeSelect.options[songTypeSelect.selectedIndex].value;
+
+            if(selectedSongType != 'reset'){
+                currentUrl.searchParams.set("songtype", selectedSongType);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("songtype");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name filterByUser
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedUser is set as the 'songuser' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'songuser' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterByUser(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedUser = allUsersSelect.options[allUsersSelect.selectedIndex].value;
+
+            if(selectedUser != 'reset'){
+                currentUrl.searchParams.set("songuser", selectedUser);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("songuser");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name filterByDoneStatus
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedDoneStatus is set as the 'donestatus' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'donestatus' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterByDoneStatus(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedDoneStatus = doneStatusSelect.options[doneStatusSelect.selectedIndex].value;
+
+            if(selectedDoneStatus != 'reset'){
+                currentUrl.searchParams.set("donestatus", selectedDoneStatus);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("donestatus");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name filterByPublicStatus
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedPublicStatus is set as the 'publicstatus' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'publicstatus' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterByPublicStatus(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedPublicStatus = publicStatusSelect.options[publicStatusSelect.selectedIndex].value;
+
+            if(selectedPublicStatus != 'reset'){
+                currentUrl.searchParams.set("publicstatus", selectedPublicStatus);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("publicstatus");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name filterByTestimonialStatus
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedTestimonialStatus is set as the 'testimonialstatus'
+         * parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'testimonialstatus' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterByTestimonialStatus(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedTestimonialStatus = testimonialStatusSelect.options[testimonialStatusSelect.selectedIndex].value;
+
+            if(selectedTestimonialStatus != 'reset'){
+                currentUrl.searchParams.set("testimonialstatus", selectedTestimonialStatus);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("testimonialstatus");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name resetAllSongsFilters
+         * @description Gets the current URL from the window.
+         * Gets the string of the current URL and splits it by the
+         * '?' as everything after this refers to the search prarameters
+         * and takes the first bit which is the url without filters applied.
+         * Replacing the current URL with the withoutFiltersUrl, reloads
+         * the page, restting the filters.
+        */
+        function resetAllSongsFilters(){
+
+            var currentUrl = new URL(window.location.href);
+            var withoutFiltersUrl = String(currentUrl).split('?')[0]
+            window.location.replace(withoutFiltersUrl);
+
+        };
+    </script>
 {% endblock %}

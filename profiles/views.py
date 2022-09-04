@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse, redirect, reverse
+from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.views import View
 from checkout.models import Order, OrderSong
@@ -260,12 +261,69 @@ class AllSongsAdminView(View):
             messages.error(request, "You don't have access to this page.")
             return redirect(reverse('home'))
 
+        # resetting all filter vars
+        selected_song_type = None
+        selected_user = None
+        selected_done_status = None
+        selected_public_status = None
+        selected_testimonial_status = None
+
         # gets all of the songs in the db
         all_songs = Song.objects.all()
+
+        # gets all of the users
+        all_users = User.objects.all()
+
+        # checking if the Song type filter has been applied
+        if 'songtype' in request.GET:
+            selected_song_type = request.GET['songtype']
+            superuser = get_object_or_404(User, is_superuser=True)
+            if selected_song_type == 'pre-made':
+                print('PRE-MADE, admin:', superuser)
+                all_songs = all_songs.filter(user=superuser)
+            elif selected_song_type == 'custom':
+                # CREDIT using negate filter ~Q 
+                all_songs = all_songs.filter(~Q(user=superuser))
+
+        # checking if the User filter has been applied
+        if 'songuser' in request.GET:
+            selected_user = str(request.GET['songuser'])
+            user = get_object_or_404(User, username=selected_user)
+            all_songs = all_songs.filter(user=user)
+
+        # checking if the done status filter has been applied
+        if 'donestatus' in request.GET:
+            selected_done_status = request.GET['donestatus']
+            if selected_done_status == 'done':
+                all_songs = all_songs.filter(completed=True)
+            elif selected_done_status == 'not-done':
+                all_songs = all_songs.filter(completed=False)
+
+        # checking if the public status filter has been applied
+        if 'publicstatus' in request.GET:
+            selected_public_status = request.GET['publicstatus']
+            if selected_public_status == 'public':
+                all_songs = all_songs.filter(public=True)
+            elif selected_public_status == 'private':
+                all_songs = all_songs.filter(public=False)
+
+        # checking if the testimonial status filter has been applied
+        if 'testimonialstatus' in request.GET:
+            selected_testimonial_status = request.GET['testimonialstatus']
+            if selected_testimonial_status == 'testimonial':
+                all_songs = all_songs.filter(use_as_testimonial=True)
+            elif selected_testimonial_status == 'not-testimonial':
+                all_songs = all_songs.filter(use_as_testimonial=False)
 
         # returns all custom and pre-made songs
         context = {
             'all_songs': all_songs,
+            'all_users': all_users,
+            'selected_song_type': selected_song_type,
+            'selected_user': selected_user,
+            'selected_done_status': selected_done_status,
+            'selected_public_status': selected_public_status,
+            'selected_testimonial_status': selected_testimonial_status,
         }
 
         return render(request, 'profiles/site_management_all_songs.html', context)
