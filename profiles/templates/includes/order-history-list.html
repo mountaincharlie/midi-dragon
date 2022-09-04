@@ -22,7 +22,7 @@
         <div class="col-6 col-md-7">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'order_confirmation' order.order_number %}" class="midi-l-grey" title="Go to Order Confirmation page">
+                    <a href="{% url 'order_overview' order.order_number %}" class="midi-l-grey" title="Go to Order Overview page">
                         <h5 class="my-1 d-none d-md-block">{{ order.order_number }}</h5>
                         <h5 title="{{ order.order_number }}" class="my-1 d-block d-md-none">{{ order.order_number|truncatechars:10 }}</h5>
                     </a>

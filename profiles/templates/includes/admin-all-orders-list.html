@@ -62,11 +62,14 @@
     <div class="row d-flex text-center my-4 my-md-2 midi-l-grey hover-highlight-row">
         <!-- MAKE THESE LINKS TO THE ORDER OVERVIEW PAGE USE get_absolute_url? -->
         <div class="col-5 col-lg-6">
-            <h5 class="d-none d-lg-block my-1 midi-l-grey">{{ order.order_number }}</h5>
-            <h5 class="d-none d-md-block d-lg-none my-1 midi-l-grey">{{ order.order_number|truncatechars:15 }}</h5>
-            <h5 class="d-block d-md-none my-1 midi-l-grey" title="{{ order.order_number }}">{{ order.order_number|truncatechars:10 }}</h5>
+            <a href="{% url 'order_overview' order.order_number %}" class="midi-l-grey" title="Go to Order Overview page">
+                <h5 class="d-none d-lg-block my-1">{{ order.order_number }}</h5>
+                <h5 class="d-none d-md-block d-lg-none my-1 ">{{ order.order_number|truncatechars:15 }}</h5>
+                <h5 class="d-block d-md-none my-1" title="{{ order.order_number }}">{{ order.order_number|truncatechars:10 }}</h5>
+            </a>
             <h5 class="my-1 midi-teal d-block d-sm-none">£{{ order.order_total }}</h5>
         </div>
+        
 
         <div class="col-4 col-sm-3 col-lg-2">
             <h5 class="d-none d-md-block my-1 midi-l-grey">
