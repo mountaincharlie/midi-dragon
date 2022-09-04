@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col-12 mt-2 mb-2 text-center midi-l-grey">
+        <h5 class="d-inline">Admin Username:</h5>
+        <p class="m-0 ps-2 d-inline midi-teal fs-5 logo-font">{{ user.username }}</p>
+    </div>
+</div>
+
+<!-- filter dropdowns - adapted from the ones in song.html which have CI CREDIT -->
+<div class="row mt-2 mb-4">
+    <div class="col-12 col-sm-5 col-lg-6 text-center mb-4">
+        <div id="all-orders-filter-reset" role="button" class="btn btn-teal p-1">Reset Filters</div>
+    </div>
+
+    <!-- filtering by user -->
+    {% if all_users %}
+    <div class="col-12 col-sm-3 col-lg-2 text-center my-1">
+        <select id="admin-all-orders-users-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_user != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_user == None %}selected{% endif %}>Users: </option>
+            {% for user in all_users %}
+            <option value="{{ user.username }}" {% if selected_user == user.username %}selected{% endif %}>{{ user.username }}</option>
+            {% endfor %}
+            <option value="anonymous" {% if selected_user == 'anonymous' %}selected{% endif %}>Anonymous</option>
+        </select>
+    </div>
+    {% endif %}
+
+    <!-- date order filter -->
+    <div class="col-12 col-sm-2 text-center my-1">
+        <select id="admin-date-order-select" class="fs-6 midi-d-grey-bg midi-l-grey midi-border-{% if selected_date_order != None %}teal{% else %}l-grey{% endif %}">
+            <option value="reset" {% if selected_date_order == None %}selected{% endif %}>Date: </option>
+            <option value="newest" {% if selected_date_order == 'newest' %}selected{% endif %}>Newest</option>
+            <option value="oldest" {% if selected_date_order == 'oldest' %}selected{% endif %}>Oldest</option>
+        </select>
+    </div>
+
+</div>
+<!-- --------------------------------- END OF FILTERS SECTION -->
+{% if all_orders %}
+
+<!-- headings row -->
+<div class="row basic-font text-center">
+    <div class="col-5 col-lg-6">
+        <h4 class="mb-0 fw-bolder midi-teal">ORDER NO.</h4>
+    </div>
+    <div class="col-4 col-sm-3 col-lg-2">
+        <h4 class="mb-0 fw-bolder midi-teal">USER</h4>
+    </div>
+    <div class="col-3 col-sm-2">
+        <h4 class="mb-0 fw-bolder midi-teal">DATE</h4>
+    </div>
+    <div class="col-2 d-none d-sm-block">
+        <h4 class="mb-0 fw-bolder midi-teal">TOTAL</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 p-0">
+        <hr class="hr-90-teal">
+    </div>
+</div>
+<!-- each row is the details for a song -->
+{% for order in all_orders %}
+    <div class="row d-flex text-center my-4 my-md-2 midi-l-grey hover-highlight-row">
+        <!-- MAKE THESE LINKS TO THE ORDER OVERVIEW PAGE USE get_absolute_url? -->
+        <div class="col-5 col-lg-6">
+            <h5 class="d-none d-lg-block my-1 midi-l-grey">{{ order.order_number }}</h5>
+            <h5 class="d-none d-md-block d-lg-none my-1 midi-l-grey">{{ order.order_number|truncatechars:15 }}</h5>
+            <h5 class="d-block d-md-none my-1 midi-l-grey" title="{{ order.order_number }}">{{ order.order_number|truncatechars:10 }}</h5>
+            <h5 class="my-1 midi-teal d-block d-sm-none">£{{ order.order_total }}</h5>
+        </div>
+
+        <div class="col-4 col-sm-3 col-lg-2">
+            <h5 class="d-none d-md-block my-1 midi-l-grey">
+                {% if order.user_profile == None %}
+                    Anonymous
+                {% else %}
+                    {{ order.user_profile }}
+                {% endif %}
+            </h5>
+            <h5 class="d-block d-md-none my-1 midi-l-grey" title="{{ order.user_profile }}">
+                {% if order.user_profile == None %}
+                    Anonymo...
+                {% else %}
+                    {{ order.user_profile|truncatechars:8 }}
+                {% endif %}
+            </h5>
+        </div>
+        <div class="col-3 col-sm-2">
+            <h5 class="my-1">{{ order.date|date:"d-m-Y" }}</h5>
+        </div>
+        <div class="col-2">
+            <h5 class="my-1 d-none d-sm-block">£{{ order.order_total }}</h5>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
+<hr class="hr-90-teal d-block d-md-none">
+<div class="row d-flex">
+    <div class="col-12 midi-l-grey text-center align-items-center mt-4 midi-warning">
+        <h2 class="my-4">No orders were found in the database.</h2>
+    </div>
+</div>
+{% endif %}

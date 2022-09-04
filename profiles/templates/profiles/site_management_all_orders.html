@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - All Orders{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">
+                Site Management
+            </h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div class="row d-flex d-md-none">
+        <div class="col-1 d-inline mobiledropdowncontainer text-center fs-1 p-0">
+            <!-- burger icon is the dropdown-toggle -->
+            <!-- unordered list is in the dropdown-menu -->
+            <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="sitemanagementdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="sitemanagementdropdownbtn">
+                <li class="dropdown-item midi-l-grey pink-hover">
+                    <a class="midi-l-grey" role="button" href="{% url 'all_songs' %}">All Songs</a>
+                </li>
+                <li class="dropdown-item pink-hover">
+                    <a class="midi-l-grey" href="{% url 'all_orders' %}">All Orders</a>
+                </li>
+                <li class="dropdown-item pink-hover">
+                    <a class="midi-l-grey" role="button" href="{% url 'admin:index' %}">Dango Admin Panel</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-11 midi-l-grey text-center">
+            <h2 class="mt-1 pe-4 fw-bolder mb-4"> | ALL ORDERS | </h2>
+        </div>
+    </div>
+
+    <!-- desktop view: row holding the management content -->
+    <div class="row d-flex ">
+        <!-- menu -->
+        <div class="management-options d-none d-md-block col-12 col-md-3 text-center text-md-start">
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'all_songs' %}" class="midi-l-grey" title="My Details screen">
+                        <h4 class="pink-hover d-inline">All Songs</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'all_orders' %}" class="midi-l-grey" title="Project Drafts screen">
+                        <h4 class="pink-hover d-inline management-options-highlight">All Orders</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row my-4 midi-l-grey">
+                <div class="col-12">
+                    <a role="button" href="{% url 'admin:index' %}" class="midi-l-grey" title="Projects In Progress screen">
+                        <h4 class="pink-hover d-inline">Django Admin Panel</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- rendering html snippets -->
+        <div class="col-12 col-md-9">
+            <div class="row">
+                <div class="col-12">
+                    <!-- snippet here -->
+                    {% include 'includes/admin-all-orders-list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+<!-- PUT IN EXTERNAL JS FILE -->
+{% block postload_js %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+    
+        // ------- custom selectors based on logic from CI walkthrough - CREDIT
+
+        // ------- GLOBAL VARS
+
+        // gets the user selector by its ID
+        let allOrdersUsersSelect = document.getElementById('admin-all-orders-users-select');
+        // gets the date order selector by its ID
+        let dateOrderSelect = document.getElementById('admin-date-order-select');
+        // gets the reset filters button by its ID
+        let resetFiltersButton = document.getElementById('all-orders-filter-reset');
+
+
+        // ------- EVENT LISTENERS
+
+        allOrdersUsersSelect.addEventListener("change", filterOrdersByUser);
+        dateOrderSelect.addEventListener("change", filterByDateOrder);
+        resetFiltersButton.addEventListener("click", resetAllSongsFilters);
+
+
+        // ------- CALLBACK FUNCTIONS
+
+        /**
+         * @name filterOrdersByUser
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedUser is set as the 'songuser' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'songuser' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterOrdersByUser(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedUser = allOrdersUsersSelect.options[allOrdersUsersSelect.selectedIndex].value;
+
+            if(selectedUser != 'reset'){
+                currentUrl.searchParams.set("orderuser", selectedUser);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("orderuser");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name filterByDateOrder
+         * @description Gets the current URL from the window.
+         * Gets the value from the select element.
+         * If the 'rest' option is not selected, then the
+         * selectedDoneStatus is set as the 'donestatus' parameter in
+         * the url.
+         * The updated currentUrl is applied to reload the page.
+         * If the 'reset' option is selected, the 'donestatus' param
+         * is removed from the currentUrl which is used to reload
+         * the page.
+        */
+        function filterByDateOrder(){
+
+            var currentUrl = new URL(window.location.href);
+            var selectedDateOrder = dateOrderSelect.options[dateOrderSelect.selectedIndex].value;
+
+            if(selectedDateOrder != 'reset'){
+                currentUrl.searchParams.set("dateorder", selectedDateOrder);
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("dateorder");
+                window.location.replace(currentUrl);
+            }
+        };
+
+
+        /**
+         * @name resetAllSongsFilters
+         * @description Gets the current URL from the window.
+         * Gets the string of the current URL and splits it by the
+         * '?' as everything after this refers to the search prarameters
+         * and takes the first bit which is the url without filters applied.
+         * Replacing the current URL with the withoutFiltersUrl, reloads
+         * the page, restting the filters.
+        */
+        function resetAllSongsFilters(){
+
+            var currentUrl = new URL(window.location.href);
+            var withoutFiltersUrl = String(currentUrl).split('?')[0]
+            window.location.replace(withoutFiltersUrl);
+
+        };
+    </script>
+{% endblock %}
