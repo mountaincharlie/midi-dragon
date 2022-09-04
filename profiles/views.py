@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views import View
@@ -20,6 +20,11 @@ class MyDetailsView(View):
         FINISH ...
 
         """
+        # if the super user tries to view this page it redirects them to their Site Management page
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         # gets the MyDetailsForm() with the users details if possible
         try:
             my_details_form = MyDetailsForm(initial={
@@ -87,6 +92,11 @@ class ProjectDraftsView(View):
         """
         FINISH ...
         """
+        # if the super user tries to view this page it redirects them to their Site Management page
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         # gets all the user's custom songs (filter songs by user = self.request.user) AS A LIST
         users_custom_songs = list(Song.objects.filter(user=self.request.user.id))
         print('users_custom_songs', users_custom_songs)
@@ -127,6 +137,11 @@ class ProjectsInProgressView(View):
         """
         FINISH ...
         """
+        # if the super user tries to view this page it redirects them to their Site Management page
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         # defines the list for incomplete purchased custom songs created belonging to the user
         users_incomplete_purchased_custom_songs = {}
 
@@ -167,6 +182,11 @@ class CompletedProjectsView(View):
         """
         FINISH ...
         """
+        # if the super user tries to view this page it redirects them to their Site Management page
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         # defines the list for complete purchased custom songs created belonging to the user
         users_complete_purchased_custom_songs = {}
 
@@ -205,6 +225,11 @@ class OrderHistoryView(View):
         """
         FINISH ...
         """
+        # if the super user tries to view this page it redirects them to their Site Management page
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         # gets all of the user's Orders
         users_orders = Order.objects.filter(user_profile=self.request.user.id)
         users_orders_dict = {}
@@ -219,3 +244,28 @@ class OrderHistoryView(View):
         }
 
         return render(request, 'profiles/dashboard_order_history.html', context)
+
+
+class AllSongsAdminView(View):
+    """
+    Class based view inheriting Django's View
+    FINISH ...
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        FINISH ...
+        """
+        # checks that it is the admin who is the logged in user rtying to access the page, else redirects the user with a message
+        if not request.user.is_superuser:
+            messages.error(request, "You don't have access to this page.")
+            return redirect(reverse('home'))
+
+        # gets all of the songs in the db
+        all_songs = Song.objects.all()
+
+        # returns all custom and pre-made songs
+        context = {
+            'all_songs': all_songs,
+        }
+
+        return render(request, 'profiles/site_management_all_songs.html', context)
