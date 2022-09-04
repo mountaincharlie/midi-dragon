@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# secret key
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True in development mode and False in Heroku app
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['midi-dragon.herokuapp.com', 'localhost']
 
