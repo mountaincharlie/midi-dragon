@@ -67,6 +67,7 @@ li{
 a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     color: #FF57D2 !important;
     border-color: #FF57D2 !important;
+    cursor: pointer;
 }
 
 
@@ -399,7 +400,7 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     color: #9A9EAE;
 }
 
-#design-custom-song-form .form-control, .textInput,
+#design-custom-song-form .form-control, .textInput, .emailinput,
 ::-webkit-file-upload-button{
     color: #9A9EAE;
     background-color: #1D212E;
@@ -418,7 +419,8 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     cursor: pointer;
 }
 
-#design-custom-song-form .form-control:hover{
+#design-custom-song-form .form-control:hover,
+#design-custom-song-form .form-control:focus{
     border-color: #FF57D2;
 }
 
@@ -473,7 +475,8 @@ audio::-webkit-media-controls-current-time-display, audio::-webkit-media-control
     -webkit-appearance: none;
 }
 
-.instruments-select:hover{
+.instruments-select:hover,
+.instruments-select:focus{
     border-color: #FF57D2;
 }
 
@@ -520,7 +523,7 @@ input:-webkit-autofill:active  {
     color: #9A9EAE;
 }
 
-#payment-form .form-control, .textInput,
+#payment-form .form-control, .textInput, .emailinput,
 ::-webkit-file-upload-button{
     color: #9A9EAE;
     background-color: #1D212E;
@@ -637,6 +640,58 @@ input:-webkit-autofill:active  {
 }
 
 
+/* ---------- dashboard/site management */
+
+.dashboard-option-highlight,
+.management-options-highlight{
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: 4px solid #00D1CF;
+    border-right: 4px solid #00D1CF;
+    font-weight:bolder;
+    color:#00D1CF;
+}
+
+.dashboard-option-highlight a,
+.management-options-highlight a{
+    color:#00D1CF !important;
+}
+
+.dashboard-options,
+.management-options {
+    width: 20%;
+    margin: auto;
+    margin-top:10px;
+}
+
+
+#my-details-form{
+    color:#9A9EAE;
+    width: 80%;
+    margin: auto;
+}
+
+#my-details-form label,
+#username-label{
+    font-size: larger;
+    font-weight:700;
+    text-transform: uppercase;
+}
+
+#my-details-form .form-control, .textInput, .emailinput,
+::-webkit-file-upload-button{
+    color: #9A9EAE;
+    background-color: #1D212E;
+    border-color: #00D1CF;
+    font-family:'BioRhyme', sans-serif;
+}
+
+#my-details-form .form-control:hover,
+#my-details-form .form-control:focus{
+    border-color: #FF57D2;
+}
+
+
 /* ---------- navbar */
 
 #profiledropdownbtn::after,
@@ -644,6 +699,8 @@ input:-webkit-autofill:active  {
 #logindropdownbtn::after,
 #mobilelogindropdownbtn::after,
 #burgericondropdownbtn::after,
+#dashboarddropdownbtn::after,
+#sitemanagementdropdownbtn::after,
 #mobilesearchdropdownbtn::after {
     content: none;
 }
@@ -687,7 +744,8 @@ input:-webkit-autofill:active  {
     margin-bottom: 15px;
 }
 
-.allauth-forms form input:hover{
+.allauth-forms form input:hover,
+.allauth-forms form input:focus{
     border-color: #FF57D2;
 }
 
