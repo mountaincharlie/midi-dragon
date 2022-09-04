@@ -247,6 +247,31 @@ class OrderHistoryView(View):
         return render(request, 'profiles/dashboard_order_history.html', context)
 
 
+class OrderOverview(View):
+    """
+    Class based view inheriting Django's View
+    view to handle successful checkouts
+    -Contains the get method for displaying the Order overview to the user
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        -Takes in the request and the order_number for the order
+        -Gets the order by its number
+        -Gets the order's associated songs
+        -Passes the order instance and order_songs through the context
+        -return renders the order_overview page
+        """
+        order = get_object_or_404(Order, order_number=self.kwargs['order_number'])
+
+        order_songs = OrderSong.objects.filter(order=order)
+
+        context = {
+            'order': order,
+            'order_songs': order_songs,
+        }
+
+        return render(request, 'profiles/order_overview.html', context)
+
 
 class AllSongsAdminView(View):
     """
