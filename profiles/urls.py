@@ -10,4 +10,7 @@ urlpatterns = [
     path('projects-in-progress/', login_required(views.ProjectsInProgressView.as_view()), name='projects_in_progress'),
     path('completed-projects/', login_required(views.CompletedProjectsView.as_view()), name='completed_projects'),
     path('order-history/', login_required(views.OrderHistoryView.as_view()), name='order_history'),
+    path('order-overview/<order_number>/', login_required(views.OrderOverview.as_view()), name='order_overview'),
+    path('all-songs/', login_required(views.AllSongsAdminView.as_view()), name='all_songs'),
+    path('all-orders/', login_required(views.AllOrdersAdminView.as_view()), name='all_orders'),
 ]
