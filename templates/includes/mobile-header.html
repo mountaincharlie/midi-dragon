@@ -69,14 +69,39 @@
             </div>
             <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="mobileprofiledropdownbtn">
                 {% if user.is_superuser %}
-                    <li><a class="dropdown-item midi-l-grey" href="#">Site Management</a></li>
-                {% endif %}
-                <li><a class="dropdown-item midi-l-grey" href="{% url 'my_details' %}">Dashboard</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'all_songs' %}">
+                        Site
+                        <br>
+                        Management
+                    </a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'all_songs' %}">All Songs</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'all_orders' %}">All Orders</a></li>
+                    <li><a class="dropdown-item midi-l-grey" href="{% url 'admin:index' %}">
+                        Django
+                        <br>
+                        Admin Panel
+                    </a></li>
+                {% else %}
+                <li><a class="dropdown-item midi-l-grey" href="{% url 'my_details' %}">
+                    <!-- Dashboard -->
+                    {{ user.username }}'{% if user.username|slice:"::-1"|slice:":1" != 's' %}s
+                    {% endif %}
+                    <br>
+                    Dashboard
+                </a></li>
                 <li><a class="dropdown-item midi-l-grey" href="{% url 'my_details' %}">My Details</a></li>
                 <li><a class="dropdown-item midi-l-grey" href="{% url 'project_drafts' %}">Project Drafts</a></li>
-                <li><a class="dropdown-item midi-l-grey" href="{% url 'projects_in_progress' %}">Projects In Progress</a></li>
-                <li><a class="dropdown-item midi-l-grey" href="{% url 'completed_projects' %}">Completed Projects</a></li>
+                <li><a class="dropdown-item midi-l-grey" href="{% url 'projects_in_progress' %}">
+                    Projects
+                    <br>
+                    In Progress
+                </a></li>
+                <li><a class="dropdown-item midi-l-grey" href="{% url 'completed_projects' %}">
+                    Completed
+                    <br>
+                    Projects</a></li>
                 <li><a class="dropdown-item midi-l-grey" href="{% url 'order_history' %}">Order History</a></li>
+                {% endif %}
                 <li><a class="dropdown-item midi-l-grey" href="{% url 'account_logout' %}">Logout</a></li>
             </ul>
         {% else %}
