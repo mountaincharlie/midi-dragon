@@ -29,7 +29,7 @@
                     <a class="midi-l-grey" role="button" href="{% url 'all_songs' %}">All Songs</a>
                 </li>
                 <li class="dropdown-item pink-hover">
-                    <a class="midi-l-grey" href="#">All Orders</a>
+                    <a class="midi-l-grey" href="{% url 'all_orders' %}">All Orders</a>
                 </li>
                 <li class="dropdown-item pink-hover">
                     <a class="midi-l-grey" role="button" href="{% url 'admin:index' %}">Dango Admin Panel</a>
@@ -47,21 +47,21 @@
         <div class="management-options d-none d-md-block col-12 col-md-3 text-center text-md-start">
             <div class="row my-4 midi-l-grey">
                 <div class="col-12">
-                    <a role="button" href="#" class="midi-l-grey" title="My Details screen">
+                    <a role="button" href="{% url 'all_songs' %}" class="midi-l-grey" title="My Details screen">
                         <h4 class="pink-hover d-inline management-options-highlight">All Songs</h4>
                     </a>
                 </div>
             </div>
             <div class="row my-4 midi-l-grey">
                 <div class="col-12">
-                    <a role="button" href="#" class="midi-l-grey" title="Project Drafts screen">
+                    <a role="button" href="{% url 'all_orders' %}" class="midi-l-grey" title="Project Drafts screen">
                         <h4 class="pink-hover d-inline">All Orders</h4>
                     </a>
                 </div>
             </div>
             <div class="row my-4 midi-l-grey">
                 <div class="col-12">
-                    <a role="button" href="#" class="midi-l-grey" title="Projects In Progress screen">
+                    <a role="button" href="{% url 'admin:index' %}" class="midi-l-grey" title="Projects In Progress screen">
                         <h4 class="pink-hover d-inline">Django Admin Panel</h4>
                     </a>
                 </div>
