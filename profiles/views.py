@@ -247,6 +247,7 @@ class OrderHistoryView(View):
         return render(request, 'profiles/dashboard_order_history.html', context)
 
 
+
 class AllSongsAdminView(View):
     """
     Class based view inheriting Django's View
@@ -327,3 +328,56 @@ class AllSongsAdminView(View):
         }
 
         return render(request, 'profiles/site_management_all_songs.html', context)
+
+
+class AllOrdersAdminView(View):
+    """
+    Class based view inheriting Django's View
+    FINISH ...
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        FINISH ...
+        """
+        # checks that it is the admin who is the logged in user rtying to access the page, else redirects the user with a message
+        if not request.user.is_superuser:
+            messages.error(request, "You don't have access to this page.")
+            return redirect(reverse('home'))
+
+        # resetting all filter vars
+        selected_user = None
+        selected_date_order = None
+
+        # gets all of the songs in the db
+        all_orders = Order.objects.all()
+
+        # gets all of the users
+        all_users = list(User.objects.all())
+
+        # checking if the User filter has been applied
+        if 'orderuser' in request.GET:
+            selected_user = str(request.GET['orderuser'])
+            if selected_user == 'anonymous':
+                user = None
+            else:
+                user = get_object_or_404(User, username=selected_user)
+            all_orders = all_orders.filter(user_profile=user)
+        
+        # checking if the date ordering has been applied
+        if 'dateorder' in request.GET:
+            selected_date_order = request.GET['dateorder']
+            order_key = 'date'
+            if selected_date_order == 'newest':
+                order_key = f'-{order_key}'
+            # ordering the orders
+            all_orders = all_orders.order_by(order_key)
+
+        # returns all orders
+        context = {
+            'all_orders': all_orders,
+            'all_users': all_users,
+            'selected_user': selected_user,
+            'selected_date_order': selected_date_order,
+        }
+
+        return render(request, 'profiles/site_management_all_orders.html', context)
