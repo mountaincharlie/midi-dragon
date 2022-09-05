@@ -36,65 +36,105 @@ This application provides users with the ability to browse a collection of pre-m
 ## Business Model [TO FINISH]
 ---
 
-* Purpose: B2C
-  * [explanation] 
+* Purpose: Business to Consumer (B2C)
+  * midiDRAGON is the business, our Pre-made songs are our product, the Custom Songs feature is a service we provide and the users who are purchasing these songs, directly from us, are the consumers.
 
 * Core business intents:
-  * ...purpose of site
-  * ...what it's selling (services and products)
-  * ...how it makes money (single payments from products and services)
-  * ...how it's promoted
-  * ...target users and the value they get
+  * The purpose of midiDRAGON is to provide royalty free music that users can purchase once and use for any of thier content creation or personal projects as much as they want. In the case of the Custom Song Design feature, midiDRAGON also allows users to purchase bespoke songs to be made for them.
+  * midiDRAGON sells both products and services. The Pre-made Songs are available to be viewed, listened to and purchased by any site users, even if they're not logged in or have an account.The Design a Custom Song service is only available to users who have an account and are logged in, because registered users have access to their Profile Dashboard which is where their draft, in progress and completed Custom Song projects can be viewed and managed. 
+  * midiDRAGON makes money via single payments from ts products and services.
+  * midiDRAGON is promoted via its Facebook business page (linked in the Marketing Strategy section below), as well as by users who choose for their custom songs to be used as a testimonial on the site, which further promotes midiDRAGON's services to users who are already on the site.
+  * The target audience for midiDRAGON are people who are in need of music that is safe for them to use on their personal or professional audio or video creations, but particularly those who are regular content creators (e.g. Youtubers, Podcasters, short film directors). Professional content creators appreciate how difficult it can be to get high quality music that suits their project and won't result in it being demonetized or scrutinized legally.  
+  * The value that users get from midiDRAGON is the quick, simple and safe process of purchasing songs, the security of knowing that they can use midiDRAGON's songs in any of their projects without the threat of their content being banned (As long as they don't claim the songs as their own intellectual property in any way. Specific guidance for midiDRAGON's Terms of Service are laid out in the FAQs and Terms of Service pages, which are linked below) and the ability to, without any musical skill or equipment, design a custom song to be made for them. 
 
 * Privacy Policy 
-  * (link to page on site)
-  * link to site used to generate (add to credits also)
+  * [midiDRAGON Privacy Policy](https://midi-dragon.herokuapp.com/privacy-policy/)
+  * Credit: [Privacy Policy Generator](https://www.privacypolicygenerator.info/) for generating the policy.
 
 * Terms of Service 
-  * (link to page on site)
+  * [midiDRAGON ToS](https://midi-dragon.herokuapp.com/terms-of-service/)
+
+* Frequently Asked Questions 
+  * [midiDRAGON FAQs](https://midi-dragon.herokuapp.com/frequently-asked-questions/)
 
 
 ## Marketing Strategy [TO FINISH]
 ---
 
 * Facebook Business Page
-  * [screenshots of the page]
-  * [link to FB page]
+  * [midiDRAGON Facebook Business Page](https://www.facebook.com/Midi-Dragon-107201462130945)
+  * ![midiDRAGON Facebook Business Page](./static/images/readme_images/midi-dragon-fb-business-page-1.png "midiDRAGON Facebook Business Page")
+  * ![midiDRAGON Facebook Business Page](./static/images/readme_images/midi-dragon-fb-business-page-2.png "midiDRAGON Facebook Business Page")
+  * Cover photo matching the mididDRAGON site
+  * Profile picture matching the mididDRAGON logo
+  * 'Shop On Website' button which takes the user to the browse Pre-made Songs page
+  * 'About' description, ink to site, contact email, price range and relevant tags
+  * First post to promote the site and including the link to the site
 
 * Email Newsletter Subscription
-  * ...explanation why this strat (since small business and just starting - requires free/low cost marketing since the products arent very expensive and the business is just starting out)
-  * ...explain what you used (MailChimp)
+  * mididDRAGON uses this as their primary marketing strategy since its just a small business starting out at the moment and requires free/low cost marketing.
+  * This has been implemented on midiDRAGON's site using [MailChimp](https://mailchimp.com/en-gb/)'s Newsletter Subscription form in the footer.
+  * ![Email Subscription Form with MailChimp](./static/images/readme_images/newsletter-with-mailchimp.png "Email Subscription Form with MailChimp")
+  * For the purposes of this project, the form is styled to fit the rest of the site and has basic error/success messages powered by MailChimp's code but doesn't actually send any newsletters.
 
-* Content (in future)
-  * ...explanation (since as more users use the site and allow their projects as testimonials, there will be more content to promote the site and also I can create short clips about my process for creating the songs etc) [also by allowing content creators to promote their own content/accounts through the testimonials, it helps connect the community, encourages the user to create more custom song projects and want to use Midi Dragon potentially over other options for music making services]
+* Content
+  * midiDRAGON also slightly implements the Content marketing strategy through the [Testimonials](https://midi-dragon.herokuapp.com/songs/testimonials/) page where users' custom songs are made avaliable for other users to view and listen to, if the user who purchased it allows the song to be used as a testimonial, which helps to promote midiDRAGON's Custom Song service.
+  * This is also something that could be expanded in the future to have weekly spotlight songs and other regular content promotion on the site and through the Facebook Page and Newsletter Subscription.
+  * Allowing users to leave a link to their own content creation platforms in their testimonials also helps to connect the community and by having it on the midiDRAGON site, this could also motivate people to have their cusomt songs created by midiDRAGON rather than other freelance music producers.
 
 
 ## Search Engine Optimisation [TO FINISH]
 ---
 
-* Keyword research
-  * [initial selection process]
-  * [final collection]
+### Keyword research
+* Initial Process
+  * Picking 3 main topics and thinking of as many relevant keywords for those topics
+  * ![Keyword research Initial list](./static/images/readme_images/kw-research-part-1.png "Keyword research Initial list")
+* Stage 2 - using Google search techniques to find more keywords
+  * Checking the Google autofill suggestions
+  * Adding '_' before the keyword as this acts as a 'wildcard' to give suggestions for additions to the start of the keyword
+  * Checking the suggestions at the very bottom of the Google search results page
+  * Thinking about the kind of searches that potential midiDRAGON customers would be making (e.g. 'personalised music gifts')
+  * ![Keyword research stage 2](./static/images/readme_images/kw-research-part-2.png "Keyword research stage 2")
+* Stage 3 - organising the list
+  * Removing duplicates and organising clearly
+  * ![Keyword research stage 3](./static/images/readme_images/kw-research-part-3.png "Keyword research stage 3")
+* Stage 4 - refining the list
+  * Considering the __Relevance__ of the keywords - does midiDRAGON's purpose suit the keyword (e.g. 'background music for at home' isn't exactly what midiDRAGON customers are going to be expecting from the site)
+  * Considering the __Authority__ midiDRAGON has over the keyword (e.g. most keywords mentioning 'music for Youtube' return a lot of Google searches for services more specific for Youtubers than midiDRAGON)
+  * Considering the __Volume__ of searches each keyword gets - and finding a balance between keywords that yield a lot of searches but also that aren't too competitive for a new small business like midiDRAGON
+  * Practically, I searched for the keywords in Google and checked which ones didn't appear exactly in too many high ranking site Titles and also which keywords didn't yield too many Google ads as this also was an indication of them not being too competitive. Finally, I considered which keywords were relevant to midiDRAGON's purpose and which midiDRAGON had a reasonable amount of authority over.
+  * ![Keyword research stage 4](./static/images/readme_images/kw-research-part-4.png "Keyword research stage 4")
+
+* Choosing the midiDRAGON name
+  * midi - Musical Instrument Digital Interface - reffers to the format that most of my music production occurs in
+  * dragon - memorable and Font Awesome had a stylish looking icon to act as the logo
+  * I researched whether any combinations of midi-dragon existed, but there were no music related results aside from one album name.
+  * So midiDRAGON was unique, memorable and relevant enough to work well for the site.
 
 * Semantic HTML
-  * ...how you used it with keywords (e.g. bolds, headings, title element, alt attributes, specific and relevant media file names etc)
+  * Many of the keywords contain the names of the song genres on midiDRAGON (e.g. Lofi, Cinematic, Indie) which appear many times throughout the site.
+  * Some of the keywords appear in headings, buttons and the title element across the site (e.g. Pre-made Songs, Design Custom Song)
+  * Some of the keywords are mentioned in the FAQs (e.g. Royalty free music, Custom Songs)
+  * All of the media files used for the site also have relevant names (e.g. each Pre-made Song's image and audio file has a name to match the name of the song) which improves the SEO for the site.
 
 * meta tags
-  * ...how you stuff the keywords tag with keywords
-  * ...how you use keywords in the description tag but it also flows as normal sentences
+  * Meta Tag - Filling it with my refined list of keywords.
+  * Description Tag - Creating a summary of the site's key features whilst making use of the keywords in my final list.
 
 * Links to reliable and relevant external sites
-  * ...consider linking to: FL studio, Heroku, django?, links to crown church, toby carvery slough and herts CU facebook pages for the projects i made for them
-  * ...about rel noopener attributes on them
+  * I included links to 2 additional sites in the footer; Heroku (for the creation of the app) and Fl Studio (as the Digital Audio Workspace that I use for creating my music), since these are both reliable and reputable site which are both very relevant to midiDRAGON.
+  * For the links to Heroku, FL Studio and my Facebook Business page, I used the target="_blank" attribute in order for them to be opened in a new page when clicked so that the users aren't taken away from midiDRAGON. I also included the rel="noopener noreferrer" attribute to prevent the linked site being able to have any information about or any access to my site through users clicking the link.
 
 * robots.txt file
-  * ...explanation of why
-  * ...explanation of how made and where stored
-  * (THINGS TO DISALLOW => anything requiring authentications/containing secure details [e.g. any profile pages, admin pages, checkout, tracklist etc])
+  * Simple text file elling the Search Engine the urls its not allowed to crawl/index.
+  * Its presence in a project shows the Search Engine that you ackowledge it has access to the site and is a sign of quality, improving your ranking.
+  * I created the robots.txt file in my root directory including the 'User-agent' as * indicating it applies to all SEO 'agents', listed the 'Disallows' (for my accounts, tracklist and profiles urls) and included my 'Sitemap'
 
 * sitemap.xml file
-  * ...explanation of why
-  * ...explanation of how made and where stored
+  * Lists the site's important page urls so that the Search Engine can navigate through them, helping the Search Engine understand the site's structure, speeding up it sprocess and ensuring all the essential pages are covered.
+  * I used [xml-sitemaps](https://www.xml-sitemaps.com/) to generate my sitemap.xml file
+  * I then made sure I uploaded this into the root directory of my project.
 
 
 ## Technologies Used [TO FINISH]
@@ -114,9 +154,10 @@ This application provides users with the ability to browse a collection of pre-m
     * postgresql
     * AllAuth
     * Crispy Forms
-    * countries??
+    * django-storages
 * Bootstrap
 * Stripe
+* boto3 (for AWS)
 
 
 ## Project Management [TO FINISH]
@@ -307,6 +348,7 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
   * Removed the song_end_fade and audio_clip fields from the Song model as they were features that weren't really necessary for pre-made or custom songs and distracted from the important features on the Custom Design Song form.
   * Removed the AdOns model - this additional functionality was not essential to the site's function and purpose, so I've left it as a possible future feature.
   * Removed the UserProfile model since it ended up only having a 1 to 1 relationship with the Django built in User model and a 1 to many relationship with the Order model, so instead I just related the Django User model and the Order model directly via a 1 to many relationship.
+  * Added the created_date field to the Song model so that the users can see in their Profile Dashboard when their projects were created.
 * Final Schema diagram, using [dbdiagram.io](https://dbdiagram.io/home)
 * ![Final Database Design](./static/images/readme_images/p5-final-db-schema.png "Final Database Design")
 
