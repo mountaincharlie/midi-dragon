@@ -118,8 +118,8 @@ This application provides users with the ability to browse a collection of pre-m
   * Some of the keywords are mentioned in the FAQs (e.g. Royalty free music, Custom Songs)
   * All of the media files used for the site also have relevant names (e.g. each Pre-made Song's image and audio file has a name to match the name of the song) which improves the SEO for the site.
 
-* meta tags
-  * Meta Tag - Filling it with my refined list of keywords.
+* Meta Tags
+  * Keyword Tag - Filling it with my refined list of keywords.
   * Description Tag - Creating a summary of the site's key features whilst making use of the keywords in my final list.
 
 * Links to reliable and relevant external sites
@@ -163,24 +163,24 @@ This application provides users with the ability to browse a collection of pre-m
 ## Project Management [TO FINISH]
 ---
 * Using GitHub
-    * link to Midi Dragon Project page
+  * link to Midi Dragon Project page
 
 * Using GitHub Projects to create Epics (big features/tasks)
-    * screenshot of full list of numbered epics (collapsed)
-    * screenshot 
+  * screenshot of full list of numbered epics (collapsed)
+  * screenshot 
 
 * Using GitHub Issues to create User Stories and Project Maintenance (with GitHub’s labels to identify their type)
-    * screenshot of github issue types (e.g. user story with MoSCoW priority labels)
+  * screenshot of github issue types (e.g. user story with MoSCoW priority labels)
 
 * Using GitHub's Project KanBan board feature to mark my progress throughout the project
-    * screenshot of the kanban board for one of the epics
+  * screenshot of the kanban board for one of the epics
 
 * Using GitHub labels to prioritize User Stories (using MoSCoW prioritization)
-    * md syntax for images: (![Project Maintainance label](./static/images/readme_images/proj-maint-label.jpg "Project Maintainance label"))
-    * screenshots of all the labels you use, with their definition etc
+  * md syntax for images: (![Project Maintainance label](./static/images/readme_images/proj-maint-label.jpg "Project Maintainance label"))
+  * screenshots of all the labels you use, with their definition etc
 
 * Using checklists within the GitHub Issues in order to specify the tasks required to achieve User Stories, Project Maintenance and Testing
-    * screenshot of a checklist within a user story/maintenance/testing 
+  * screenshot of a checklist within a user story/maintenance/testing 
 
 
 ## Initial Designs [TO FINISH]
@@ -786,8 +786,8 @@ If the logged in user is the admin then a different view class is called wheneve
 ## Deployment [TO FINISH]
 ---
 
-### Early Deployment to Heroku (adjust for this project)
-* First I created the cook-ebook app on Heroku
+### Early Deployment to Heroku
+* First I created the midi-dragon app on Heroku
 * Then I added my Heroku Postgres database in Heroku's Resources -> Add Ons
 * I created an env.py file in my root directory and made sure that it was listed in my .gitignore so that it would never be commited to GitHub
 * I copied the link to my Heroku database from the Heroku Config Variable and pasted it into my env.py file
@@ -795,15 +795,20 @@ If the logged in user is the admin then a different view class is called wheneve
 * I gave my SECRET_KEY a value and created a Heroku Config Variable for this 
 * I then changed my default database to use dj_database_url and DATABASE_URL
 * In my settings.py file I set my Heroku app as a localhost in my ALLOWED_HOSTS variable
-* After installing Cloudinary, I created a 'DISABLE_COLLECTSATIC' Config Variable in Heroku with a value of '1', since I didn't have any staticfiles at that time
+* I created a 'DISABLE_COLLECTSATIC' Config Variable in Heroku with a value of '1', since I didn't have any staticfiles at that time
 * I then created a Procfile for my app
-* Set auto deploys
+* Setup automatic deploys with Github
 
 ### Final Deployment to Heroku
-* 
+* In settings.py set DEBUG = 'DEVELOPMENT' in os.environ, so that in development mode DEBUG = True, but in the Heroku app DEBUG = False
+* I then set up my AWS bucket following [Code Institue's tutorial](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+EA101+2021_T1/courseware/eb05f06e62c64ac89823cc956fcd8191/40cc2543c48643fda09351da6fa90579/)
+* I added my AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and the USE_AWS as True in Heroku config vars to complete the set up of AWS with my Heroku app
+* I then removed my 'DISABLE_COLLECTSATIC' Config Variable since I did have staticfiles
+* I added my STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY and STRIPE_WH_SECRET (from a new Webhook Endpoint which I created for the deployed site) to the Heroku config vars to complete my setup with Stripe on my Heroku app
+* I added my EMAIL_HOST_USER and EMAIL_HOST_PASS value to Heroku config vars to complete my connection of Gmail SMTP service with my Heroku app (for sending order confirmation and account verification emails)
 
 ### Deployed site link
-* link
+* [midiDRAGON](https://midi-dragon.herokuapp.com/)
 
 
 ## Credits [TO FINISH]
@@ -883,6 +888,7 @@ listner in stripe_elements.js.
 * Icons:
   * Font Awesome's …
   * Favicon made Font Awesome's …
+* Audio files:
 
 
 ## Future Features [TO FINISH]
