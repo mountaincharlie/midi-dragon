@@ -243,15 +243,20 @@ This application provides users with the ability to browse a collection of pre-m
   * public [booleanField, default: False, when use_as_testimonial is True but public is False, this indicates that the song is awaiting being used as a testimonial (either while being edited or while waiting for admin approval)]
 
 * An AddOn table containing the fields:
-   * field [field type, notes]
+  * id [automatically increments]
+  * type [charField, type of addOn]
+  * song [intfield, the id of the song it will be applied to]
+  * value [charfield, 'instrument' or 'number' (for additional review session)]
+  * price [decimalfield, 'calculated from the values defined in settings.py']
+  * further_details [textField, for the user to add additional notes about the addOn]  
 
 * A ProjectType table containing the fields:
-   * id [automatically increments]
-   * name [charField, name of project type]
-   * length [charField, possible time range for a song of each type]
-   * num_included_instruments [intField, number of instruments included in each project type’s price]
-   * num_included_reviews [intField, number of review sessions included in each project type’s price]
-   * min_price [decimalField, price of each project type which would be the minimum price for that custom song project - if no additional instruments etc were added]
+  * id [automatically increments]
+  * name [charField, name of project type]
+  * length [charField, possible time range for a song of each type]
+  * num_included_instruments [intField, number of instruments included in each project type’s price]
+  * num_included_reviews [intField, number of review sessions included in each project type’s price]
+  * min_price [decimalField, price of each project type which would be the minimum price for that custom song project - if no additional instruments etc were added]
 
 * An Instrument table containing the fields:
   * id [automatically increments]
@@ -273,14 +278,13 @@ Due to it's many-to-many relationship with the Song table, there is also an inte
 I used Django’s built in User model to connect to my UserProfile table with a one-to-one relationship and to my Song table with a one-to-many relationship.
 
 * An Order table containing the fields:
-   * id [automatically increments]
-   * order_number [charField, non-editable and auto-created by pre_save() signal]
-   * user_profile [intField, many-to-one relationship with UserProfile, related_name= "my_orders" so that in profile.html, using an “if my_orders" statement, this will check for the orders the logged in user owns]
-   * full_name [charField, editable and populated from the user’s profile or the user is required to type it in]  
-   * email [emailField, editable and populated from the user’s profile or the user is required to type it in]
-   * date [datetimeField, auto created on Order creation when the order is placed and paid for]
-   * order_total [decimalField, total cost of the order instance]
-
+  * id [automatically increments]
+  * order_number [charField, non-editable and auto-created by pre_save() signal]
+  * user_profile [intField, many-to-one relationship with UserProfile, related_name= "my_orders" so that in profile.html, using an “if my_orders" statement, this will check for the orders the logged in user owns]
+  * full_name [charField, editable and populated from the user’s profile or the user is required to type it in]  
+  * email [emailField, editable and populated from the user’s profile or the user is required to type it in]
+  * date [datetimeField, auto created on Order creation when the order is placed and paid for]
+  * order_total [decimalField, total cost of the order instance]
 
 * An OrderItems table containing the fields:
   * id [automatically increments]
@@ -288,21 +292,23 @@ I used Django’s built in User model to connect to my UserProfile table with a 
   * song [intField, one-to-one relationship with Song, related_name=songitem. Used to get the song details, like price, for the Order instance]
 The items in the OrderItems table are essentially order ‘versions’ of songs that are bought, containing all of the song’s details through the relationship with the Song table and the purchase date and order_number etc through the Order table. Used to create each item in the Order history and Order confirmation displays.
 
-
 * A UserProfile table containing the fields:
-   * id [automatically increments]
-   * user [intField, one-to-one relationship with Django’s User model]
-   * phone_number [charField, optional for user’s to add if they prefer this means of contact for review sessions]
+  * id [automatically increments]
+  * user [intField, one-to-one relationship with Django’s User model]
+  * phone_number [charField, optional for user’s to add if they prefer this means of contact for review sessions]
 
 * I used [dbdiagram.io](https://dbdiagram.io/home) to create a visual representation of my database schema
-* screenshot
+* ![Initial Database Design](./static/images/readme_images/p5-initial-db-schema.png "Initial Database Design")
 
-### Final Database Schema (only if any changes made from initial)
+### Final Database Schema
 * Changes
-  * screenshots
-  * (add quantity to SongInstrument - when refactoring the Song and Instrument models relationship so that songs could have multiple of any particular instrument without having to create duplicates in the Instrument model)
-  * (remove song_end_fade and audio_clip fields from Song model)
-  * (remove AdOns model - future feat?)
+  * Added the quantity field to the SongInstrument model. While refactoring the Song and Instrument models relationship so that songs could have multiple of any particular instrument without having to create duplicates in the Instrument model.
+  * Changed the Song model's audio_video field to just be the audio_file field since there wasn't enough need to allow for videos to be playable on the site since the products we are selling are the audio itself.
+  * Removed the song_end_fade and audio_clip fields from the Song model as they were features that weren't really necessary for pre-made or custom songs and distracted from the important features on the Custom Design Song form.
+  * Removed the AdOns model - this additional functionality was not essential to the site's function and purpose, so I've left it as a possible future feature.
+  * Removed the UserProfile model since it ended up only having a 1 to 1 relationship with the Django built in User model and a 1 to many relationship with the Order model, so instead I just related the Django User model and the Order model directly via a 1 to many relationship.
+* Final Schema diagram, using [dbdiagram.io](https://dbdiagram.io/home)
+* ![Final Database Design](./static/images/readme_images/p5-final-db-schema.png "Final Database Design")
 
 
 ## Final Designs [TO FINISH]
@@ -841,4 +847,5 @@ listner in stripe_elements.js.
 ---
 Ideas that could be used to expand the site's functionality. 
 
-###
+### AdOns
+* 
