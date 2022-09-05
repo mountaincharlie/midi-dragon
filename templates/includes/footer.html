@@ -6,7 +6,6 @@
                 <form action="https://gmail.us18.list-manage.com/subscribe/post?u=a62bab68a8d722dfce3e16a04&amp;id=950d1b4245" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                     <div id="mc_embed_signup_scroll">
                         <h2 class="midi-d-grey text-center fs-4">Newsletter</h2>
-                        <!-- <div class="indicates-required midi-d-grey"><span class="asterisk">*</span> indicates required</div> -->
                         <div class="mc-field-group  midi-l-grey-bg">
                             <label class="midi-d-grey" for="mce-EMAIL">Email Address  <span class="asterisk midi-d-grey">*</span>
                             </label>
@@ -15,10 +14,10 @@
                         <div id="mce-responses" class="clear foot">
                             <div class="response" id="mce-error-response" style="display:none"></div>
                             <div class="response" id="mce-success-response" style="display:none"></div>
-                        </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups -->
+                        </div>
                         <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_a62bab68a8d722dfce3e16a04_950d1b4245" tabindex="-1" value=""></div>
                         <div class="optionalParent">
-                            <div class="text-start"> <!-- clear foot class -->
+                            <div class="text-start">
                                 <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button btn-d-grey">
                                 <p class="brandingLogo midi-d-grey">Made with <a class="midi-d-grey" href="http://eepurl.com/h7JZin" title="Mailchimp - email marketing made easy and fun" target="_blank"> <i class="fa-brands fa-mailchimp"></i> <strong>mailchimp</strong></a></p>
                                 <!-- image from original mailchimp form <img src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg"> -->
@@ -29,7 +28,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 
 <!-- hr on mobile only -->
@@ -38,23 +36,30 @@
 <!-- FB buisness, Privacy Policy and ToS -->
 <div class="col-12 col-md-6 text-start d-flex align-items-center justify-content-center">
     <ul class="p-0 m-0">
-        <!-- business FB page - NEEDS norelopener? -->
+        <!-- business FB page link in new tab -->
         <li class="py-3">
-            <a class="midi-l-grey fs-5" href="#" target="_blank">
+            <a class="midi-l-grey fs-5" rel="noopener noreferrer" href="https://www.facebook.com/Midi-Dragon-107201462130945" target="_blank">
                 <i class="fa-brands fa-facebook pe-2"></i>
                 Find us on Facebook
             </a>
         </li>
-        <!-- Privacy Policy page - NEEDS norelopener? -->
+        <!-- FAQs page -->
         <li class="py-3">
-            <a class="midi-l-grey fs-5" href="#" target="_blank">
+            <a class="midi-l-grey fs-5" href="{% url 'faqs' %}">
+                <i class="fa-solid fa-circle-question pe-2"></i>
+                FAQs
+            </a>
+        </li>
+        <!-- Privacy Policy page -->
+        <li class="py-3">
+            <a class="midi-l-grey fs-5" href="{% url 'privacy' %}">
                 <i class="fa-solid fa-user-shield pe-2"></i>
                 Privacy Policy
             </a>
         </li>
-        <!-- Terms of Service page - NEEDS norelopener? -->
+        <!-- Terms of Service page -->
         <li class="py-3">
-            <a class="midi-l-grey fs-5" href="#" target="_blank">
+            <a class="midi-l-grey fs-5" href="{% url 'tos' %}">
                 <i class="fa-solid fa-circle-exclamation pe-2"></i>
                 Terms of Service
             </a>
@@ -65,29 +70,27 @@
 <!-- hr on mobile only -->
 <hr class="midi-teal hr-80 d-md-none mb-2">
 
-<!-- reliable links? -->
 <div class="row p-2 w-100">
     <!-- on medium + screens -->
     <div class="col-12 d-none d-md-block text-center">
-        <a class="midi-l-grey pe-md-4" href="#" target="_blank">
+        <a class="midi-l-grey pe-md-4" rel="noopener noreferrer" href="https://www.heroku.com/" target="_blank">
             <i class="fa-solid fa-bolt"></i>
             App created with <strong class="logo-font">Heroku</strong>
         </a>
-        <a class="midi-l-grey ps-md-4" href="#" target="_blank">
+        <a class="midi-l-grey ps-md-4" rel="noopener noreferrer" href="https://www.image-line.com/fl-studio/" target="_blank">
             <i class="fa-solid fa-sliders"></i>
             Music made with <strong class="logo-font">FL Studio</strong>
         </a>
     </div>
     <!-- on small screens -->
     <div class="col-12 d-md-none text-center">
-        <a class="midi-l-grey" href="#" target="_blank">
+        <a class="midi-l-grey" rel="noopener noreferrer" href="https://www.heroku.com/" target="_blank">
             <i class="fa-solid fa-bolt"></i>
             App created with <strong class="logo-font">Heroku</strong>
         </a>
-        
     </div>
     <div class="col-12 d-md-none text-center">
-        <a class="midi-l-grey" href="#" target="_blank">
+        <a class="midi-l-grey" rel="noopener noreferrer" href="https://www.image-line.com/fl-studio/" target="_blank">
             <i class="fa-solid fa-sliders"></i>
             Music made with <strong class="logo-font">FL Studio</strong>
         </a>
