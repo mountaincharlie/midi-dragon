@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /tracklist/
+Disallow: /profiles/
+Sitemap: https://midi-dragon.herokuapp.com/sitemap.xml

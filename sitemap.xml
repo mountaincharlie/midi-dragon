@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://midi-dragon.herokuapp.com/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/accounts/login/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/accounts/signup/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/tracklist/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/?sort=price&amp;direction=asc</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/?sort=genre&amp;direction=asc</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/?sort=duration&amp;direction=asc</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/?sort=bpm&amp;direction=asc</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/accounts/login/?next=/songs/design-custom-song/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/testimonials/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/frequently-asked-questions/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/privacy-policy/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/terms-of-service/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/accounts/password/reset/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/someplace-3592152752480965662/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/finding-my-place-6742864093265364746/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/accounts/signup/?next=%2Fsongs%2Fdesign-custom-song%2F</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/songs/sister-song-5320193776314692559/</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://midi-dragon.herokuapp.com/accounts/login/?next=%2Fsongs%2Fdesign-custom-song%2F</loc>
+  <lastmod>2022-09-05T10:13:11+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
