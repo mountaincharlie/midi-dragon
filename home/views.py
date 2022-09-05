@@ -39,3 +39,27 @@ def index(request):
                 tracklist.remove(ordered_song)
 
     return render(request, 'home/index.html')
+
+
+def faqs(request):
+    """
+    View for returning the FAQs.html
+    """
+
+    return render(request, 'home/FAQs.html')
+
+
+def tos(request):
+    """
+    View for returning the terms_of_service.html
+    """
+
+    return render(request, 'home/terms_of_service.html')
+
+
+def privacy(request):
+    """
+    View for returning the privacy_policy.html
+    """
+
+    return render(request, 'home/privacy_policy.html')

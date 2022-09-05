@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block extra_title %} - FAQs{% endblock %}
+
+{% block content %}
+<!-- bootstrap container for all the content on this page -->
+<div id="faqs-container" class="container pt-2 pb-4 overlay">
+    <!-- page heading -->
+    <div class="row py-4">
+        <div class="col-12">
+            <h1 class="page-heading midi-l-grey">FREQUENTLY ASKED QUESTIONS</h1>
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 text-center midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1"></i>
+                Do I need to pay to have an account with midiDRAGON?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                No. Registering for an account is completely free! midiDRAGON doesn't run any subscription services, so you won't be asked for any payment information until you place an order for any Pre-made and/or Custom Songs.
+            </p>
+            <hr class="hr-90-light my-4 d-block d-md-none">
+        </div>
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                How soon will i get access to my purchased Pre-made Songs?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 pe-2"></i>
+                ASAP! You will be sent a confirmation email whenever you complete an order and if your order contains any Pre-made Songs, there will be links included to download the songs straight away.
+            </p>
+            <hr class="hr-90-light my-4 d-block d-md-none">
+        </div>
+    </div>
+    <div class="row d-none d-md-block">
+        <div class="col-12 p-0 my-4">
+            <hr class="hr-90-light">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                Do I need to register for an account inorder to design a custom song?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                Yes. In order to be able to manage and maintain your custom songs you'll need a place to store them. With a midiDRAGON account you will have your own Dashboard to view your Details, Draft Projects, Projects in-progress, Completed Projects and Order History.
+            </p>
+            <hr class="hr-90-light d-block d-md-none my-4">
+        </div>
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                How long will it take for my Custom Song to be created?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                Completion time for Custom Songs depends on the complexity of the project, the number of review sessions included or purchased and how busy midiDRAGON is with other custom projects.
+                <br>
+                Once midiDRAGON has recieved and reviewed your Custom Song Design, they will be in contact to let you know an estimated completion time.
+            </p>
+            <hr class="hr-90-light d-block d-md-none my-4">
+        </div>
+    </div>
+    <div class="row d-none d-md-block">
+        <div class="col-12 p-0 my-4">
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                Can I get a refund?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                Purchases of any Pre-made Songs are <strong>not</strong> eligible for refund. For information on the Custom Song refund policy, please see our <a href="{% url 'tos' %}" class="midi-l-grey logo-font">Terms of Service</a> 
+            </p>
+            <hr class="hr-90-light d-block d-md-none my-4">
+        </div>
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                Does midiDRAGON own all the music on the site?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                Yes. All songs and musical content on the midiDRAGON site has been created and is owned fully by midiDRAGON.
+            </p>
+            <hr class="hr-90-light d-block d-md-none my-4">
+        </div>
+    </div>
+    <div class="row d-none d-md-block">
+        <div class="col-12 p-0 my-4">
+            <hr class="hr-90-light">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                Are midiDRAGON's Pre-made and Custom Songs Royalty Free?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                Yes.
+            </p>
+            <hr class="hr-90-light d-block d-md-none my-4">
+        </div>
+        <div class="col-12 col-md-6 text-center p-0 midi-l-grey"> 
+            <h3 class="logo-font fw-bolder">
+                <i class="fa-regular fa-circle-question fs-1 me-2"></i>
+                What does midiDRAGON's songs being Royalty Free mean?
+            </h3>
+            <p class="fs-5 mx-4 midi-teal">
+                <i class="fa-solid fa-angles-right fs-2 me-2"></i>
+                The 2 key things you need to know about Royalty Free music are:
+            </p>
+            <ol class="fs-5 mx-4 midi-teal">
+                <li>
+                    You only have to pay for any of midiDRAGON's Pre-made or Custom Songs <strong>once</strong> and then you can use those songs anywhere, as many times as you want, forever.
+                </li>
+                <li>
+                    You don't own the rights to any of the Pre-made or Custom Songs you buy - they still belong to midiDRAGON so you can't sell on any of the songs or pass them off as your own work.
+                </li>
+            </ol>
+            <p class="fs-5 mx-4 midi-teal">
+                For full details please see our <a href="{% url 'tos' %}" class="midi-l-grey logo-font">Terms of Service</a>.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
