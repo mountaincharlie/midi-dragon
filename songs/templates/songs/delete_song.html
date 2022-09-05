@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
  
-{% block extra_title %} - Edit Custom Song{% endblock %}
+{% block extra_title %} - Delete Confirmation{% endblock %}
 
 {% block content %}
 <div class="container pt-2 pb-4 overlay d-flex">
@@ -31,7 +31,12 @@
                             {% csrf_token %}
             
                             <!-- cancel button to return the user to their My eBook page without deleting the recipe -->
-                            <a class="btn btn-l-grey me-1" href="#" role="button" aria-label="Cancel and return to profile button">Cancel</a>
+                            
+                            {% if user.is_superuser %}
+                                <a class="btn btn-l-grey me-1" href="{% url 'all_songs' %}" role="button" aria-label="Cancel and return to site management button">Cancel</a>
+                            {% else %}
+                                <a class="btn btn-l-grey me-1" href="{% url 'project_drafts' %}" role="button" aria-label="Cancel and return to project drafts button">Cancel</a>
+                            {% endif %}
             
                             <!-- delete button to return the user to their My eBook page after deleting the recipe -->
                             <button class="btn btn-midi-warning ms-1" type="submit" name="confirm_delete" aria-label="Delete recipe confirmation button">Delete Song</button>

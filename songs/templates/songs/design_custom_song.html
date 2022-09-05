@@ -62,6 +62,9 @@
                             <div class="col-12 mt-2 mb-4">
                                 
                                 <h5 id="form-instruments-label">Instruments</h5>
+                                <p class="midi-l-grey small">
+                                    E.g. To have 2 Piano tracks you would need to select 2 of your instrument options as Piano.
+                                </p>
                                 <div id="visible-instruments-dropdown">
                                     <div class="row">
                                         <div class="col-12">
@@ -226,7 +229,11 @@
                 <div class="row basic-font">
                     <div class="col-12 text-end">
                         <!-- cancel should send user to their profile -->
-                        <a role="button" href="#" class="btn btn-l-grey me-2">Cancel</a>
+                        {% if user.is_superuser %}
+                            <a role="button" href="{% url 'all_songs' %}" class="btn btn-l-grey me-2">Cancel</a>
+                        {% else %}
+                            <a role="button" href="{% url 'home' %}" class="btn btn-l-grey me-2">Cancel</a>
+                        {% endif %}
                         <button class="btn btn-teal pink-hover" type="submit" aria-label="Confirm save custom song design button">Save</button>
                     </div>
                 </div>
