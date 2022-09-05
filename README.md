@@ -162,25 +162,26 @@ This application provides users with the ability to browse a collection of pre-m
 
 ## Project Management [TO FINISH]
 ---
-* Using GitHub
-  * link to Midi Dragon Project page
+* Using GitHub Projects to manage this project
+ * [Midi Dragon Project](https://github.com/users/mountaincharlie/projects/3/views/1)
 
-* Using GitHub Projects to create Epics (big features/tasks)
-  * screenshot of full list of numbered epics (collapsed)
-  * screenshot 
+* Using GitHub Projects to create Epics (big features/tasks) and mark my progress throughout the project
+  * ![GitHub Projects to create Epics](./static/images/readme_images/project-management-epics.png "GitHub Projects to create Epics")
+  * ![Example of Epics's listed tasks](./static/images/readme_images/project-overview-by-epics.png "Example of Epics's listed tasks")
+  * ![Example of Epics's listed tasks](./static/images/readme_images/epic-overview-by-user-stories.png "Example of Epics's listed tasks")
 
-* Using GitHub Issues to create User Stories and Project Maintenance (with GitHub’s labels to identify their type)
-  * screenshot of github issue types (e.g. user story with MoSCoW priority labels)
-
-* Using GitHub's Project KanBan board feature to mark my progress throughout the project
-  * screenshot of the kanban board for one of the epics
+* Using GitHub Issues to create User Stories and Project Maintenance (with GitHub’s labels to identify their type and task check lists)
+  * ![Project Maintenance Task Example](./static/images/readme_images/user-stories-example.png "Project Maintenance Task Example")
+  * ![Project Maintenance Task Example](./static/images/readme_images/project-maintenance-task-example.png "Project Maintenance Task Example")
 
 * Using GitHub labels to prioritize User Stories (using MoSCoW prioritization)
-  * md syntax for images: (![Project Maintainance label](./static/images/readme_images/proj-maint-label.jpg "Project Maintainance label"))
-  * screenshots of all the labels you use, with their definition etc
-
-* Using checklists within the GitHub Issues in order to specify the tasks required to achieve User Stories, Project Maintenance and Testing
-  * screenshot of a checklist within a user story/maintenance/testing 
+  * ![Project Maintainance label](./static/images/readme_images/project-maintenance-label.png "Project Maintainance label")
+  * ![User Story label](./static/images/readme_images/user-story-label.png "User Story label")
+  * ![Must Have label](./static/images/readme_images/must-have-label.png "Must Have label")
+  * ![Should Have label](./static/images/readme_images/should-have-label.png "Should Have label")
+  * ![Could Have label](./static/images/readme_images/could-have-label.png "Could Have label")
+  * ![Would Have label](./static/images/readme_images/would-have-label.png "Would Have label")
+  * ![Testing label](./static/images/readme_images/testing-label.png "Testing label")
 
 
 ## Initial Designs [TO FINISH]
