@@ -1,12 +1,17 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib import messages
 from django.views import View
 from songs.models import Song
-from tracklist.contexts import tracklist_contents
 
 
 def view_tracklist(request):
     """ View to return the tracklist page """
+
+    # stopping the superuser being able to access the tracklist since they shouldnt be able to buy their own songs
+    if request.user.is_superuser:
+        messages.info(request, "Redirecting Admin to Site Management page.")
+        return redirect(reverse('all_songs'))
+
 
     return render(request, 'tracklist/tracklist.html')
 

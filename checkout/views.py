@@ -85,6 +85,11 @@ class CheckoutView(View):
         otherwise just an empty instance of OrderForm is sent to the template
         """
 
+        # stopping the superuser being able to access the checkout since they shouldnt be able to buy their own songs
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         tracklist = request.session.get('tracklist', [])
 
         if not tracklist:
@@ -209,6 +214,7 @@ class OrderConfirmation(View):
         """
         -Takes in the request and the order_number for the order just created
         -Gets the order by its number
+        -Gets the order's associated songs
         -If the user is logged in then it adds their profile to the order
         instance
         -Displays a success message to the user with the order number and the 
@@ -219,7 +225,6 @@ class OrderConfirmation(View):
         """
         order = get_object_or_404(Order, order_number=self.kwargs['order_number'])
 
-        # getting the order's associated songs
         songs = OrderSong.objects.filter(order=order)
 
         # checking if the user is authenticated before connecting them to the order instance via user_profile
