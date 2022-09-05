@@ -20,17 +20,14 @@
                     <li><a class="midi-l-grey" href="{% url 'songs' %}">All Songs</a></li>
                 </ul>
             </li>
+            {% if not user.is_superuser %}
             <li class="dropdown-item pink-hover"><a class="midi-l-grey" href="{% url 'design_custom_song' %}">Design Custom Song</a></li>
+            {% endif %}
             <li class="dropdown-item pink-hover"><a class="midi-l-grey" role="button" href="{% url 'testimonials' %}">Testimonials</a></li>
         </ul>
     </div>
 
-    <!-- clickable site logo -->
-    <div class="col text-center p-0">
-        <a class="navbar-brand midi-teal fs-1" href="{% url 'home' %}" aria-label="Link to landing page">
-            <i class="fa-solid fa-dragon"></i>
-        </a>
-    </div>
+
 
     <!-- search icon dropdown -->
     <div class="col mobiledropdowncontainer midi-l-grey pink-hover text-center fs-5 p-0">
@@ -118,6 +115,7 @@
     </div>
 
     <!-- tracklist icon -->
+    {% if not user.is_superuser %}
     <div class="col text-center fs-5 p-0">
         <!-- same as on meduim+ screens -->
         <a href="{% url 'tracklist' %}" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}" title="My Tracklist">
@@ -129,6 +127,14 @@
                     £0.00
                 {% endif %}
             </p>
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- clickable site logo -->
+    <div class="col text-center p-0">
+        <a class="navbar-brand midi-teal fs-1" href="{% url 'home' %}" aria-label="Link to landing page">
+            <i class="fa-solid fa-dragon"></i>
         </a>
     </div>
 </div>

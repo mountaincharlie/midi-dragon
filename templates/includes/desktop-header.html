@@ -27,13 +27,6 @@
     <!-- 3 desktop icons -->
     <div class="col-3 midi-l-grey">
         <ul class="list-inline list-unstyled w-100 text-end">
-            <!-- search icon -->
-            <!-- <li class="list-inline-item dropdown midi-l-grey fs-5 px-4">
-                <div class="text-center pink-hover">
-                    <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
-                    <p>Search</p>
-                </div>
-            </li> -->
             <!-- profile icon -->
             <li class="list-inline-item dropdown midi-l-grey fs-5">
                 {% if user.is_authenticated %}
@@ -78,7 +71,8 @@
                 </ul>
                 {% endif %}
             </li>
-            <!-- tracklist icon -->
+            <!-- tracklist icon - not avaliable for admins -->
+            {% if not user.is_superuser %}
             <li class="list-inline-item fs-5 ps-4 pe-3">
                 <a href="{% url 'tracklist' %}" class="{% if tracklist_total %}midi-teal font-weight-bold{% else %}midi-l-grey{% endif %}" title="My Tracklist">
                     <div class="text-center fs-5">
@@ -93,6 +87,9 @@
                     </div> 
                 </a>
             </li>
+            {% else %}
+            <span class="list-inline-item fs-5 px-4 mx-4"></span>
+            {% endif %}
         </ul>
     </div>
 
@@ -117,10 +114,16 @@
                     <li><a class="dropdown-item midi-l-grey" href="{% url 'songs' %}">All Songs</a></li>
                 </ul>
             </li>
+            {% if not user.is_superuser %}
             <li class="list-inline-item midi-l-grey">
                 <!-- btn to custom song form -->
                 <a class="btn btn-l-grey fs-5 px-4 py-1" href="{% url 'design_custom_song' %}" role="btn"><strong>Design Custom Song</strong></a>
             </li>
+            {% else %}
+            <li class="list-inline-item midi-teal">
+                <p class="m-0 fs-4">You are logged in as the Admin</p>
+            </li>
+            {% endif %}
             <li class="list-inline-item midi-l-grey">
                 <!-- btn to testimonials page -->
                 <a class="btn btn-l-grey fs-5 px-4 py-1" href="{% url 'testimonials' %}" role="button"><strong>Testimonials</strong></a>

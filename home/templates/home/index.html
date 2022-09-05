@@ -31,7 +31,9 @@
                 <li>Edit your draft projects details anytime before you buy</li>
                 <li>No musical or technical experience required</li>
             </ul>
+            {% if not user.is_superuser %}
             <a href="{% url 'design_custom_song' %}" class="btn btn-d-grey large-btn" role="button">Design Your Own Song</a>
+            {% endif %}
         </div>
         <!-- include a column next to this which has a screenshot of the form? -->
         <div class="col-6 d-none d-md-block"></div>
