@@ -241,27 +241,30 @@ class DownloadSong(View):
         if 'USE_AWS' in os.environ:
             # file_path = f'{settings.MEDIA_URL}'+filename
             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
-            # import boto3
+            import boto3
 
-            # client = boto3.client(
-            #     's3',
-            #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            #     region_name=settings.AWS_S3_REGION_NAME
-            # )
-            # bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-            # file_name = settings.MEDIAFILES_LOCATION + '/' + filename
+            client = boto3.client(
+                's3',
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                region_name=settings.AWS_S3_REGION_NAME
+            )
+            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+            file_name = settings.MEDIAFILES_LOCATION + '/' + filename
+            s3 = boto3.resource('s3')
 
-            # url = client.generate_presigned_url(
-            #     'get_object',
-            #     Params={
-            #         'Bucket': bucket_name,
-            #         'Key': file_name, },
-            #     ExpiresIn=600, )
+            url = client.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': bucket_name,
+                    'Key': file_name, },
+                ExpiresIn=600, )
+
+            s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, url)
             #ABOVE WORKS BUT NOT IDEAL
 
             # return HttpResponseRedirect(url)
-            import boto3
+            # import boto3
 
             # session = boto3.Session(
             #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -284,18 +287,18 @@ class DownloadSong(View):
 
             # s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
 
-            import boto3
+            # import boto3
 
-            s3_client = boto3.client(
-                's3',
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME
-            )
+            # s3_client = boto3.client(
+            #     's3',
+            #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            #     region_name=settings.AWS_S3_REGION_NAME
+            # )
 
-            file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
+            # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
 
-            s3_client.download_file(settings.AWS_STORAGE_BUCKET_NAME, filename, file_path)
+            # s3_client.download_file(settings.AWS_STORAGE_BUCKET_NAME, filename, file_path)
 
             return render(request, "home/index.html")
 
