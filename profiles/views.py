@@ -113,10 +113,10 @@ class ProjectDraftsView(View):
                 the_songs.append(Song.objects.filter(id=song.song.id))
                 print('the_songs', the_songs)
                 for song in the_songs:
-                    # all_users_bought_songs.append(song)
+                    song = list(song)[0]  # getting the actual song out of the q set
                     if song in users_custom_songs:
                         print('users_custom_songs before', users_custom_songs)
-                        users_custom_songs.pop(song)
+                        users_custom_songs.remove(song)  # using remove rather than pop which is for integers
                         print('users_custom_songs after', users_custom_songs)
                     else:
                         print('this song is a purchased pre-made song or a unpurchased custom song', song)
