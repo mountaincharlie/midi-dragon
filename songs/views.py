@@ -261,11 +261,12 @@ class DownloadSong(View):
             #ABOVE WORKS BUT NOT IDEAL
 
             # return HttpResponseRedirect(url)
-            # import boto3
+            import boto3
 
             # session = boto3.Session(
             #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            #     region_name=settings.AWS_S3_REGION_NAME
             # )
 
             # s3 = session.resource('s3')
@@ -274,14 +275,27 @@ class DownloadSong(View):
 
             # s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
 
+            # import boto3
+
+            # BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
+            # KEY = 'media/' + filename
+
+            # s3 = boto3.resource('s3')
+
+            # s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
+
             import boto3
 
-            BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
-            KEY = 'media/' + filename
+            s3_client = boto3.client(
+                's3',
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                region_name=settings.AWS_S3_REGION_NAME
+            )
 
-            s3 = boto3.resource('s3')
+            file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
 
-            s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
+            s3_client.download_file(settings.AWS_STORAGE_BUCKET_NAME, filename, file_path)
 
             return render(request, "home/index.html")
 
