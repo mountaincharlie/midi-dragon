@@ -258,6 +258,7 @@ class DownloadSong(View):
             #         'Bucket': bucket_name,
             #         'Key': file_name, },
             #     ExpiresIn=600, )
+            #ABOVE WORKS BUT NOT IDEAL
 
             # return HttpResponseRedirect(url)
             # import boto3
@@ -280,7 +281,7 @@ class DownloadSong(View):
 
             s3 = boto3.resource('s3')
 
-            s3.Bucket(BUCKET_NAME).download_file(KEY, filename)
+            s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
 
             return render(request, "home/index.html")
 
