@@ -251,7 +251,6 @@ class DownloadSong(View):
             )
             bucket_name = settings.AWS_STORAGE_BUCKET_NAME
             file_name = settings.MEDIAFILES_LOCATION + '/' + filename
-            s3 = boto3.resource('s3')
 
             url = client.generate_presigned_url(
                 'get_object',
@@ -260,10 +259,10 @@ class DownloadSong(View):
                     'Key': file_name, },
                 ExpiresIn=600, )
 
-            s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, url)
+            return HttpResponseRedirect(url)
             #ABOVE WORKS BUT NOT IDEAL
 
-            # return HttpResponseRedirect(url)
+            #
             # import boto3
 
             # session = boto3.Session(
