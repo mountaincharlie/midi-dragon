@@ -11,7 +11,8 @@
         <h4 class="mb-0 fw-bolder midi-teal">ORDER NUMBER</h4>
     </div>
     <div class="col-2">
-        <h4 class="mb-0 fw-bolder midi-teal">DOWNLOAD</h4>
+        <h4 class="mb-0 fw-bolder midi-teal d-none d-md-block">DOWNLOAD</h4>
+        <h4 class="mb-0 fw-bolder midi-teal d-block d-md-none"><i class="fa-solid fa-download"></i></h4>
     </div>
 </div>
 <div class="row">
@@ -31,10 +32,11 @@
             <h5 class="my-1">{{ order.date|date:"d-m-Y" }}</h5>
         </div>
         <div class="col-4">
-            <h5 class="my-1">{{ order.order_number }}</h5>
+            <h5 class="my-1 d-none d-md-block">{{ order.order_number }}</h5>
+            <h5 title="{{ order.order_number }}" class="my-1 d-block d-md-none">{{ order.order_number|truncatechars:10 }}</h5>
         </div>
         <div class="col-2">
-            <audio controls class="download-button">
+            <audio controls class="download-button m-0">
                 <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
                 Your browser does not support the audio element.
             </audio>
