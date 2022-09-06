@@ -769,10 +769,15 @@ input:-webkit-autofill:active  {
 .download-button{
     width:20px;
     height: 20px;
+    margin-left: 10px;
 }
 
 .download-button::-webkit-media-controls-panel{
     background-color:#00D1CF;
+}
+
+.download-button::-webkit-media-controls-panel:hover{
+    background-color:#FF57D2;
 }
 
 /* ---------- footer */

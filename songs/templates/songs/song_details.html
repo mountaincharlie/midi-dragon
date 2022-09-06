@@ -60,10 +60,18 @@
                     {% if user.is_superuser %}
                     <!-- always downloadable if audio file exists -->
                         {% if song.audio_file %}
-                        <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
+                        <!-- <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
                             <i class="fa-solid fa-download fs-3"></i>
                             <p class="d-inline fs-5 ps-2 basic-font">Download</p>
-                        </a>
+                        </a> -->
+                        <p class="d-inline fs-5 ps-2 basic-font p-2">
+                            Download:
+                            <audio controls class="download-button">
+                                <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </p>
+                        
                         <!-- for pre-made songs w/o audio_file -->
                         {% elif song.public %}
                             <p class="d-inline small basic-font midi-warning">
@@ -80,7 +88,7 @@
                     {% elif user.is_authenticated %}
                         <!-- checking if the song is in their tracklist already -->
                         <!-- if theyre not the owner of the song -->
-                        {% if user.username != song.user.username %}
+                        {% if user.username != song.user.username and not song.user.is_superuser %}
                             <p class="d-inline small basic-font midi-teal">
                                 Show your appreciation by giving this song a 'like', at the bottom of the page.
                             </p>
@@ -93,16 +101,30 @@
                                     It will become downloadable once complete.
                                 </p>
                             {% elif song.user.username == user.username and song.audio_file %}
-                                <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
+                                <p class="d-inline fs-5 ps-2 basic-font p-2">
+                                    Download:
+                                    <audio controls class="download-button">
+                                        <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </p>
+                                <!-- <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
                                     <i class="fa-solid fa-download fs-3"></i>
                                     <p class="d-inline fs-5 ps-2 basic-font">Download</p>
-                                </a>
+                                </a> -->
                             <!-- pre-made songs -->
                             {% elif song.user.username != user.username and song.audio_file %}
-                                <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
+                                <p class="d-inline fs-5 ps-2 basic-font p-2">
+                                    Download:
+                                    <audio controls class="download-button">
+                                        <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </p>
+                                <!-- <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
                                     <i class="fa-solid fa-download fs-3"></i>
                                     <p class="d-inline fs-5 ps-2 basic-font">Download</p>
-                                </a>
+                                </a> -->
                             {% elif song.user.username != user.username and not song.audio_file %}
                             <p class="d-inline small basic-font midi-warning">
                                 There was an issue with the audio for '{{ song.name }}'.

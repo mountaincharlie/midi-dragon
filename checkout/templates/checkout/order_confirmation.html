@@ -138,9 +138,16 @@
                     </div>
                     <div class="col-6 my-2">
                         {% if song_obj.song.audio_file %}
-                            <a role="button" href="{% url 'download_song' song_obj.song.slug %}" class="midi-l-grey btn border-0">
+                            <p class="d-inline fs-5 ps-2 basic-font p-2">
+                                Download:
+                                <audio controls class="download-button">
+                                    <source src="{{ song_obj.song.audio_file.url }}" type="audio/mpeg" alt="{{ song_obj.song.name }} audio">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </p>
+                            <!-- <a role="button" href="{% url 'download_song' song_obj.song.slug %}" class="midi-l-grey btn border-0">
                                 <i class="fa-solid fa-download fs-3"></i>
-                            </a>
+                            </a> -->
                         <!-- custom songs with no audio -->
                         {% elif user.username == song_obj.song.user.username %}
                             <p class="d-inline small basic-font midi-teal">
