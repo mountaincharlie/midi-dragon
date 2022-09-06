@@ -246,7 +246,8 @@ class DownloadSong(View):
             client = boto3.client(
                 's3',
                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                region_name=settings.AWS_S3_REGION_NAME
             )
             bucket_name = settings.AWS_STORAGE_BUCKET_NAME
             file_name = settings.MEDIAFILES_LOCATION + '/' + filename
