@@ -222,94 +222,94 @@ class LikeSong(View):
         return redirect(song.get_absolute_url())
 
 
-class DownloadSong(View):
-    """
-    Class based view inheriting Django's View
-    Contains the get method for downloading the audio_file
-    for a particular song
-    """
-    def get(self, request, *args, **kwargs):
-        """
-        Gets the song by its slug.
-        Creates the filename which is the string of its audio_file name.
-        Sets the file path which is the filename in the media folder.
-        Opens the file for reading in binary (rb).
-        FINISH...
-        """
-        song = get_object_or_404(Song, slug=self.kwargs['slug'])
-        filename = str(song.audio_file)
-        if 'USE_AWS' in os.environ:
-            # file_path = f'{settings.MEDIA_URL}'+filename
-            # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
-            import boto3
+# class DownloadSong(View):
+#     """
+#     Class based view inheriting Django's View
+#     Contains the get method for downloading the audio_file
+#     for a particular song
+#     """
+#     def get(self, request, *args, **kwargs):
+#         """
+#         Gets the song by its slug.
+#         Creates the filename which is the string of its audio_file name.
+#         Sets the file path which is the filename in the media folder.
+#         Opens the file for reading in binary (rb).
+#         FINISH...
+#         """
+#         song = get_object_or_404(Song, slug=self.kwargs['slug'])
+#         filename = str(song.audio_file)
+#         if 'USE_AWS' in os.environ:
+#             # file_path = f'{settings.MEDIA_URL}'+filename
+#             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
+#             import boto3
 
-            client = boto3.client(
-                's3',
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME
-            )
-            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-            file_name = settings.MEDIAFILES_LOCATION + '/' + filename
+#             client = boto3.client(
+#                 's3',
+#                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+#                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+#                 region_name=settings.AWS_S3_REGION_NAME
+#             )
+#             bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+#             file_name = settings.MEDIAFILES_LOCATION + '/' + filename
 
-            url = client.generate_presigned_url(
-                'get_object',
-                Params={
-                    'Bucket': bucket_name,
-                    'Key': file_name, },
-                ExpiresIn=600, )
+#             url = client.generate_presigned_url(
+#                 'get_object',
+#                 Params={
+#                     'Bucket': bucket_name,
+#                     'Key': file_name, },
+#                 ExpiresIn=600, )
 
-            return HttpResponseRedirect(url)
-            #ABOVE WORKS BUT NOT IDEAL
+#             return HttpResponseRedirect(url)
+#             #ABOVE WORKS BUT NOT IDEAL
 
-            #
-            # import boto3
+#             #
+#             # import boto3
 
-            # session = boto3.Session(
-            #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            #     region_name=settings.AWS_S3_REGION_NAME
-            # )
+#             # session = boto3.Session(
+#             #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+#             #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+#             #     region_name=settings.AWS_S3_REGION_NAME
+#             # )
 
-            # s3 = session.resource('s3')
+#             # s3 = session.resource('s3')
 
-            # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
+#             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
 
-            # s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
+#             # s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
 
-            # import boto3
+#             # import boto3
 
-            # BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
-            # KEY = 'media/' + filename
+#             # BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
+#             # KEY = 'media/' + filename
 
-            # s3 = boto3.resource('s3')
+#             # s3 = boto3.resource('s3')
 
-            # s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
+#             # s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
 
-            # import boto3
+#             # import boto3
 
-            # s3_client = boto3.client(
-            #     's3',
-            #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            #     region_name=settings.AWS_S3_REGION_NAME
-            # )
+#             # s3_client = boto3.client(
+#             #     's3',
+#             #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+#             #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+#             #     region_name=settings.AWS_S3_REGION_NAME
+#             # )
 
-            # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
+#             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
 
-            # s3_client.download_file(settings.AWS_STORAGE_BUCKET_NAME, filename, file_path)
+#             # s3_client.download_file(settings.AWS_STORAGE_BUCKET_NAME, filename, file_path)
 
-            return render(request, "home/index.html")
+#             return render(request, "home/index.html")
 
-        else:
-            file_path = 'media/'+filename
-        mime_type = filename.split('.')[1]
+#         else:
+#             file_path = 'media/'+filename
+#         mime_type = filename.split('.')[1]
 
-        # logic for opening the file and allowing it to be downloaded from adapted from (CREDIT - https://djangoadventures.com/how-to-create-file-download-links-in-django/)
-        read_file = open(file_path, 'rb')
-        response = HttpResponse(read_file, content_type=mime_type)
-        response['Content-Disposition'] = f"attachment; filename={filename}"
-        return response
+#         # logic for opening the file and allowing it to be downloaded from adapted from (CREDIT - https://djangoadventures.com/how-to-create-file-download-links-in-django/)
+#         read_file = open(file_path, 'rb')
+#         response = HttpResponse(read_file, content_type=mime_type)
+#         response['Content-Disposition'] = f"attachment; filename={filename}"
+#         return response
 
 
 class TestimonialsList(generic.ListView):
@@ -360,6 +360,11 @@ class DesignCustomSong(View):
         FINISH ...
 
         """
+        # if the super user tries to view this page it redirects them to their Site Management page
+        if request.user.is_superuser:
+            messages.info(request, "Redirecting Admin to Site Management page.")
+            return redirect(reverse('all_songs'))
+
         custom_song_form = DesignCustomSongForm()
         song_instrument_formset = AddSongInstrumentFormSet()
 
