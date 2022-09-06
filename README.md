@@ -188,76 +188,73 @@ This application provides users with the ability to browse a collection of pre-m
 ---
 
 ### Header
-* For logged in users
-  * image
-* For non-logged users:
-  * image
+* ![Initial header design](./static/images/readme_images/initial-design-header.jpg "Initial header design")
 
 ### Footer
-* image
+* ![Initial footer design](./static/images/readme_images/initial-design-footer.jpg "Initial footer design")
 
 ### Landing Page
-* image
+* ![Initial landing page design](./static/images/readme_images/initial-design-landing-page.jpg "Initial landing page design")
 
 ### Browsing Songs
-* image
+* ![Initial Browsing Songs design](./static/images/readme_images/initial-design-browse-songs.jpg "Initial Browsing Songs design")
 
 ### Testimonials Page
-* image
+* ![Initial Testimonials design](./static/images/readme_images/initial-design-testimonials.jpg "Initial Testimonials design")
 
 ### Song Details
-* pre-made songs image
-* custom songs image
+* ![Initial pre-made song details design](./static/images/readme_images/initial-design-song-details.jpg "Initial pre-made song details design")
+* ![Initial custom song details design](./static/images/readme_images/initial-design-custom-song-details.jpg "Initial custom song details design")
 
 ### Create/Edit Custom Song Page
-* image
+* ![Initial Create/Edit Custom Song Page design](./static/images/readme_images/initial-design-design-custom-song.jpg "Initial Create/Edit Custom Song Page design")
 
 ### My TrackList Page (user’s ‘basket’)
-* image
+* ![Initial My TrackList design](./static/images/readme_images/initial-design-my-tracklist.jpg "Initial My TrackList design")
 
 ### Checkout Page
-* image
+* ![Initial Checkout design](./static/images/readme_images/initial-design-checkout.jpg "Initial Checkout design")
 
 ### Order Confirmation Page
-* image
+* ![Initial Order Confirmation design](./static/images/readme_images/initial-design-order-confirmation.jpg "Initial Order Confirmation design")
 
 ### My Profile Dashboard (contains links to Project Drafts, Projects In Progress, Completed Projects, Order History and My Details)
 * My Details
-  * image
+  * ![Initial My Details design](./static/images/readme_images/initial-design-profile-my-details.jpg "Initial My Details design")
 * Project Drafts
-  * image
+  * ![Initial Project Drafts design](./static/images/readme_images/initial-design-profile-project-drafts.jpg "Initial Project Drafts design")
 * Projects In-Progress
-  * image
+  * ![Initial Projects In-Progress design](./static/images/readme_images/initial-design-profile-projects-in-progress.jpg "Initial Projects In-Progress design")
 * Completed Projects
-  * image
+  * ![Initial Completed Projects design](./static/images/readme_images/initial-design-profile-completed-projects.jpg "Initial Completed Projects design")
 * Order History
-  * image
+  * ![Initial Order History design](./static/images/readme_images/initial-design-profile-order-history.jpg "Initial Order History design")
 
 ### Admin Site Management
 * Add Song
-  * image
+  * ![Initial Add Song design](./static/images/readme_images/initial-design-management-add-song.jpg "Initial Add Song design")
 * Add Genre
-  * image
+  * ![Initial Add Genre design](./static/images/readme_images/initial-design-management-add-genre.jpg "Initial Add Genre design")
 * Add Instrument 
-  * image
+  * ![Initial Add Instrument design](./static/images/readme_images/initial-design-management-add-instrument.jpg "Initial Add Instrument design")
 * Custom Songs 
-  * image
+  * ![Initial Custom Songs design](./static/images/readme_images/initial-design-management-custom-songs.jpg "Initial Custom Songs design")
 * All Orders 
-  * image
+  * ![Initial All Orders design](./static/images/readme_images/initial-design-management-all-orders.jpg "Initial All Orders design")
 
 ### AllAuth authentication screens
 * Login 
-  * image
+  * ![Initial Login design](./static/images/readme_images/initial-design-login.jpg "Initial Login design")
 * Register
-  * image
+  * ![Initial Register design](./static/images/readme_images/initial-design-register.jpg "Initial Register design")
 * Logout
-  * image
+  * ![Initial Logout design](./static/images/readme_images/initial-design-logout.jpg "Initial Logout design")
 
 ### Delete Confirmation Page
-* image
+* ![Initial Delete Confirmation design](./static/images/readme_images/initial-design-delete-confirmation.jpg "Initial Delete Confirmation design")
 
 ### Custom 404 Page
-* image
+* ![Initial Custom 404 design](./static/images/readme_images/initial-design-custom-404.jpg "Initial Custom 404 design")
 
 ## Database Schema [TO FINISH]
 ---
