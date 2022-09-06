@@ -1,5 +1,5 @@
 import os
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponseRedirect
 from django.contrib import messages
 from django.views import generic, View
 from django.db.models import Q
@@ -240,7 +240,26 @@ class DownloadSong(View):
         filename = str(song.audio_file)
         if 'USE_AWS' in os.environ:
             # file_path = f'{settings.MEDIA_URL}'+filename
-            file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
+            # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
+            import boto3
+
+            client = boto3.client(
+                's3',
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+            )
+            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+            file_name = settings.MEDIAFILES_LOCATION + '/' + filename
+
+            url = client.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': bucket_name,
+                    'Key': file_name, },
+                ExpiresIn=600, )
+
+            return HttpResponseRedirect(url)
+
         else:
             file_path = 'media/'+filename
         mime_type = filename.split('.')[1]
