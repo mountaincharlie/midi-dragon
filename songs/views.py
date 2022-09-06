@@ -241,25 +241,39 @@ class DownloadSong(View):
         if 'USE_AWS' in os.environ:
             # file_path = f'{settings.MEDIA_URL}'+filename
             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
+            # import boto3
+
+            # client = boto3.client(
+            #     's3',
+            #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            #     region_name=settings.AWS_S3_REGION_NAME
+            # )
+            # bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+            # file_name = settings.MEDIAFILES_LOCATION + '/' + filename
+
+            # url = client.generate_presigned_url(
+            #     'get_object',
+            #     Params={
+            #         'Bucket': bucket_name,
+            #         'Key': file_name, },
+            #     ExpiresIn=600, )
+
+            # return HttpResponseRedirect(url)
             import boto3
 
-            client = boto3.client(
-                's3',
+            session = boto3.Session(
                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME
             )
-            bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-            file_name = settings.MEDIAFILES_LOCATION + '/' + filename
 
-            url = client.generate_presigned_url(
-                'get_object',
-                Params={
-                    'Bucket': bucket_name,
-                    'Key': file_name, },
-                ExpiresIn=600, )
+            s3 = session.resource('s3')
 
-            return HttpResponseRedirect(url)
+            file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
+
+            s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
+
+            return render(request, "home/index.html")
 
         else:
             file_path = 'media/'+filename
