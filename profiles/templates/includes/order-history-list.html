@@ -35,43 +35,12 @@
                         <p class="d-none d-md-block m-0">
                             {{ song.song.name }} |
                             £{{ song.song.price }}
-                            <!-- { % if song.song.audio_file % }
-                                | <audio controls class="mt-2 download-button">
-                                    <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
-                                    Your browser does not support the audio element.
-                                 </audio>
-                            { % elif user.username == song.song.user.username % }
-                                <p class="d-none d-md-inline small basic-font midi-teal">
-                                    This custom song will become downloadable once complete.
-                                </p>
-                            { % else % }
-                            <p class="d-none d-md-inline small basic-font midi-warning">
-                                There was an issue with this pre-made song's audio.
-                                <br>
-                                Please contact midiDRAGON if the issue persists.
-                            </p>
-                            { % endif % } -->
                         </p>
                         <p class="d-block d-md-none m-0">
                             {{ song.song.name }}
                             <br>
                             £{{ song.song.price }}
                             <br>
-                            <!-- { % if song.song.audio_file % }
-                                <a role="button" href="{% url 'download_song' song.song.slug %}" class="midi-l-grey btn border-0">
-                                    <i class="fa-solid fa-download fs-6"></i>
-                                </a>
-                            { % elif user.username == song.song.user.username % }
-                                <p class="d-inline d-md-none small basic-font midi-teal">
-                                    This custom song will become downloadable once complete.
-                                </p>
-                            { % else % }
-                            <p class="d-inline d-md-none small basic-font midi-warning">
-                                There was an issue with this pre-made song's audio.
-                                <br>
-                                Please contact midiDRAGON if the issue persists.
-                            </p>
-                            { % endif % } -->
                         </p>
                     </div>
                 </div>

@@ -60,10 +60,6 @@
                     {% if user.is_superuser %}
                     <!-- always downloadable if audio file exists -->
                         {% if song.audio_file %}
-                        <!-- <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
-                            <i class="fa-solid fa-download fs-3"></i>
-                            <p class="d-inline fs-5 ps-2 basic-font">Download</p>
-                        </a> -->
                         <p class="d-inline fs-5 ps-2 basic-font p-2">
                             Download:
                             <audio controls class="download-button">
@@ -108,10 +104,6 @@
                                         Your browser does not support the audio element.
                                     </audio>
                                 </p>
-                                <!-- <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
-                                    <i class="fa-solid fa-download fs-3"></i>
-                                    <p class="d-inline fs-5 ps-2 basic-font">Download</p>
-                                </a> -->
                             <!-- pre-made songs -->
                             {% elif song.user.username != user.username and song.audio_file %}
                                 <p class="d-inline fs-5 ps-2 basic-font p-2">
@@ -121,10 +113,6 @@
                                         Your browser does not support the audio element.
                                     </audio>
                                 </p>
-                                <!-- <a role="button" href="{% url 'download_song' song.slug %}" class="midi-l-grey btn mt-2">
-                                    <i class="fa-solid fa-download fs-3"></i>
-                                    <p class="d-inline fs-5 ps-2 basic-font">Download</p>
-                                </a> -->
                             {% elif song.user.username != user.username and not song.audio_file %}
                             <p class="d-inline small basic-font midi-warning">
                                 There was an issue with the audio for '{{ song.name }}'.

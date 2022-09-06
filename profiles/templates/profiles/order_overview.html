@@ -158,9 +158,6 @@
                                     Your browser does not support the audio element.
                                 </audio>
                             </p>
-                            <!-- <a role="button" href="{% url 'download_song' song_obj.song.slug %}" class="midi-l-grey btn border-0">
-                                <i class="fa-solid fa-download fs-3"></i>
-                            </a> -->
                         <!-- message to admin for all songs with no audio -->
                         {% elif user.is_superuser %}
                             <p class="d-inline small basic-font midi-warning">
