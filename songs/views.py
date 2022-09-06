@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic, View
@@ -237,8 +238,10 @@ class DownloadSong(View):
         """
         song = get_object_or_404(Song, slug=self.kwargs['slug'])
         filename = str(song.audio_file)
-        file_path = f'{settings.MEDIA_URL[1:]}'+filename  # indexing to remove first slash
-        # file_path = 'media/'+filename
+        if 'USE_AWS' in os.environ:
+            file_path = f'{settings.MEDIA_URL}'+filename
+        else:
+            file_path = 'media/'+filename
         mime_type = filename.split('.')[1]
 
         # logic for opening the file and allowing it to be downloaded from adapted from (CREDIT - https://djangoadventures.com/how-to-create-file-download-links-in-django/)
