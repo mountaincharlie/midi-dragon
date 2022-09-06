@@ -12,6 +12,5 @@ urlpatterns = [
     path('<slug:slug>/delete-confirmation/', login_required(views.DeleteSong.as_view()), name='delete_confirmation'),
     path('<slug:slug>/', views.SongDetailsView.as_view(), name='song_details'),
     path('<slug:slug>/likes', views.LikeSong.as_view(), name='song_like'),
-    path('<slug:slug>/download/', views.DownloadSong.as_view(), name='download_song'),
-    
+    # path('<slug:slug>/download/', views.DownloadSong.as_view(), name='download_song'),
 ]
