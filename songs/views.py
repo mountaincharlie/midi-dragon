@@ -239,7 +239,8 @@ class DownloadSong(View):
         song = get_object_or_404(Song, slug=self.kwargs['slug'])
         filename = str(song.audio_file)
         if 'USE_AWS' in os.environ:
-            file_path = f'{settings.MEDIA_URL}'+filename
+            # file_path = f'{settings.MEDIA_URL}'+filename
+            file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
         else:
             file_path = 'media/'+filename
         mime_type = filename.split('.')[1]
