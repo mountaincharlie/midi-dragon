@@ -357,217 +357,310 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 (just decsriptions for features - dont need screenshots for every feature as these will be covered in the Testing section)
 
 ### Header
-* For logged in users
-  * screenshots (desktop and mobile)
 * For non-logged users:
-  * screenshots (desktop and mobile)
-* Description of features
-  * Nav icons (tracklist has title attribute since it doesnt have a label to say what it is)
-  * Admin Site Management option
-  * clickable logo
-  * search functionality
-  * filter options
-* Changes from initial design:
-    * list any
+  * On desktop
+  * ![Final Designs Header anonymous users](./static/images/readme_images/final-design-header-anonymous.png "Final Designs Header anonymous users")
+  * On mobile
+  * ![Final Designs Header anonymous users](./static/images/readme_images/final-design-header-anonymous-mobile.png "Final Designs Header anonymous users")
+  * Login menu
+  * ![Final Designs Header anonymous users](./static/images/readme_images/final-design-header-anonymous-dropdown.png "Final Designs Header anonymous users")
+* For logged in users:
+  * On desktop
+  * ![Final Designs Header registered users](./static/images/readme_images/final-design-header-user.png "Final Designs Header registered users")
+  * On mobile
+  * ![Final Designs Header registered users](./static/images/readme_images/final-design-header-user-mobile.png "Final Designs Header registered users")
+  * Profile menu
+  * ![Final Designs Header registered users](./static/images/readme_images/final-design-header-user-dropdown.png "Final Designs Header registered users")
+* For the admin:
+  * On desktop
+  * ![Final Designs Header Admin](./static/images/readme_images/final-design-header-admin.png "Final Designs Header Admin")
+  * On mobile
+  * ![Final Designs Header Admin](./static/images/readme_images/final-design-header-admin-mobile.png "Final Designs Header Admin")
+  * Admin menu
+  * ![Final Designs Header Admin](./static/images/readme_images/final-design-header-admin-dropdown.png "Final Designs Header Admin")
+
+* Description of features:
+  * The midiDRAGON logo is a clickable link back to the landing page.
+  * The searchbar allows users to search for pre-made songs by name or part of their description. This becomes an icon on mobile which is clickable to reveal a dropdown searchbar.
+  * The Login/Profile/Admin icon provides the dropdown options displayed in the images above.
+  * The Tracklist icon highlights teal when at least one item is in the user's Tracklist and displays the total price below it. Admins do not have access to the Tracklist since they shouldn't be able to buy their own songs.
+  * The Pre-made songs button reveals a dropdown menu for sorting all the Pre-made Songs by Price, Genre, Duration, BPM or just All Pre-made Songs.
+  * The Design Custom Song button takes the user to the Design Custom Song form if they are logged in, or to the login page for non-logged in users and this feature is not available for Admins.
+  * The Testimonials button takes the user to the Testimonials page.
+  * On mobile the above three buttons are condenseed into a hamburger icon dropdown.
 
 ### Footer
-* screenshots (desktop and mobile)
-* Description of features
-  * MailChimp Newsletter
-  * ?? Links to reliable sites (e.g. Heroku and FL Studio?)
-  * FB business link
-  * Privacy Policy [just screenshot in final designs?]
-  * Terms of Use [just screenshot in final designs?]
+* On desktop
+* ![Final Designs Footer](./static/images/readme_images/final-design-footer.png "Final Designs Footer")
+* On mobile
+* ![Final Designs Footer](./static/images/readme_images/final-design-footer-mobile.png "Final Designs Footer")
+* FAQs Page
+* ![Final Designs Footer](./static/images/readme_images/final-design-footer-faqs.png "Final Designs Footer")
+* Privacy Policy Page
+* ![Final Designs Footer](./static/images/readme_images/final-design-footer-privacy.png "Final Designs Footer")
+* ToS Page
+* ![Final Designs Footer](./static/images/readme_images/final-design-footer-tos.png "Final Designs Footer")
+
+* Description of features:
+  * MailChimp Newsletter form
+  * Links to reliable sites - Heroku and FL Studio
+  * Facebook business page link
+  * Privacy Policy page
+  * Terms of Use page
 * Changes from initial design:
-  * list any
+  * Added links to reliable sites to improve SEO
+  * Added FAQs page
 
 ### Landing Page
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * Informational text
-  * b.g. image (fits colour scheme) 
-  * Browse Now btn
-  * Custom song form btn
+* On desktop
+* ![Final Designs Landing Page](./static/images/readme_images/final-design-landing-page.png "Final Designs Landing Page")
+* On mobile
+* ![Final Designs Landing Page](./static/images/readme_images/final-design-landing-page-mobile.png "Final Designs Landing Page")
+
+* Description of features:
+  * Pre-made Songs information and Browse button
+  * Custom Songs information and Design Custom Song button
+  * What People Say About Us and Testimonials button
+  * Registration information and Register Now button
 * Changes from initial design:
-    * list any
+    * More informational text (the 3 main features and one for registration)
 
 ### Browsing Songs
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-   * Search filtering options
-   * Number of songs found
-   * Song layout/audio controls/details
-   * Cursor/song highlight styling makes it clear that the song is a clickable link to its details page
-   * Back To Top btn (used across site)
-* Changes from initial design:
-    * list any
+* On desktop
+* ![Final Designs Browsing Songs](./static/images/readme_images/final-design-browse-pre-made.png "Final Designs Browsing Songs")
+* On mobile
+* ![Final Designs Browsing Songs](./static/images/readme_images/final-design-browse-pre-made-mobile.png "Final Designs Browsing Songs")
+
+* Description of features:
+  * Sort filtering dropdown
+  * Filter by Genre dropdown
+  * Number of songs found
+  * Song layout with image, details, playable audio and 'add to tracklist' button if the user doesn't already have it in their Tracklist.
+  * Each song row highlights on hover so that the details associated with a song can be seen clearly.
+  * The song image and name highlights pink and cursor becomes pointer on hover to indicate that its a clickable link, which takes the user to the song details page for that song.
+  * The admin can see, search and filter by all songs (even custom and incomplete and private ones) and instead of an Add To Tracklist button, they can just see if the song if Public/Private and Pre-made/Custom.
+  * ![Final Designs Browsing Songs](./static/images/readme_images/final-design-browse-songs-admin.png "Final Designs Browsing Songs")
 
 ### Testimonials 
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-   * Carousel with captions/controls/indicators
-   * Each image is clickable link to the song's details page
-   * BS cards for all testimonials (below carousel)
-* Changes from initial design:
-  * list any
+* On desktop
+* ![Final Designs Testimonials](./static/images/readme_images/final-design-testimonials.png "Final Designs Testimonials")
+* On mobile
+* ![Final Designs Testimonials](./static/images/readme_images/final-design-testimonials-mobile.png "Final Designs Testimonials")
 
-### Song Details (for all song types)
-* Desktop and mobile final designs
-  * desktop screenshot
-  * mobile screenshot
-* Description of features
-  * if the user has a song in their Tracklist, instead of being able to purchase the item again there is a note to say this is in their Tracklist already
-  * if the user have already bought the item (it’s in one of their orders) then theres a message to say that they already own this product and can find it in their profile
-  * for purchased custom songs which aren't complete there is a note to say where the song will be downloadable from and playable from when complete 
-  * for purchased custom songs that are complete there is a Download btn and the audio controls to play the song on site
-  * for custom songs which have not yet been purchased, the user has Edit (only some details)/Delete btns
-  * for any song complete or not, the admin has access to the Edit (full details)/Delete btns
-  * if the song has 'use_as_testimonial' = True, then there is a section to include the testimonial text and a link to the testimonials page ('see other testimonials')
+* Description of features:
+   * Bootstrap carousel with captions/controls/indicators all styled to fit with the site, highliting on hover to indicate what can be clicked.
+   * Each caption on the carousel is a clickable link to the song's details page.
+   * All of the testimonial songs are also listed beneath the carousel.
+   * Each image and song name is clickable link to the song's details page and each row highlights on hover like in the Browse Pre-made Songs page
 * Changes from initial design:
-    * list any
+  * Listing the Testimonial songs beneath the carousel to fit the format of the Browsing page rather than using Bootstrap cards.
+
+### Song Details 
+* On desktop
+* ![Final Designs Song Details](./static/images/readme_images/final-design-song-details.png "Final Designs Song Details")
+* On mobile
+* ![Final Designs Song Details](./static/images/readme_images/final-design-song-details-mobile.png "Final Designs Song Details")
+
+* Description of features:
+  * The layout is the same for all song types (Pre-made, Custom and those that have been allowed to be used as Testimonials)
+  * If the user has a song in their Tracklist, instead of being able to add it to their tracklist again, there is a note to say this is in their Tracklist already.
+  * If the user have already bought the item (it’s in one of their orders) then theres a message to say that they already own this product and can find it in their dashboard.
+  * For users who have purchased a custom song, but its not complete yet, there is a note to say where the song will be downloadable from and playable from when complete.
+  * For purchased custom songs that are complete there is a Download button and the audio controls to play the song on the page (for the Admin the audio is always downloadable and playable, unless the song doesn't have an audio file yet in which case a specific note is displayed).
+  * For custom songs which have not yet been purchased, the user has an Edit and Delete button at the bottom of the page (for the Admin these buttons are always available on every song)
+  * ![Final Designs Song Details](./static/images/readme_images/final-design-song-details-btns.png "Final Designs Song Details")
+  * If the song has 'use_as_testimonial' = True, then there is a section to include the testimonial text and a link to the testimonials page
 
 ### Create Custom Song
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * fields avaliable for the user to set and their types ... 
-  * Included instruments and review sessions are determined by project type
-  * Live price calc as options change (add 'affects-price' class to fields which affect the price and put a JS change event listener on them?) [this is just displayed to the user, the real price is calculated in DB so that the user cant affect the price with JS]
-  * Add additional instrument and review sessions btn
-  * Notes to user
-  * cancel and save btns
-* Changes from initial design:
-    * list any
+* On desktop
+* ![Final Designs Custom Song Form](./static/images/readme_images/final-design-design-form.png "Final Designs Custom Song Form")
+* On mobile
+* ![Final Designs Custom Song Form](./static/images/readme_images/final-design-design-form-mobile.png "Final Designs Custom Song Form")
+
+* Description of features:
+  * Required fields have red asterisks to indicate.
+  * Fields which depend on the Project Type (Included numbers of instruments and review sessions, the duration range and the price estimate) all have notes to say that a Project Type needs to be selected first. Once a Project Type is chosen, there is also a note to the user that changing the Project Type will reset those fields which depend on it.
+  * ![Final Designs Custom Song Form](./static/images/readme_images/final-design-design-form-project-chosen.png "Final Designs Custom Song Form")
+  * ![Final Designs Custom Song Form](./static/images/readme_images/final-design-design-form-project-chosen-price-est.png "Final Designs Custom Song Form")
+  * The price is stated as an estimate becasue it is just calculated via JavaScript depending on the selections the user makes in the form, but on saving the form the price is calculated properly from the actual database data. This prevents users from being able to manipulate the JavaScript in order to change the song price and also if the user adds additional instruments without actually selecting instruments for all of the instrument selects on the screen, the price calculation code checks how many instruments are included with the selected project type and then only charges the set Additional Instrument price for any additional instruments from that.
+  * Extra instruments can be bought and the note on the Instruments section explains how each instrument represents 1 track for that instrument, so if they want multiple electric guitar parts/tracks, then they wuold need to purchase multiple electric guitars.
+  * Extra Review Sessions can be bought. The minus button is disabled at the minimum included review sessions for the Project Type, but the user doesn't have to use all of these. The plus button is disabled once the number of review sessions is 8, since this is the maximum value that i've set in my settings.py variable.
+  * There are 3 optional textareas; Song Purpose, Song Feel and Additional Details, which all contain placholder text as examples of what details the user could provide. These help breakdown the important information that mididDRAGON needs in order to make the song, if the user has a specific vision for it. There is a note at the bottom to warn the user that if they don't provide specific details about the feel and structure of the song, then they give midiDRAGON creative control to make those decisions.
+  * Finally there is a checkbox for the user to choose to allow their song to be used as a testimonial oncec its complete. There is a note to explain that the song is still exclusively for them and won't be downloadable or purchasable by any other users.
+  * The cancel button redirects to the home page and the save button either redirects to the form if there is an error or it uses the song's get_absolute_url() method to redirect to the newly created song.
 
 ### Edit Custom Song
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * User's can only edit custom songs which they havent bought yet
-  * Users can only edit the details which were avaliable to them in their Create Custom Song form
-  * delete btn along with the cancel and save btns
-* Changes from initial design:
-    * list any
+* An unpurchased Custom Song in its song details view
+  * ![Final Designs Edit Song Form](./static/images/readme_images/final-design-details-before-edit-form.png "Final Designs Edit Song Form")
+* The prepopulated Edit form for the song
+  * ![Final Designs Edit Song Form](./static/images/readme_images/final-design-details-in-edit-form.png "Final Designs Edit Song Form")
+
+* Description of features:
+  * Aside from being pre-populated with the song's data, the functionality of the Edit form is identical to for the design form.
+  * User's can only edit custom songs which they havent bought yet.
+  * The cancel button redirects the Admin to their All Songs page and any regular logged in user to their Project Drafts page.
+  * The delete button takes the user to the delete confirmation page
+  * The save button either redirects to the form if there is an error or it uses the song's get_absolute_url() method to redirect to the updated song.
 
 ### Delete Confirmation Page (used for any deletion confirmation)
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * has cancel btn (which redirects to where the user came from?)
-  * note to user
-  * delete btn to permenantly delete the object
-* Changes from initial design:
-    * list any
+* The delete confirmation message is the same on desktop and mobile
+  * ![Final Designs Delete Confirmation](./static/images/readme_images/final-design-details-in-edit-form.png "Final Designs Delete Confirmation")
 
-### My TrackList Page (user’s ‘basket’)
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * each song listed with their appropriate details
-  * each song's image and name is a clickable link to its song details page
-  * 'remove from tracklist' btn for each song
-  * Total Price calcualted in DB
-  * Keep Browsing (More Music?) and Secure checkout btns
-* Changes from initial design:
-    * list any
+* Description of features:
+  * Note to the user that the action cannont be undone.
+  * The cancel button redirects the Admin to their All Songs page and any regular logged in user to their Project Drafts page.
+  * The delete button causes the song to be permenantley deleted from the database.
+
+### My TrackList Page
+* Desktop - adding to the Tracklist
+  * ![Final Designs TrackList](./static/images/readme_images/final-design-add-to-tracklist.png "Final Designs TrackList")
+* Mobile - adding to the Tracklist
+  * ![Final Designs TrackList](./static/images/readme_images/final-design-add-to-tracklist-mobile.png "Final Designs TrackList")
+* Desktop - removing from the Tracklist
+  * ![Final Designs TrackList](./static/images/readme_images/final-design-remove-from-tracklist.png "Final Designs TrackList")
+* Mobile - removing from the Tracklist
+  * ![Final Designs TrackList](./static/images/readme_images/final-design-remove-from-tracklist-mobile.png "Final Designs TrackList")
+
+* Description of features:
+  * Adding the song to the Tracklist, changes the Add To Tracklist button for that song into just a teal icon/message, so that users don't accidentally buy a song twice.
+  * Removing the song from the Tracklist, changes the relevant Tracklist icons back to Add To Tracklist buttons.
+  * When updating the Tracklist (adding/removing items) the success message also contains an overview of the tracklist and a button to go straight to the Checkout.
+  * The price, Browse and Checkout buttons are at the bottom of the screen on desktop, but at the top on mobile, to prevent users on mobile having to scroll all the way to the bottom to see the total price.
+    * ![Final Designs TrackList](./static/images/readme_images/final-design-tracklist-total-top-mobile.png "Final Designs TrackList")
+  * If the user doesn't have anything in their Tracklist, when they view it they recieve the message below and a link to Browse Pre-made songs.
+    * ![Final Designs TrackList](./static/images/readme_images/final-design-empty-tracklist.png "Final Designs TrackList")
 
 ### Checkout Page
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * Order overview 
-  * User's details form
-  * Stripe payment form [give Stripe card test details]
-  * notes to the user about their email address and the amount their card will be charged
-  * My Tracklist and Complete Order btns
-  * Processing payment overlay screen [include screenshots]
-* Changes from initial design:
-    * list any
+* The user's Profile - My Details page is used to update/save the Full name and email of the user and prepopulate the Checkout form
+  * ![Final Designs Checkout](./static/images/readme_images/final-design-my-details-used-to-prepop-checkout.png "Final Designs Checkout")
+* Desktop checkout
+  * ![Final Designs Checkout](./static/images/readme_images/final-design-prepoped-checkout.png "Final Designs Checkout")
+* Mobile checkout
+  * ![Final Designs Checkout](./static/images/readme_images/final-design-prepoped-checkout-mobile.png "Final Designs Checkout")
+
+* Description of features:
+  * Order Overview lists the songs in the order and the total price.
+  * The user's details are preopoulated in teh Checkout form if the user is logged in and if the details exist for the user (might not have set a first name yet).
+  * Note to the user about the importance of them making sure they have access to their provided email address, since this will be your main form of contact regarding their songs and them having a link to where they can download the song.
+  * Stripe payment form [using Stripe card test details: 4242 4242 4242 4242 with an valid date and cvc]
+  * Back to Tracklist redirects the user to their Tracklist.
+  * Complete Order triggers the Stripe functionality and causes the payment form to be hidden so that it can't accidentally be submitted multiple times, and applies the processing-payment-overlay
+    * ![Final Designs Checkout](./static/images/readme_images/final-design-processing-overlay.png "Final Designs Checkout")
 
 ### Order Confirmation Page
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * note for which email the confirmation will be sent to (the one provided in the form - not necessarily the one the user has in their profile)
-  * Order info
-  * Order overview
-  * User's details from the checkout form
-  * Order total
-  * Browse More Songs/More Music btn
-* Changes from initial design:
-    * list any
+* Desktop Order Confirmation
+  * ![Final Designs Order Confirmation](./static/images/readme_images/final-design-order-confirmation.png "Final Designs Order Confirmation")
+* Mobile Order Confirmation
+  * ![Final Designs Order Confirmation](./static/images/readme_images/final-design-order-confirmation-mobile.png "Final Designs Order Confirmation")
 
-### My Profile Dashboard (contains links to Project Drafts, Projects In Progress, Completed Projects, Order History and My Details)
-(only accessible by the user owning the page - its their profile which is used to populate the data anyway)
-* Desktop and mobile final designs
-    * desktop screenshots for each screen
-    * mobile screenshots for each screen
-* Description of features
-  * My Details page with form to update the user's full name and email address
-  * Project Drafts page listing all of the user's un-purchaseed custom songs, in date order - each song is a clickable link to its details. Also has a btn to create a new custom song?
-  * Projects in Progress page listing all of the user's purchased custom songs which have not yet been completed, in date order - each song is a clickable link to its details
-  * Completed Projects page listing all of the user's purchased custom songs which have been completed, in date order - each song is a clickable link to its details
-  * Order History page listing all of the user's orders in date order - each order number is a toggle to display the order overview OR a link to a Order Overview page (same template as Order Confirmation)
+* Description of features:
+  * After being purchased, the song's Add To Tracklist buttons are changed to teal icons/notes indicating that they have been purchased, so that user's don't accidentally buy the same song again.
+  * ![Final Designs Order Confirmation](./static/images/readme_images/final-design-purchased-songs-cant-add-to-tracklist.png "Final Designs Order Confirmation")
+  * Lists important order dedtails such as the order number, date and the email that the confirmation will also be sent to.
+  * The email contains a link to the confirmation page since it has the links to the purchased songs aswell as the buttons to download the song if its ready (for users who don't have an account and purchased Pre-made songs, this email is important since they don't have a profile dashboard to check their order history or download their songs)
+  * Order overview, like in the Checkout page
+  * Links and Downloads section which contains the links to the order songs and the download buttons for all who are applicable.
+  * Browse Pre-made Songs button at the bottom.
 * Changes from initial design:
-  * list any
+    * Layout change, but it still contains the same important information
 
-### Admin Site Management (contains adding forms for Song, Genre and Instrument models)
-only for admins (protected in views.py)
-* Desktop and mobile final designs
-  * desktop screenshots for each screen
-  * mobile screenshots for each screen
-* Description of features
-  * Add Song page with a form for the Admin to create a new song in the DB
-  * Custom Songs page listing all of the purchased custom songs by any user, in date order (filter by user and In-progress/completed checkboxes for filtering) - each song is a clickable link to its details (where admin can update the testimonial and completed/public fields and upload the audio file)
-  * All Orders page listing all of the orders for any user in date order - each order number is a toggle to display the order overview OR a link to a Order Overview page (same template as Order Confirmation) (filter by user)
-  * Add Genre form (or might be Future Feature)
-  * Add Instrument form (or might be Future Feature)
-* Changes from initial design:
-  * list any (prioritising Custom Songs and All Orders screens over Add Genre/Instrument)
+### My Profile Dashboard
+* My details - page contains the form for the user to update their fullname and email address. The song name is a clickable link to the song's details.
+* Desktop 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-my-details.png "Final Designs Profile Dashboard")
+* Mobile 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-my-details-mobile.png "Final Designs Profile Dashboard")
 
-### Admin Edit Song
-If the logged in user is the admin then a different view class is called whenever the Edit btn is selected since the admin can access/edit **any** field 
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * for any song the admin can edit any of its fields 
-* Changes from initial design:
-    * list any
+* Project Drafts - page contains a list of the user's custom songs which haven't been purchased yet. The song name is a clickable link to the song's details.
+* Desktop 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-project-drafts.png "Final Designs Profile Dashboard")
+* Mobile - with the mobile menu displayed
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-project-drafts-with-menu-mobile.png "Final Designs Profile Dashboard")
+* If the user doesn't haven any then a message and a prompt to try designing a custom song is displayed. 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-project-drafts-empty.png "Final Designs Profile Dashboard")
 
-### AllAuth authentication screens (login/out, register, email confirmation sent)
-* Desktop and mobile final designs
-  * desktop screenshot
-  * mobile screenshot
-* Description of features
-  * link from login page to register page if the user doen't have an account yet
-  * link from register page to login page if the user already has an account
-  * Back To The Music btn on logout page
+* Projects In Progress - page contains a list of the user's custom songs which have been purchased, but haven't been completed yet. The song name is a clickable link to the song's details.
+* Desktop 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-projects-in-progress.png "Final Designs Profile Dashboard")
+* Mobile 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-projects-in-progress-mobile.png "Final Designs Profile Dashboard")
+* If the user doesn't haven any then a message and a prompt to check if any of their Project Drafts are ready to purchase. 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-projects-in-progress-empty.png "Final Designs Profile Dashboard")
+
+* Completed Projects - page contains a list of the user's custom songs which have been purchased and are complete. The song name is a clickable link to the song's details.
+* Desktop 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-completed-projects.png "Final Designs Profile Dashboard")
+* Mobile 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-completed-projects-mobile.png "Final Designs Profile Dashboard")
+* If the user doesn't haven any then a message and a prompt to check out Pre-made Songs. 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-completed-projects-empty.png "Final Designs Profile Dashboard")
+
+* Order History - page contains a list of all the user's orders. The order number is a clickable link to the order overview page.
+* Desktop 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-order-history.png "Final Designs Profile Dashboard")
+* Mobile 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-order-history-mobile.png "Final Designs Profile Dashboard")
+* If the user doesn't haven any then a message and a prompt to check out Pre-made Songs. 
+  * ![Final Designs Profile Dashboard](./static/images/readme_images/final-design-order-history-empty.png "Final Designs Profile Dashboard")
+
+
+### Admin Site Management
+* All Songs - page contains a list of all the songs in midiDRAGON's database and their associated; user, done status, public status and use at testimonial status. The song name is a clickable link to the song's details.
+* Desktop 
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-all-songs.png "Final Designs Admin Site Management")
+* Mobile
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-all-songs-mobile.png "Final Designs Admin Site Management")
+* The filters work in combination with one another and the reset filters button clears the search parameters in the url, resetting everything back.
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-all-songs-apply-filters.png "Final Designs Admin Site Management")
+
+* All Orders - page contains a list of all the orders in midiDRAGON's database and their associated; user, date and total. The order number is a clickable link to the order overview page.
+* Desktop 
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-all-orders.png "Final Designs Admin Site Management")
+* Mobile
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-all-orders-mobile.png "Final Designs Admin Site Management")
+* The filters work in combination with one another and the reset filters button clears the search parameters in the url, resetting everything back.
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-all-orders-apply-filters.png "Final Designs Admin Site Management")
+
+* Django Admin Panel - a link directly into Django's Admin Panel without having to type it manually in the url.
+* Showing the mobile menu
+  * ![Final Designs Admin Site Management](./static/images/readme_images/final-design-mobile-menu.png "Final Designs Admin Site Management")
+
 * Changes from initial design:
-  * list any
+  * Add Song/Genre/Instrument can all be accessed easily through the Admin Panel link, so since it wasn't a high priority to implement these features, I've left them as Future Features. (Most features can still be edited for songs through the Edit Custom Song Form, which the admin has access to for every song)
+  * Instead of having a section for just Custom songs, its now All Songs.
+
+
+### AllAuth authentication screens
+* Login
+* Desktop 
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-login.png "Final Designs AllAuth authentication")
+* Mobile
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-login-mobile.png "Final Designs AllAuth authentication")
+
+* Logout
+* Desktop/Mobile
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-logout.png "Final Designs AllAuth authentication")
+
+* Register
+* Desktop 
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-register.png "Final Designs AllAuth authentication")
+* Mobile
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-register-mobile.png "Final Designs AllAuth authentication")
+* Email confrimation sent
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-register-send-email.png "Final Designs AllAuth authentication")
+* Real email recieved
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-register-real-email.png "Final Designs AllAuth authentication")
+* Confirm email on midiDRAGON site
+  * ![Final Designs AllAuth authentication](./static/images/readme_images/final-design-register-confirm-email.png "Final Designs AllAuth authentication")
+
 
 ### Custom 404 Page
-* Desktop and mobile final designs
-    * desktop screenshot
-    * mobile screenshot
-* Description of features
-  * Note to user
-  * same b.g. image as landing page
-  * Take Me Back To The Music btn
-* Changes from initial design:
-    * list any
+* Desktop 
+  * ![Final Designs Custom 404](./static/images/readme_images/final-design-custom-404.png "Final Designs Custom 404")
+* Mobile
+  * ![Final Designs Custom 404](./static/images/readme_images/final-design-custom-404-mobile.png "Final Designs Custom 404")
+* Has a Back to the music button which takes the user to the Browse Pre-made Songs page.
+
 
 ## User Experience Design [TO FINISH]
 ---
