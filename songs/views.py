@@ -260,18 +260,27 @@ class DownloadSong(View):
             #     ExpiresIn=600, )
 
             # return HttpResponseRedirect(url)
+            # import boto3
+
+            # session = boto3.Session(
+            #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            # )
+
+            # s3 = session.resource('s3')
+
+            # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
+
+            # s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
+
             import boto3
 
-            session = boto3.Session(
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            )
+            BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
+            KEY = 'media/' + filename
 
-            s3 = session.resource('s3')
+            s3 = boto3.resource('s3')
 
-            file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
-
-            s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
+            s3.Bucket(BUCKET_NAME).download_file(KEY, filename)
 
             return render(request, "home/index.html")
 
