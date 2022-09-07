@@ -912,31 +912,246 @@ The below sections will follow the names of the Epics from my Project Management
 
 
 ### PEP8 and Pylint Python Validators
-* python file
-    * any pylint warnings/errors
-    * PEP8 result:
+* checkout/admin.py
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* checkout/apps.py
+  * any pylint warnings for unused import checkout.signals and that its imported but not used, but this is because its just being used to override the ready method of the class.
+  * PEP8 result: All right
+* checkout/forms.pt
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* checkout/models.py
+  * has pylint error: Instance of 'ForeignKey' has no 'order_number' member, but the function returns it fine.
+  * PEP8 result: All right
+* checkout/signals.py
+  * has pylint warnings Unused argument 'kwargs'/'sender'/'created' but these are either optional arguments or arguments specifically required by the signal functions. 
+  * PEP8 result: All right
+* checkout/urls
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* checkout/views.py
+  * has 4 pylint warnings for line too long, but these are for Django messages and I can't break these messages onto different lines without causing serious errors.
+  * has pylint arror: Class 'OrderSong' and 'Order' have no 'objects' member', and 'User' has no 'DoesNotExist' member, but using 'objects' and 'DoesNotExist' works perfectly well for this project.
+  * has pylint warnings Unused argument 'kwargs'/'sender'/'created' but these are either optional arguments or arguments specifically required by the functions.
+  * has pylin warning: Catching too general exception Exception, but this is the point, we want to capture an errors that may occur.
+  * PEP8 result: only 5 'line too long' errors, explained above
+* checkout/webhook_handler.py
+  * has 5 pylint warnings for models not having 'objects' or 'DoesNotExist' member, but these functions work completely fine. 
+  * has 3 pylint warnings for line to long, but these are all for the content of HttpResponses and I have no way to make thses shorter without losing important information.
+  * has pylint warning: Catching too general exception Exception, but this is the point, we want to capture an errors that may occur.
+  * PEP8 result: only 3 'line too long' errors, explained above
+* checkout/webhooks.py
+  * has 2 pylint warnings for local variable 'e' is assigned to but never used, but this section is from Stripe's documentation
+  * has pylint warning: Catching too general exception Exception, but this is the point, we want to capture an errors that may occur.
+  * has 1 pylint warning for line to long but this is for a variable used as part of Stripe's documentation which just happen to have very long names (handler.handle_payment_intent_payment_failed)
+  * PEP8 result: only 1 'line too long' errors, explained above
+* home/urls
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* home/views.py
+  * has pylint warnings: Class 'Order' has no 'objects' member and Class 'OrderSong' has no 'objects' member, but these functions work completely fine. 
+  * PEP8 result: All right
+* profiles/urls
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* profiles/forms
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* profiles/views
+  * has 5 pylint warnings for line too long, but they are all for messages which I cant make shorter and context dictionaries with really long variable names.
+  * has 15 pylint warnings for classes having no'objects' member, but these functions all work completely fine. 
+  * has 18 pylint warnings for Unused argument 'kwargs'/'args' but these are optional arguments anyway
+  * has pylint warning: Catching too general exception Exception, but this is the point, we want to capture an errors that may occur.
+  * PEP8 result: only 5 'line too long' errors, explained above
+* songs/admin.py 
+  * one pylint warnings for line too long, but its for an if statment that I can't shorten
+  * 3 pylink warnings for Unused argument 'request', but the functions require them and work fine
+  * PEP8 result: only 1 'line too long' errors, explained above
+* songs/apps.py
+  * any pylint warnings for unused import checkout.signals and that its imported but not used, but this is because its just being used to override the ready method of the class.
+  * PEP8 result: All right
+* songs/forms.py
+  * has 4 pylint warnings for line too long, but they are all for my placeholder text descriptions which I cant make shorter.
+  * has 3 pylint warnings for classes having no'objects' member, but these functions all work completely fine.
+  * PEP8 result: only 4 'line too long' errors, explained above
+* songs/models.py
+  * has 3 pylint warnings for _ _ str_ _ does not return str, but this all works completely fine.
+  * has 1 pylint warning for line too long but this is for an if statement that I can't make any shorter.
+  * has 1 pylint warning for Instance of 'ManyToManyField' has no 'count' member, but this functions all work completely fine.
+  * has 1 pylint warning for Instance of 'CharField' has no 'lower' member, but these functions all work completely fine.
+  * PEP8 result: only 1 'line too long' errors, explained above
+* songs/signals.py
+  * has 6 pylint warning for line too long but they're all for calculations with variables that need log descriptive names.
+  * has 2 pylint warnings for classes having no'objects' member, but these functions all work completely fine.
+  * has 2 pylint warnings for Unused argument 'kwargs'/'sender' but these are optional arguments anyway
+* songs/urls
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* songs/view.py
+  * has many pylint warnings for classes having no'objects' member, but these functions all work completely fine.
+  * has a few pylint warning for line too long but they're all for messages and long named variables which cant be changed.
+  * PEP8 result: some 'line too long' errors, explained above
+  * PEP8 result: 4 line break warnings, but these were just so that I could have my Q operators on seperate lines rathern than none massive one.
+* tracklist/contexts.py
+  * has 2 pylint warnings for classes having no'objects' member, but these functions all work completely fine.
+* tracklist/urls
+  * no pylint warnings/errors
+  * PEP8 result: All right
+* tracklist/urls
+  * has 2 pylint warning for line too long but they're both for messages which I cant shorten any further.
+  * has 18 pylint warnings for Unused argument 'kwargs'/'args' but these are optional arguments anyway
 
 ### HTML Validation in Offical W3C Validator (including some likely warnings due to using a templating language)
-* list each html template
-    * list it's errors/warnings with explanations 
+* checkout.html
+  * Did have the error resulting from me having a p element as a child of a button, which I ammended
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* order_confirmation.html
+  * Wasn't allowed the alt atribute on the source element, which I ammended
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* FAQs.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* index.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* privacy_policy.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* terms_of_service.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* dashboard_completed_projects.html
+  * Had a type not allowed on div warning and a div missing role attribute for line 24, which I ammended
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* dashboard_my_details.html
+  * Had a type not allowed on div warning and a div missing role attribute for line 24, which I ammended and for the other html files which follow a similar structure.
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* dashboard_order_history.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* dashboard_project_drafts.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* dashboard_projects_in_progress.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* order_overview.html
+  * Wasn't allowed the alt atribute on the source element, which I ammended
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* site_management_all_orders.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* site_management_all_songs.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* admin-all-orders-list.html
+  * has a number of Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has a number of Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* admin-all-songs-list.html
+  * has a number of Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has a number of Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* completed-projects-list.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+  * The Offical W3C Validator thinks that the h4 on line 15 is empty, but it actually contains an icon.
+* my-details-form.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* order-history.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+*project-drafts.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* projects-in-progress.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* delete_song.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* design_custom_song.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* edit_custom_song.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* songs_details.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* testimonials.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* desktop-song-list-headings.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* desktop-song-list.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* desktop-testimonials-list-headings.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* mobile-song-list.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* mobile-testimonials-list.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* tracklist.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* price-and-buttons.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* desktop-tracklist-headings.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* add-to-tracklist-form.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* base.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* mobile-header.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* footer.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+* desktop-header.html
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
 * customised version of django-all_auth's login.html
-    * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
-    * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
 * customised version of django-all_auth's logout.html
-    * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
-    * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
 * customised version of django-all_auth's signup.html
-    * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
-    * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
+  * has some Offical W3C Validator errors for using {{ }} and {%  %} syntax, but these are necessary for Django functionality
+  * has some Offical W3C Validator errors for missing head element information, but this file extends from base.html which contains the head element
 
 ### CSS Validation in Offical Jigsaw Validator
-* list each css file/end of template script
-    * should be no errors or warnings in Offical Jigsaw Validator
+* base.css
+  * No errors or warnings in Offical Jigsaw Validator
 
 ### JS Check in JSHint
-* list each js file/end of template script
-    * should be no errors or warning in JSHint
-
+* stripe_elements.js
+  * JSHint says it has 2 undefined variables, 'Stripe' which is directly from Stripe's documentation for how to use its JavaScript, and '$' which just refer to the lines where I use JQuery's .fadeToggle method.
+  * Other than this, there are no serious errors or warning in JSHint
+* Javascript at the bottom of site_management_all_songs.html
+  * no errors or warning in JSHint
+* Javascript at the bottom of site_management_all_orders.html
+  * no errors or warning in JSHint
+* customSong.js
+  * JSHint says that srcElement is alreay defined and out of scope, but the was that its set up works, so no serious errors or warnings in JSHint.
+* Both small JavaScriptsat the bottom of songs/songs.html
+  * no errors or warning in JSHint
 
 ## Bugs [TO FINISH]
 ---
@@ -1054,7 +1269,8 @@ The below sections will follow the names of the Epics from my Project Management
 * [JP Silvashy's solution on Stackoverflow](https://stackoverflow.com/a/2003831) for how to use .shift() in javascript in order to get the first item from an array whilst also removing it from the list. I used this in the Javascript for my edit custom song template when pre-populating each instrument select with the existing instruments.
 * [linehammer's solution](https://dev.to/mmeurer00/location-reload-a55) for how to reload my checkout page without charging the user if the payment fails for any reason. Used in my submit event listener on the form in my stripe_elements.js.
 * [Python docs - uuid](https://docs.python.org/3/library/uuid.html) for how to use UUID objects, which I used to generate my order_number for my Order model.
-
+* [Code Institute's idea for using json_script](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/templates/checkout/checkout.html) for passing vars from the checkout view function context dict to the external JS, at the bottom of checkout/checkout.html.
+* [Code Institute's method for how to implement the product sort selects with JQuery](https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/products/templates/products/products.html) is what I also implemented on my brosing screen in my songs.html. I adapted it to suit this project, but I also apply the technique in a much more custom way in the Site Management All Songs and All Orders.
 
 ### Content
 * Fonts:

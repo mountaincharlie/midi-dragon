@@ -126,7 +126,7 @@ WSGI_APPLICATION = 'midi_dragon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# checks if in TESTING mode [need to remove before final deployment??]
+# checks if in TESTING mode [remove before final deployment?]
 if 'TESTING' in os.environ:
     print('Using sqilte3 db')
     DATABASES = {
