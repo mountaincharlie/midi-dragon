@@ -4,9 +4,8 @@
 {% block extra_title %} - My Tracklist{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">My Tracklist</h1>
@@ -96,7 +95,7 @@
                                 <button type="submit" class="btn btn-midi-warning border-0">
                                     <i class="fa-solid fa-trash-can fs-4"></i>
                                     <!-- written message only for mobile view -->
-                                    <p class="fs-5 ps-1 d-inline d-md-none basic-font">Remove from Tracklist</p>
+                                    <span class="fs-5 ps-1 d-inline d-md-none basic-font">Remove from Tracklist</span>
                                 </button>
                             </div>
                             <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project-->
