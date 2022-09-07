@@ -163,7 +163,7 @@ This application provides users with the ability to browse a collection of pre-m
 ## Project Management [TO FINISH]
 ---
 * Using GitHub Projects to manage this project
- * [Midi Dragon Project](https://github.com/users/mountaincharlie/projects/3/views/1)
+ * [Midi Dragon Project](https://github.com/users/mountaincharlie/projects/3/)
 
 * Using GitHub Projects to create Epics (big features/tasks) and mark my progress throughout the project
   * ![GitHub Projects to create Epics](./static/images/readme_images/project-management-epics.png "GitHub Projects to create Epics")
@@ -725,77 +725,191 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 ## Testing  [TO FINISH]
 ---
 
-* show manual testing for features like (messages to user if they have already bought a song or it's in their Tracklist already)
-
 ### Automated Testing with Django
-(IS THIS STILL NECESSARY IF YOU HAVE THE IF STATEMENT FOR DEVELOPMENT MODED?)
 * In order to run these tests, I needed Django to use sqlite3 as a local database. To do this I created a 'TESTING' variable in my env.py file and then in settings.py I added an If Statement which checked for this variable and used the sqlite3 database if it was found. When I was not running tests, I commented out this variable and so Django instead used my postgresql database.
-    * in my env.py:
-    * ![env.py var for testing](./static/images/readme_images/testing_mode_env.jpg "env.py var for testing")
-    * in my settings.py:
-    * ![setting.py condition for testing](./static/images/readme_images/testing_mode_settings.jpg "setting.py condition for testing")
-* Rather than create all my tests in one test.py file, I decided to split them into specific files within each app, naming them as:
-    * test_models.py
-    * test_urls.py
-    * test_forms.py
-    * test_views.py
+  * in my env.py:
+  * ![env.py var for testing](./static/images/readme_images/testing-env.png "env.py var for testing")
+  * in my settings.py:
+  * ![setting.py condition for testing](./static/images/readme_images/testing-db.png "setting.py condition for testing")
+* I decided to just test my urls and some basic views with automated testing as a lot of the functionality on the site make sense to test manually (e.g. django messages and search filters, some of which have already been demonstrated in the Final Designs section).
 
-### Tests in ____ app
-* In test_urls.py:
-   * list all tests
-* In test_models.py:
-  * list all tests 
-  ...
-* (All of these tests were successful?)
+### Testing urls
+* In each of my apps, I removed the default test.py file and created my own test_urls.py file
+* Tested that each of my urls resovles correctly.
+* The tests were succesful for all of my urls
 
-### Tests in ____ app
-*  In test_urls.py:
-   * list all tests
-* In test_models.py:
-  * list all tests
-  ...
-* All of these tests were successful
+### Testing the home/views.py
+* Tested the home url is successfully reversed and the correct template is used
+* Tested the faqs url is successfully reversed and the correct template is used
+* Tested the tos url is successfully reversed and the correct template is used
+* Tested the privacy url is successfully reversed and the correct template is used
+* These tests were all succesful
 
-...
-
-### Initial Coverage
-* After implementing __ successful tests across the models, urls, forms and urls in my apps, I installed Django Coverage.
+### Coverage
+* After implementing 30 successful tests across my apps, I installed Django Coverage.
 * Django Coverage installation to viewing html report (following [Code Institute's video](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FST101+2021_T1/courseware/dc049b343a9b474f8d75822c5fda1582/5666926980b74689b37a0d5da3cec510/)):
     * pip3 install coverage
-    *  {????} set os.environ['TESTING'] = 'yes' in my env.py
-    * coverage run --source=cook_ebook manage.py test
+    * set os.environ['TESTING'] = 'yes' in my env.py
+    * coverage run manage.py test
     * coverage report
     * coverage html
     * python3 -m http.server 
-* Initial coverage report:___%
-* screenshot
-* From the report I could see that my:
-    * anything that needs extra work
-* So I revisited my test files in order to cover as many of these missing tests as possible
- 
-### Further Tests
-* Any automated tests you added
-  * list them…
-  * how much coverage that section then had
-  * how much coverage overall now
-… 
-* List any files you struggled to write automated tests for and list what you did manual tests for:
-    * what you were testing (method etc)
-    * screenshot
+* Coverage report:53%
+* ![coverage report](./static/images/readme_images/testing-auto-coverage.png "coverage report")
 
-### Manual Testing Other Features (features which you were never going to test automatically e.g. colors on hover and email confirmations)
-* Describe feature and what it should do
-    * Screenshots of what happens before/after you do something to show the feature works
+### Manual Testing Site Features
+* All the pages on the site are responsive across different screen sizes.
+  * This was demonstrated in the screenshots for the Final Designs which show each page displaying correctly on desktop and mobile screens.
 
+The below sections will follow the names of the Epics from my Project Management and conduct all the manual tests in the testing taslk lists.
+### The base template
+* The User icon in the header is different depending on the user who is logged in
+  * Its grey and says 'login' for non-logged in users
+  * Its teal and says 'Profile' for regular logged in users 
+  * Its teal and says 'Admin' for the Admin 
+* The Design Custom Song form is only accessible for logged in users
+  * As a non-logged in user, clicking the Design Custom Song button or manually changing the url, redirects to the Login page.
+* Django messages, with Bootstrap Toasts, display correctly
+  * Desktop
+  * ![messages display correctly](./static/images/readme_images/testing-messages-display.png "messages display correctly")
+  * Mobile
+  * ![messages display correctly](./static/images/readme_images/testing-messages-display-mobile.png "messages display correctly")
+* The Tracklist icon changes colour and disaplys the total cost
+  * This was also demonstrated in the Final Designs for the Tracklist
+  * ![Tracklist icon changes colour and disaplys the total cost](./static/images/readme_images/testing-tracklist-icon-changes.png "Tracklist icon changes colour and disaplys the total cost")
+* The Add to Tracklist buttons for those songs have also now become coloured icons which are not buttons, so the user doesn't order multiple of the same song.
+  * ![Tracklist add button becomes unclickable](./static/images/readme_images/testing-song-in-tracklist-1.png "Tracklist add button becomes unclickable")
+  * ![Tracklist add button becomes unclickable](./static/images/readme_images/testing-song-in-tracklist-2.png "Tracklist add button becomes unclickable")
+* At this point if the user logs into their account the items will still be in their Tracklist (unless they've previously purchased the song - see soon) and we can see that the success message doesn't unnecessarily show the Tracklist Overview because the message is just reffering to successful login 
+  * ![testing-success-msg-without-overview](./static/images/readme_images/testing-success-msg-without-overview.png "testing-success-msg-without-overview")
+* The user 'Charchar' has previously purchased the song called 'Someplace', so if they have this song with others in their Tracklist before they've logged in and then they log in, the song 'Somplace' will be removed from the Tracklist to avoid them buying it twice 
+  * Before logging in, the user has three songs in their Tracklist including 'Someplace'
+  * ![three songs in tracklist](./static/images/readme_images/testing-3-songs-in-tracklist-before-login.png "three songs in tracklist")
+  * After logging in as 'Charchar' 'Someplace' has been removed from the Tracklist, while the other two songs remain.
+  * ![two songs in tracklist](./static/images/readme_images/testing-2-songs-in-tracklist-after-login.png "two songs in tracklist")
+* The midiDRAGON logo is a clickable link back to the landing page on both mobile and desktop views.
+  * This works correctly and the logo also highlights pink when hovered/clicked like the other buttons, links and clickable icons on the site.
+* The options in the Pre-made Songs dropdown work correctly to sort the Pre-made Songs
+  * You can also see that the filter dropdown at the top of the results has also changed to reflect the choice of ordering by song Duration
+  * ![testing-sorting-songs-by-duration](./static/images/readme_images/testing-sorting-songs-by-duration.png "testing-sorting-songs-by-duration")
 
-### Manual JavaScript tests
-* Describe feature/functionality
-  * screenshots of it working
+### The home app
+* The landing page renders correctly.
+  * Seen in the Final Designs screenshots.
+* Styling has been properly applied across the site.
+  * This can also be seen through all of the screenshots in the Final Designs section which shows the styling to be consistent across the whole site.
+* Automated testing in the home app urls and views was all successful
 
-### Final Coverage 
-* After implementing __ successful tests across my models, urls, forms and urls, I installed Django Coverage.
-* image of final coverage report
-* The areas I was not able to cover with automated testing, I tried to test thoroughly with manual testing (documented in the above sections). 
+### The songs app
+* The Admin actions work correctly in the Admin Panel
+  * A song cannot be made Public if its not Complete
+  * ![testing-cant-be-public-if-not-complete](./static/images/readme_images/testing-cant-be-public-if-not-complete.png "testing-cant-be-public-if-not-complete")
+  * A Compete song cannot be made Public if its audio is broken/missing
+  * ![testing-cant-be-public-if-not-complete](./static/images/readme_images/testing-cant-be-public-if-broken-audio.png "testing-cant-be-public-if-not-complete")
+  * If a song is changed to Incomplete, then the Public status is automatically changed to False
+  * ![testing-making-incomplete-forces-not-public](./static/images/readme_images/testing-making-incomplete-forces-not-public.png "testing-making-incomplete-forces-not-public")
+* Only the Admin can access the Edit/Delete buttons for any song (users can only access them for their own Custom songs before purchasing them)
+  * The Admin can edit Pre-made Songs
+  * ![testing-admin-can-edit-pre-made-songs](./static/images/readme_images/testing-admin-can-edit-pre-made-songs.png "testing-admin-can-edit-pre-made-songs")
+  * The Admin can edit Custom Songs
+  * ![testing-admin-can-edit-custom-songs](./static/images/readme_images/testing-admin-can-edit-custom-songs.png "testing-admin-can-edit-custom-songs")
+  * Regular users cannot edit any Pre-made Songs
+  * ![testing-users-cant-edit-pre-made-songs](./static/images/readme_images/testing-users-cant-edit-pre-made-songs.png "testing-users-cant-edit-pre-made-songs")
+* If a user choses to delete a song that they're allowed to, they're first taken to the Delete Confirmation page
+  * ![testing-delete-confirmation](./static/images/readme_images/testing-delete-confirmation.png "testing-delete-confirmation")
+  * If they do choose to confirm the song to be permenantly deleted then they're provided with a success message
+  * ![testing-delete-success-message](./static/images/readme_images/testing-delete-success-message.png "testing-delete-success-message")
+* Typing anything into the searchbar will return the Pre-made Songs (or all songs from the Admin) with that query in their name and/or description
+  * The number of search results is also correctly displayed
+  * ![testing-search-by-title-or-desc](./static/images/readme_images/testing-search-by-title-or-desc.png "testing-search-by-title-or-desc")
+  * If the search query is blank, the page is refreshed and an error message is displayed
+  * ![testing-blank-query-error-message](./static/images/readme_images/testing-blank-query-error-message.png "testing-blank-query-error-message")
+  * If the search query doesn't yeild any matches, the user is informed
+  * ![testing-note-if-no-songs-found-for-query](./static/images/readme_images/testing-note-if-no-songs-found-for-query.png "testing-note-if-no-songs-found-for-query")
+* The audio controls work correctly, never autoplaying and highlighting on hover/focus
+  * ![testing-audio-controls-and-highlights](./static/images/readme_images/testing-audio-controls-and-highlights.png "testing-audio-controls-and-highlights")
+* Logged in users can click the 'like' button to show their appreciation for a song and see how many likes a song had
+  * The 'like' button becomes solid grey if the user has already left a like and the number correctly changes
+  * ![testing-like-button](./static/images/readme_images/testing-like-button.png "testing-like-button")
+* Before a user adds their custom song to their Tracklist, they can see the Add To Tracklist button as well as the Edit/Delete buttons
+  * ![custom-song-before-tracklist](./static/images/readme_images/custom-song-before-tracklist.png "custom-song-before-tracklist")
+* After a user adds their custom song to their Tracklist, they no longer have the Add To Tracklist or Edit/Delete buttons
+  * ![custom-song-added-to-tracklist](./static/images/readme_images/custom-song-added-to-tracklist.png "custom-song-added-to-tracklist")
+* After purchasing their custom song explanatory notes appear where the Add To Tracklist and the Edit/Delete Buttons use to be and where the song's audio will be when complete.
+  * ![custom-song-purchased-note](./static/images/readme_images/custom-song-purchased-note.png "custom-song-purchased-note")
+* Once the purchased Custom song is complete and the Admin adds its audio file, the song becomes downloadable (button when the TRacklist button was) and the audio element for the song is available.
+  * ![custom-song-download-on-audio-complete](./static/images/readme_images/custom-song-download-on-audio-complete.png "custom-song-download-on-audio-complete")
+* If a user allows their Custom Song to be viewable as a Testimonial Song, no other users can purchase or download it. 
+  * Non-logged in users are prompted to create an account to dsign their own custom song.
+  * ![custom-song-testimonials-anonymous-cant-buy](./static/images/readme_images/custom-song-testimonials-anonymous-cant-buy.png "custom-song-testimonials-anonymous-cant-buy")
+  * Other logged in users are prompted to show thier appreciation by leaving a 'like'
+  * ![custom-song-testimonials-logged-in-cant-buy](./static/images/readme_images/custom-song-testimonials-logged-in-cant-buy.png "custom-song-testimonials-logged-in-cant-buy")
+* Testimonials
+  * Only songs which have their 'use_as_testimonial' field set to True are visible in the Testimonial page.
+  * Each aption correctly links to the details for the song it belongs to.
+  * The carousel doesn't change automatically and allows users to navigate with the controls.
+  * ![testing-testimonial-carousel](./static/images/readme_images/testing-testimonial-carousel.png "testing-testimonial-carousel")
+* Automated testing in the song app urls was all successful
+
+### The tracklist app
+* The Add To Tracklist and Remove From Tracklist buttons work and by updating the Tracklist, the Tracklist overview should be visible in those success messages.
+  * ![testing-add-success-message](./static/images/readme_images/testing-add-success-message.png "testing-add-success-message")
+  * ![testing-add-to-tracklist](./static/images/readme_images/testing-add-to-tracklist.png "testing-add-to-tracklist")
+  * ![testing-remove-from-tracklist-with-message](./static/images/readme_images/testing-remove-from-tracklist-with-message.png "testing-remove-from-tracklist-with-message")
+* The song image and name are both clickable links to the details page for the song.
+* There is a specific message to the user when the last song is removed from their Tracklist
+  * ![testing-when-last-tracklist-song-removed](./static/images/readme_images/testing-when-last-tracklist-song-removed.png "testing-when-last-tracklist-song-removed")
+* Automated testing in the tracklist app urls was all successful
+
+### Custom Song Form
+* Only logged in, non-admin users can access the Design Custom Song form. The admin has no buttons for it in their view and is redirected to their Site Management if they alter the urls to access it. Non-logged in users are redirected to the login page if they click the button.
+* The actual price of the song is calculated correctly in the back end.
+  * If a user accidentally chooses to purchase an additional instrument, while one of their included instruments selects is left blank, the proper price will be calculated so that the number of included instruments for the Project Type is subtracted from the total number of instruments, before it calculates the price of additional instruments.
+  * ![testing-instrument-select-left-blank](./static/images/readme_images/testing-instrument-select-left-blank.png "testing-instrument-select-left-blank")
+  * The price is correctly calculated (which is why the one on the form is called the 'Price estimate') and the instruments that the user chose for the project are correctly listed despite one of the selects being left blank on the form
+  * ![testing-correct-price-calculated](./static/images/readme_images/testing-correct-price-calculated.png "testing-correct-price-calculated")
+* On creating the Custom Song, the success message displays correctly
+  * ![testing-custom-song-creation-message](./static/images/readme_images/testing-custom-song-creation-message.png "testing-custom-song-creation-message")
+* The number of review sessions buttons disable at their min/max values
+  * For the regular Project Type, the number of included Review Sessions is 2 and this is treated as the minimum they can order with the song even if they don't end up wanting/needing to use all of their sessions. The maximum value is set as 8 in a variable in my settings.py
+  * ![testing-disabled-minus-button](./static/images/readme_images/testing-disabled-minus-button.png "testing-disabled-minus-button")
+  * ![testing-disabled-plus-button](./static/images/readme_images/testing-disabled-plus-button.png "testing-disabled-plus-button")
+* If the BPM is given a value outside the stated range [35-155] then the form validation prevents the form being submitted but keeps it in tact (all other valid data in the form remains correct) and draws the user to the input for them to correct it.
+  * ![testing-bpm-validation](./static/images/readme_images/testing-bpm-validation.png "testing-bpm-validation")
+
+### Messages with Bootstrap Toasts
+* They display in the correct place and with the correct styling.
+* They are dismissed when the 'x' icon is clicked.
+* Only success messages which are to do with changes in the Tracklist display the Tracklist overview.
+
+### The checkout app
+* The Checkout can only be accessed if the user has something in their Tracklist, so if they try to manually access it, tehy are redirected with a message.
+  * ![testing-cant-checkout-with-empty-tracklist](./static/images/readme_images/testing-cant-checkout-with-empty-tracklist.png "testing-cant-checkout-with-empty-tracklist")
+* If the admin tries to manually access the checkout, theyre redirected to their Site Management with a message.
+  * ![testing-admin-cant-access-checkout](./static/images/readme_images/testing-admin-cant-access-checkout.png "testing-admin-cant-access-checkout")
+* The Checkout form is pre-populated with the user's email and full name if provided in their Dashboard My Details page, this was demonstrated in the Final Designs section.
+
+### Payment With Stripe
+* Using the test card number: 4242 4242 4242 4242 with any valid date and cvc
+* Make a purchase and check that the payment intent is successful
+  * ![testing-checkout](./static/images/readme_images/testing-checkout.png "testing-checkout")
+  * The Stripe Event was successful
+  * ![testing-payment-succeded](./static/images/readme_images/testing-payment-succeded.png "testing-payment-succeded")
+  * The webhook was also successful
+  * ![testing-webhook-payment-succeded](./static/images/readme_images/testing-webhook-payment-succeded.png "testing-webhook-payment-succeded")
+* To simulate a case when the user may experince an issue with their browser during the payment processing, I tried closing the browser while it was processing the payment, to check if the webhook handler works and creates an instance of Order.
+  * ![testing-checkout-3-songs](./static/images/readme_images/testing-checkout-3-songs.png "testing-checkout-3-songs")
+  * The Stripe Event was successful
+  * ![testing-inturrupted-payment-succeded](./static/images/readme_images/testing-inturrupted-payment-succeded.png "testing-inturrupted-payment-succeded")
+  * The webhook was also successful
+  * ![testing-webhook-inturrupted-payment-succeded](./static/images/readme_images/testing-webhook-inturrupted-payment-succeded.png "testing-webhook-inturrupted-payment-succeded")
+
+### The profiles app
+* Regular users are redirected to the home page with a message if they try to manually access the Site Management
+  * ![testing-users-cant-access-site-management](./static/images/readme_images/testing-users-cant-access-site-management.png "testing-users-cant-access-site-management")
+* The Admin is redirected to Site Management with a message if they try to manually access the Profiles Dashboard
+  * ![testing-admin-cant-access-profiles-dashboard](./static/images/readme_images/testing-admin-cant-access-profiles-dashboard.png "testing-admin-cant-access-profiles-dashboard")
+
 
 ### PEP8 and Pylint Python Validators
 * python file
