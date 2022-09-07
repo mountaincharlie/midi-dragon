@@ -681,6 +681,11 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 * Throughout the site the user is prompted with messages and navigational buttons to help guide them through their experience. Evidence of this user friendly and simple navigation can be found in the Final Designs section which shows the features and functionality avaliable to users depending on their authentication, previous interactions with the site (e.g. past orders or current songs in their Tracklist) and helping them make the most of their experince with midiDRAGON.
 * Cancel button on the Design Custom Song, Edit Custom Song and Delete confirmation pages so that the user doesn't have to use the browsers back button in order to cancel out of any of these features.
 
+### Media
+* The images, icons and audio files are high quailty to ensure a satisfying experience for the users.
+* The audio elements and Testimonials carousel are completely user operated, as neither of them autoplays.
+
+
 ## Accessibility
 ---
 
@@ -1295,9 +1300,41 @@ listner in stripe_elements.js.
   * For Someplace song - by [Jérôme Prax on Unsplash](https://unsplash.com/photos/jLZWzT_kdTI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink)
   * 
 * Icons:
-  * Font Awesome's …
-  * Favicon made Font Awesome's …
+  * Font Awesome's:
+  * [Dragon](https://fontawesome.com/icons/dragon?s=solid&f=classic) as the site logo and favicon. 
+  * [Circle User](https://fontawesome.com/icons/circle-user?s=solid&f=classic) as the Profile/Admin/Login icon in the header. 
+  * [Compact Disc](https://fontawesome.com/icons/compact-disc?s=solid&f=classic) as the Tracklist icon in the header and the Add to Tracklist buttons. 
+  * [Compact Disc](https://fontawesome.com/icons/compact-disc?s=solid&f=classic) as the Tracklist icon in the header and the Add to Tracklist buttons. 
+  * [Credit Card](https://fontawesome.com/icons/credit-card?s=solid&f=classic) as the complete order button icon and the icon to indicate songs that the user has purchased. 
+  * [Lock](https://fontawesome.com/icons/lock?s=solid&f=classic) as the secure checkout button icon. 
+  * [Download](https://fontawesome.com/icons/download?s=solid&f=classic) on mobile in the profiles dashboard headers. 
+  * [User Shield](https://fontawesome.com/icons/user-shield?s=solid&f=classic) as the Privacy Policy icon. 
+  * [Magnifying Glass](https://fontawesome.com/icons/magnifying-glass?s=solid&f=classic) as the search icon. 
+  * [Bars](https://fontawesome.com/icons/bars?s=solid&f=classic) as the collapsable mobile menu icons. 
+  * [Circle](https://fontawesome.com/icons/circle?s=solid&f=classic) as the dots on the payment processing overlay. 
+  * [Sliders](https://fontawesome.com/icons/sliders?s=solid&f=classic) as the icon for the FL Studio link. 
+  * [Bolt](https://fontawesome.com/icons/bolt?s=solid&f=classic) as the icon for the powered by Heroku link. 
+  * [mailchimp](https://fontawesome.com/icons/mailchimp?s=brands&f=brands) as the icon for newsletter subscription with mailchimp. 
+  * [facebook](https://fontawesome.com/icons/facebook?s=brands&f=brands) as the icon for the Buisness Facebook link. 
+  * [Circle Arrow Left](https://fontawesome.com/icons/circle-arrow-left?s=solid&f=classic) as the icon for the Browse Pre-made Songs buttons and the back to Tracklist button. 
+  * [Angle Left](https://fontawesome.com/icons/angle-left?s=solid&f=classic) as the icon for the Testimonial carousel controls. 
+  * [Angle Right](https://fontawesome.com/icons/angle-right?s=solid&f=classic) as the icon for the Testimonial carousel controls. 
+  * [Regular Heart](https://fontawesome.com/icons/heart?s=regular&f=classic) as the icon for the likes, when a user hasn't like it yet. 
+  * [Solid Heart](https://fontawesome.com/icons/heart?s=solid&f=classic) as the icon for the likes, when a user has like it. 
+  * [Check](https://fontawesome.com/icons/check?s=solid&f=classic) as the icon that goes with the Compact disk to show a song is in the users Tracklist or with the Credit Card to show that the user has purchased that song already. 
+  * [Trash Can](https://fontawesome.com/icons/trash-can?s=solid&f=classic) as the icon for removing songs from the tracklist. 
+  * [Circle exclamation](https://fontawesome.com/icons/circle-exclamation?s=solid&f=classic) as the icon for the Terms of Service. 
+  * [Circle X Mark](https://fontawesome.com/icons/circle-xmark?s=solid&f=classic) as the icon for the Stripe card payment error messages and to show a field is false in teh Site Managemet All Songs page. 
+  * [Circle Check](https://fontawesome.com/icons/circle-check?s=solid&f=classic) as the icon to show a field is True in teh Site Managemet All Songs page. 
+  * [Angles Right](https://fontawesome.com/icons/angles-right?s=solid&f=classic) as the icon for answers on the FAQs page. 
+  * [Circle Question](https://fontawesome.com/icons/circle-question?f=classic&s=solid) as the icon for the FAQs link. 
+  * [Minus](https://fontawesome.com/icons/minus?s=solid&f=classic) as the minus button for Review Sessions on the Custom Song form. 
+  * [Plus](https://fontawesome.com/icons/plus?s=solid&f=classic) as the plus button for Review Sessions on the Custom Song form. 
+
+  * Favicon made Font Awesome's [Dragon icon](https://fontawesome.com/icons/dragon?s=solid&f=classic) and converted using [favicon.io](https://favicon.io/favicon-converter/).
+
 * Audio files:
+  * __All the songs__ on the site were written, recorded and produced by me.
 
 
 ## Future Features [TO FINISH]
