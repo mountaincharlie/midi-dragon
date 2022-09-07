@@ -1,4 +1,4 @@
-# Midi Dragon [TO FINISH]
+# Midi Dragon
 
 Midi Dragon is an ecommerce web application for users who want to design their own custom songs or short music clips, which are then created for them. From YouTubers looking for an intro song to capture the essence of their channel, to hobby video makers in need of a specific sound for their content, Midi Dragon’s choice of pre-made and custom songs is the perfect way for creators to find authentic sound for their projects. 
 
@@ -11,7 +11,7 @@ This application provides users with the ability to browse a collection of pre-m
 ![Viewing midiDRAGON on mobile](./static/images/readme_images/midi-dragon-mobile-view.png "Viewing midiDRAGON on mobile")
 
 
-## Contents [TO FINISH]
+## Contents
 ---
 * [Business Model](https://github.com/mountaincharlie/project-five-midi-dragon#business-model)
 * [Marketing Strategy](https://github.com/mountaincharlie/project-five-midi-dragon#marketing-strategy)
@@ -33,7 +33,7 @@ This application provides users with the ability to browse a collection of pre-m
 
 
 
-## Business Model [TO FINISH]
+## Business Model
 ---
 
 * Purpose: Business to Consumer (B2C)
@@ -58,7 +58,7 @@ This application provides users with the ability to browse a collection of pre-m
   * [midiDRAGON FAQs](https://midi-dragon.herokuapp.com/frequently-asked-questions/)
 
 
-## Marketing Strategy [TO FINISH]
+## Marketing Strategy
 ---
 
 * Facebook Business Page
@@ -83,7 +83,7 @@ This application provides users with the ability to browse a collection of pre-m
   * Allowing users to leave a link to their own content creation platforms in their testimonials also helps to connect the community and by having it on the midiDRAGON site, this could also motivate people to have their cusomt songs created by midiDRAGON rather than other freelance music producers.
 
 
-## Search Engine Optimisation [TO FINISH]
+## Search Engine Optimisation
 ---
 
 ### Keyword research
@@ -137,7 +137,7 @@ This application provides users with the ability to browse a collection of pre-m
   * I then made sure I uploaded this into the root directory of my project.
 
 
-## Technologies Used [TO FINISH]
+## Technologies Used
 ---
 * HTML
 * CSS
@@ -145,7 +145,7 @@ This application provides users with the ability to browse a collection of pre-m
 * JavaScript
 
 
-## Frameworks Libraries and other Applications Used [TO FINISH]
+## Frameworks Libraries and other Applications Used
 ---
 
 * Django with;
@@ -160,7 +160,7 @@ This application provides users with the ability to browse a collection of pre-m
 * boto3 (for AWS)
 
 
-## Project Management [TO FINISH]
+## Project Management
 ---
 * Using GitHub Projects to manage this project
  * [Midi Dragon Project](https://github.com/users/mountaincharlie/projects/3/)
@@ -184,7 +184,7 @@ This application provides users with the ability to browse a collection of pre-m
   * ![Testing label](./static/images/readme_images/testing-label.png "Testing label")
 
 
-## Initial Designs [TO FINISH]
+## Initial Designs
 ---
 
 ### Header
@@ -256,7 +256,7 @@ This application provides users with the ability to browse a collection of pre-m
 ### Custom 404 Page
 * ![Initial Custom 404 design](./static/images/readme_images/initial-design-custom-404.jpg "Initial Custom 404 design")
 
-## Database Schema [TO FINISH]
+## Database Schema
 ---
 
 ### Initial Schema Plan
@@ -351,10 +351,8 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 * ![Final Database Design](./static/images/readme_images/p5-final-db-schema.png "Final Database Design")
 
 
-## Final Designs [TO FINISH]
+## Final Designs
 ---
-
-(just decsriptions for features - dont need screenshots for every feature as these will be covered in the Testing section)
 
 ### Header
 * For non-logged users:
@@ -662,7 +660,7 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 * Has a Back to the music button which takes the user to the Browse Pre-made Songs page.
 
 
-## User Experience Design [TO FINISH]
+## User Experience Design
 ---
 
 ### Mobile First Design With Bootstrap 5
@@ -683,18 +681,19 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 * Throughout the site the user is prompted with messages and navigational buttons to help guide them through their experience. Evidence of this user friendly and simple navigation can be found in the Final Designs section which shows the features and functionality avaliable to users depending on their authentication, previous interactions with the site (e.g. past orders or current songs in their Tracklist) and helping them make the most of their experince with midiDRAGON.
 * Cancel button on the Design Custom Song, Edit Custom Song and Delete confirmation pages so that the user doesn't have to use the browsers back button in order to cancel out of any of these features.
 
-## Accessibility [TO FINISH]
+## Accessibility
 ---
 
 ### Lighthouse Accessibility Score
-* screenshot
+* ![lighthouse-score](./static/images/readme_images/lighthouse-score.png "lighthouse-score")
+
 
 ### Semantic Elements
 * Using 'header', 'nav', 'main' and 'footer' in base.html to make the roles of each section obvious.
 * Adding role="button" for link elements which are being used as buttons
 
 
-## Commit Messages [TO FINISH]
+## Commit Messages
 ---
 
 * After receiving positive feedback on the organization and consistency of my Git Commit messages on my last project, I decided to use [Conventional Commit’s](https://www.conventionalcommits.org/en/v1.0.0-beta.2/) recommended commit message structure again. 
@@ -712,7 +711,7 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
     * "type[optional scope]: commit description"
 
 
-## Testing  [TO FINISH]
+## Testing
 ---
 
 ### Automated Testing with Django
@@ -1193,7 +1192,7 @@ The below sections will follow the names of the Epics from my Project Management
 * No known unfixed bugs (other than warnings/errors explained in code validation section)
 
 
-## Deployment [TO FINISH]
+## Deployment
 ---
 
 ### Early Deployment to Heroku
