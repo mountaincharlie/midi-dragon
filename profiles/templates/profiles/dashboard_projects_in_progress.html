@@ -4,9 +4,8 @@
 {% block extra_title %} - Projects In Progress{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">
@@ -22,10 +21,10 @@
     <div class="row d-flex d-md-none">
         <div class="col-1 d-inline mobiledropdowncontainer text-center fs-1 p-0">
             <!-- burger icon is the dropdown-toggle -->
-            <!-- unordered list is in the dropdown-menu -->
-            <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="dashboarddropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle text-center midi-l-grey pink-hover" role="button" id="dashboarddropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-bars"></i>
             </div>
+            <!-- unordered list is in the dropdown-menu -->
             <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="dashboarddropdownbtn">
                 <li class="dropdown-item midi-l-grey pink-hover">
                     <a class="midi-l-grey" role="button" href="{% url 'my_details' %}">My Details</a>
@@ -48,8 +47,6 @@
             <h2 class="mt-1 fw-bolder mb-4"> | PROJECTS IN PROGRESS | </h2>
         </div>
     </div>
-
-    <!-- desktop view: row holding the dashboard content -->
     <div class="row d-flex ">
         <!-- menu -->
         <div class="dashboard-options d-none d-md-block col-12 col-md-3 text-center text-md-start">
@@ -89,11 +86,10 @@
                 </div>
             </div>
         </div>
-        <!-- rendering html snippets -->
         <div class="col-12 col-md-9">
             <div class="row">
                 <div class="col-12">
-                    <!-- snippet here -->
+                    <!-- html snippet here -->
                     {% include 'includes/projects-in-progress-list.html' %}
                 </div>
             </div>

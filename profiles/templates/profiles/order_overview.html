@@ -4,9 +4,8 @@
 {% block extra_title %} - Order Overview{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4 text-center">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">Order Overview</h1>
@@ -55,11 +54,6 @@
         </div>
     </div>
 
-    <!-- ALSO - for authenticated users - add the check to song_details for if they have already purchased the song -->
-
-    <!-- ALSO in songs list you ned to disbale add to tracklist button for users who are authenticated and have the song in one of their orders -->
-
-    <!-- contains the order overview and Downloads/song_details Links columns -->
     <div class="row pt-4">
         <!-- order overview -->
         <div class="col-12 col-md-6 midi-l-grey logo-font text-center">
@@ -154,7 +148,7 @@
                             <p class="d-inline fs-5 ps-2 basic-font p-2">
                                 Download:
                                 <audio controls class="download-button">
-                                    <source src="{{ song_obj.song.audio_file.url }}" type="audio/mpeg" alt="{{ song_obj.song.name }} audio">
+                                    <source src="{{ song_obj.song.audio_file.url }}" type="audio/mpeg">
                                     Your browser does not support the audio element.
                                 </audio>
                             </p>

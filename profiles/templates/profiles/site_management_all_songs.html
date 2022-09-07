@@ -82,13 +82,10 @@
 {% endblock %}
 
 
-<!-- PUT IN EXTERNAL JS FILE -->
 {% block postload_js %}
     {{ block.super }}
 
     <script type="text/javascript">
-    
-        // ------- custom selectors based on logic from CI walkthrough - CREDIT
 
         // ------- GLOBAL VARS
 
@@ -142,7 +139,7 @@
                 currentUrl.searchParams.delete("songtype");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -169,7 +166,7 @@
                 currentUrl.searchParams.delete("songuser");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -196,7 +193,7 @@
                 currentUrl.searchParams.delete("donestatus");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -223,7 +220,7 @@
                 currentUrl.searchParams.delete("publicstatus");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -251,7 +248,7 @@
                 currentUrl.searchParams.delete("testimonialstatus");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -266,9 +263,9 @@
         function resetAllSongsFilters(){
 
             var currentUrl = new URL(window.location.href);
-            var withoutFiltersUrl = String(currentUrl).split('?')[0]
+            var withoutFiltersUrl = String(currentUrl).split('?')[0];
             window.location.replace(withoutFiltersUrl);
 
-        };
+        }
     </script>
 {% endblock %}

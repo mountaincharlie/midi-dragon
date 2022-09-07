@@ -4,9 +4,8 @@
 {% block extra_title %} - All Orders{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">
@@ -20,10 +19,10 @@
     <div class="row d-flex d-md-none">
         <div class="col-1 d-inline mobiledropdowncontainer text-center fs-1 p-0">
             <!-- burger icon is the dropdown-toggle -->
-            <!-- unordered list is in the dropdown-menu -->
-            <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="sitemanagementdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle text-center midi-l-grey pink-hover" role="button" id="sitemanagementdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-bars"></i>
             </div>
+            <!-- unordered list is in the dropdown-menu -->
             <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="sitemanagementdropdownbtn">
                 <li class="dropdown-item midi-l-grey pink-hover">
                     <a class="midi-l-grey" role="button" href="{% url 'all_songs' %}">All Songs</a>
@@ -41,7 +40,6 @@
         </div>
     </div>
 
-    <!-- desktop view: row holding the management content -->
     <div class="row d-flex ">
         <!-- menu -->
         <div class="management-options d-none d-md-block col-12 col-md-3 text-center text-md-start">
@@ -67,11 +65,11 @@
                 </div>
             </div>
         </div>
-        <!-- rendering html snippets -->
+
         <div class="col-12 col-md-9">
             <div class="row">
                 <div class="col-12">
-                    <!-- snippet here -->
+                    <!-- html snippet here -->
                     {% include 'includes/admin-all-orders-list.html' %}
                 </div>
             </div>
@@ -82,13 +80,10 @@
 {% endblock %}
 
 
-<!-- PUT IN EXTERNAL JS FILE -->
 {% block postload_js %}
     {{ block.super }}
 
     <script type="text/javascript">
-    
-        // ------- custom selectors based on logic from CI walkthrough - CREDIT
 
         // ------- GLOBAL VARS
 
@@ -133,7 +128,7 @@
                 currentUrl.searchParams.delete("orderuser");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -160,7 +155,7 @@
                 currentUrl.searchParams.delete("dateorder");
                 window.location.replace(currentUrl);
             }
-        };
+        }
 
 
         /**
@@ -175,9 +170,9 @@
         function resetAllSongsFilters(){
 
             var currentUrl = new URL(window.location.href);
-            var withoutFiltersUrl = String(currentUrl).split('?')[0]
+            var withoutFiltersUrl = String(currentUrl).split('?')[0];
             window.location.replace(withoutFiltersUrl);
 
-        };
+        }
     </script>
 {% endblock %}

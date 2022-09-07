@@ -4,9 +4,8 @@
 {% block extra_title %} - My Details{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">
@@ -20,13 +19,12 @@
 
     <!-- mobile menu -->
     <div class="row d-flex d-md-none">
-        <!-- MAKE THIS AN INCLUDES SINCE THE DROPDOWN USES AN ID AND THE WHOLE THING IS THE SAME ON ALL SCREENS -->
         <div class="col-1 d-inline mobiledropdowncontainer text-center fs-1 p-0">
             <!-- burger icon is the dropdown-toggle -->
-            <!-- unordered list is in the dropdown-menu -->
-            <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="dashboarddropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle text-center midi-l-grey pink-hover" role="button" id="dashboarddropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-bars"></i>
             </div>
+            <!-- unordered list is in the dropdown-menu -->
             <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="dashboarddropdownbtn">
                 <li class="dropdown-item midi-l-grey pink-hover">
                     <a class="midi-l-grey" role="button" href="{% url 'my_details' %}">My Details</a>
@@ -91,11 +89,10 @@
                 </div>
             </div>
         </div>
-        <!-- rendering html snippets -->
         <div class="col-12 col-md-9">
             <div class="row">
                 <div class="col-12">
-                    <!-- snippet here -->
+                    <!-- rendering html snippets -->
                     {% include 'includes/my-details-form.html' %}
                 </div>
             </div>
