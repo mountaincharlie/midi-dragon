@@ -12,7 +12,7 @@
  * 
  * 'change' event listener and form 'submit' event listener logic adapted to fit this project, from Code Institute's walkthrough:
  * [https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/static/checkout/js/stripe_elements.js]
- */
+*/
 
 
 // ------ GLOBAL VARS
@@ -78,11 +78,11 @@ card.addEventListener('change', function(ev) {
                 <i class="fa-solid fa-circle-xmark"></i>
             </span>
             <span>${ev.error.message}</span>
-        `
+        `;
         errorDiv.innerHTML = error_msg_html;
     } else {
         errorDiv.innerText = '';
-    };
+    }
 });
 
 
@@ -166,7 +166,7 @@ form.addEventListener('submit', function(ev) {
                             <i class="fa-solid fa-circle-xmark"></i>
                         </span>
                         <span>${result.error.message}</span>
-                    `
+                    `;
                     errorDiv.innerHTML = error_msg_html;
 
                 $('#payment-form').fadeToggle(100);
@@ -180,14 +180,12 @@ form.addEventListener('submit', function(ev) {
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     form.submit();
-                    console.log('PAYMENT SUCCESS - form submitted')
-                };
-            };
+                }
+            }
         });
     }).fail(function() {
         clearInterval(highlightInterval);
         window.location = document.URL;
-        console.log('PAYMENT FAILED')
     });
 });
 
@@ -218,16 +216,13 @@ function highlightCircle(){
     if (circleOne.classList.contains('circle-highlight')){
         circleOne.classList.remove('circle-highlight');
         circleTwo.classList.add('circle-highlight');
-        console.log('one to two')
     } else if (circleTwo.classList.contains('circle-highlight')){
         circleTwo.classList.remove('circle-highlight');
         circleThree.classList.add('circle-highlight');
-        console.log('two to three')
     } else if (circleThree.classList.contains('circle-highlight')){
         circleThree.classList.remove('circle-highlight');
         circleOne.classList.add('circle-highlight');
-        console.log('three to one')
     } else {
         clearInterval(highlightInterval);
-    };
-};
+    }
+}

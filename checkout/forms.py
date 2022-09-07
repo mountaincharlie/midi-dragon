@@ -12,6 +12,7 @@ class OrderForm(forms.ModelForm):
     """
 
     class Meta:
+        """ meta form data for OrderForm """
         model = Order
         fields = (
             'full_name',

@@ -1,3 +1,4 @@
+""" contains the update_on_save() and update_on_delete() signals """
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .models import OrderSong
@@ -6,7 +7,7 @@ from .models import OrderSong
 @receiver(post_save, sender=OrderSong)
 def update_on_save(sender, instance, created, **kwargs):
     """
-    Handles functions from the OrderSong models post_save event 
+    Handles functions from the OrderSong models post_save event
     sender => OrderSong
     instance => the instance of the OrderSong that sent it
     created = > django boolean for if this is a new instance or being updated
@@ -24,7 +25,7 @@ def update_on_save(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=OrderSong)
 def update_on_delete(sender, instance, **kwargs):
     """
-    Handles functions from the OrderSong models post_delete event 
+    Handles functions from the OrderSong models post_delete event
     sender => OrderSong
     instance => the instance of the OrderSong that sent it
     Reciver decorator to pass info about whats happening here

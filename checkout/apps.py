@@ -1,3 +1,4 @@
+""" apps.py for the checkout app """
 from django.apps import AppConfig
 
 
@@ -6,4 +7,5 @@ class CheckoutConfig(AppConfig):
     name = 'checkout'
 
     def ready(self):
+        """ overrides the ready method """
         import checkout.signals

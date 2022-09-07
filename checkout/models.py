@@ -1,5 +1,4 @@
 """
-
 CREDITS
 Order model is based on and adapted from Code Institute's walkthrough
 [https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/models.py]
@@ -7,8 +6,6 @@ Order model is based on and adapted from Code Institute's walkthrough
 
 import uuid
 from django.contrib.auth.models import User
-# from django.db.models.signals import post_save, post_delete
-# from django.dispatch import receiver
 from django.db import models
 from songs.models import Song
 
@@ -20,7 +17,7 @@ class Order(models.Model):
     Contains the fields:
     order_number - non-editable 32 digit string generated using
     python's uuid
-    user_profile - TO BE ADDED ON CREATION OF THE PROFILE APP 
+    user_profile - TO BE ADDED ON CREATION OF THE PROFILE APP
     (if the UserProfile instance is deleted, this field will be
     set to Null, so that the order wont be lost)
     full_name - will be an editable input on the checkout page
@@ -36,7 +33,6 @@ class Order(models.Model):
 
     order_number = models.CharField(max_length=32, null=False, editable=False)
 
-    # related_name => could call user.user_profile.my_orders
     user_profile = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -88,11 +84,6 @@ class Order(models.Model):
         post_delete (as a negative number) signals
         Uses the 'orderitems' related_name
         """
-
-        print('ORDER TOTAL:', self.order_total)
-        print('ORDER TOTAL TYPE:', type(self.order_total))
-        print('SONG PRICE:', song_price)
-        print('SONG PRICE TYPE:', type(song_price))
         self.order_total += song_price
         self.save()  # saves the instance
 
@@ -122,7 +113,7 @@ class OrderSong(models.Model):
     the associated OrderSong songs are set to null so that these records
     aren't missing on the order since the order will still exist)
     """
-    # contains the order date
+
     order = models.ForeignKey(
         Order,
         null=False,
@@ -130,7 +121,7 @@ class OrderSong(models.Model):
         on_delete=models.CASCADE,
         related_name='ordersongs'
     )
-    # contains the song price for the order total calc
+
     song = models.ForeignKey(
         Song,
         null=True,

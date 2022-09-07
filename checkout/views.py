@@ -1,14 +1,11 @@
 """
 View functions and classes to handle the checkout app functionality
 
-CREDITS
-Views based on the logic from the CI walkthrough view functions and adapted
-for this project
-[https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/checkout/views.py]
-
-Creating the PaymentIntent using auto payment menthods in python from the
+CREDITS - in README
+-Views based on the logic from the CI walkthrough view functions and adapted
+for this project.
+-Creating the PaymentIntent using auto payment menthods in python from the
 Stripe docs
-[https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=elements]
 """
 import json
 import stripe
@@ -47,7 +44,7 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, f'Sorry, your payment could not be processed \n at this time please try again later. \n If the issue persists, please contact midiDRAGON')
+        messages.error(request, 'Sorry, your payment could not be processed \n at this time please try again later. \n If the issue persists, please contact midiDRAGON')
         return HttpResponse(content=e, status=400)
 
 
@@ -67,6 +64,8 @@ class CheckoutView(View):
 
     def get(self, request, *args, **kwargs):
         """
+        -First checks if the user is trying to manually view the checkout
+        and redirects them to their All Songs page if so.
         -Gets the tracklist list from the session
         -Includes a check in case the user tries to manually access the
         checkout through the url when they dont have anything in their
@@ -85,9 +84,8 @@ class CheckoutView(View):
         otherwise just an empty instance of OrderForm is sent to the template
         """
 
-        # stopping the superuser being able to access the checkout since they shouldnt be able to buy their own songs
         if request.user.is_superuser:
-            messages.info(request, "Redirecting Admin to Site Management page.")
+            messages.info(request, "Admin redirected to Site Management page.")
             return redirect(reverse('all_songs'))
 
         tracklist = request.session.get('tracklist', [])
@@ -106,12 +104,9 @@ class CheckoutView(View):
             currency=settings.STRIPE_CURRENCY,
         )
 
-        # FINISH ONCE PROFILES APP CREATED
         # checking if the user is authenticated and prepoping their data if
         if request.user.is_authenticated:
-            # order_form = OrderForm()
             try:
-                # profile = User.objects.get(id=request.user.id)
                 profile = User.objects.get(id=self.request.user.id)
                 order_form = OrderForm(initial={
                     'full_name': profile.get_full_name(),
@@ -137,15 +132,15 @@ class CheckoutView(View):
         -Creates a dictionary of form data as teh instance of the form since
         its submission is handled in stripe_elmenets.js
         -Sets order_form = the OrderForm instance
-        -If the form is valid, the order is saved but not committed, the 
-        payment intent id (pid) is taken from the first part of the 
+        -If the form is valid, the order is saved but not committed, the
+        payment intent id (pid) is taken from the first part of the
         'client_secret'
         -Sets the order's paymentIntent id (pid) and original_tracklist with
         a json dump of the tracklist from the session
         -Saves the order
         -Iterates through the song objects in the tracklist list to create
-        each OrderSong instance, using a Try/Except block to check that the song
-        exists
+        each OrderSong instance, using a Try/Except block to check that the
+        song exists
         -If it doesn't exist anymore, a message is displayed to the user, the
         order is deleted and the user is redirected to their Tracklist
         -If it deos exist, then after creating and saving it, the user is
@@ -169,7 +164,7 @@ class CheckoutView(View):
             order.stripe_pid = pid
             order.original_tracklist = json.dumps(tracklist)
             order.save()
- 
+
             for song in tracklist:
                 try:
                     existing_song = Song.objects.get(slug=song)
@@ -217,17 +212,19 @@ class OrderConfirmation(View):
         -Gets the order's associated songs
         -If the user is logged in then it adds their profile to the order
         instance
-        -Displays a success message to the user with the order number and the 
+        -Displays a success message to the user with the order number and the
         email that the confirmation will be sent to
         -Clears the tracklist from the session
         -Passes the order instance through the context
         -return renders the order_confirmation page
         """
-        order = get_object_or_404(Order, order_number=self.kwargs['order_number'])
+        order = get_object_or_404(
+            Order,
+            order_number=self.kwargs['order_number']
+        )
 
         songs = OrderSong.objects.filter(order=order)
 
-        # checking if the user is authenticated before connecting them to the order instance via user_profile
         if request.user.is_authenticated:
             profile = User.objects.get(id=request.user.id)
             order.user_profile = profile
@@ -235,7 +232,6 @@ class OrderConfirmation(View):
 
         messages.success(request, f'Your order was successful placed! \n Order number: {order.order_number}. \n A confirmation email will be sent to {order.email}')
 
-        # clearing the session tracklist
         if 'tracklist' in request.session:
             del request.session['tracklist']
 

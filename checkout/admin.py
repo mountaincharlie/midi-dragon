@@ -1,3 +1,4 @@
+""" admin.py file for the chekout app """
 from django.contrib import admin
 from .models import Order, OrderSong
 
@@ -10,6 +11,9 @@ class OrderSongInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     """
+    OrderAdmin is for the admin functions
+    relating to the Order model, and inherits
+    admin.ModelAdmin
     """
 
     readonly_fields = (
