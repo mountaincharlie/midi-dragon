@@ -1,3 +1,4 @@
+""" apps.py for songs app """
 from django.apps import AppConfig
 
 

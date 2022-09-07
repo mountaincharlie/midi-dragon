@@ -4,9 +4,8 @@
 {% block extra_title %} - Testimonials{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">TESTIMONIALS</h1>
@@ -15,7 +14,6 @@
     </div>
 
     <!-- bootstrap carousel showing all testimonials -->
-
     <div class="row midi-l-grey">
         <div class="col-12 text-center p-0 px-md-4">
             <!-- carousel -->
@@ -108,7 +106,7 @@
 
         {% for song in songs %}
             <!-- song list rows on mobile -->
-            <div class="row d-md-none hover-highlight-row midi-l-grey logo-font align-items-center mb-2">
+            <div class="row d-md-none hover-highlight-row midi-l-grey logo-font align-items-center mb-2 text-center">
                 <!-- adapt existing mobile list layout -->
                 {% include 'includes/mobile-testimonial-list.html' %}
             </div>
@@ -139,6 +137,5 @@
                 </div>
             </div>
     {% endif %}
-    
 </div>
 {% endblock %}

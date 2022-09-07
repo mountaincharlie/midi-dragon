@@ -1,8 +1,6 @@
 // jshint esversion: 6
 
 // JS for handling the instruments formsets, number of review sessions and the on-screen price calculation
- 
-// credit for techniques you used in your P4 project?
 
 // ---- GLOBAL VARS
 
@@ -56,7 +54,7 @@ let useAsTestimonialCheckbox = useAsTestimonialCheckboxContainer.childNodes[1];
 let instrumentFormsetContainer = document.getElementById('instrument-formsets-container');
 
 // gets the empty formset new-instrument-form
-let newEmptyInstrumentForm = document.getElementById('new-instrument-form')
+let newEmptyInstrumentForm = document.getElementById('new-instrument-form');
 
 // gets the included-instruments-container
 let includedInstrumentsContainer = document.getElementById('included-instruments-container');
@@ -70,23 +68,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // calling the projectTypeChosen function if the dropdown value is already not the reset value (e.g. if in Edit mode)
     if (projectTypeDropdown.value != ''){
-        // calls projectTypeChosen function - IF it resets insrtuments => FIX
+        // calls projectTypeChosen function
         projectTypeChosen(projectTypeDropdown);
-        console.log(projectTypeDropdown)
-        // console.log(projectTypeDropdown.options.selectedIndex)
-
-
-        // let existingProjectType = projectTypeDropdown[projectTypeDropdown.options.selectedIndex];
-        // let newProjectType = projectTypeDropdown[parseInt(projectTypeDropdown.options.selectedIndex)+1];
-
-        // existingProjectType.removeAttribute('selected');
-        // newProjectType.setAttribute('selected', 'true');
-        // newProjectType.removeAttribute('selected');
-        // existingProjectType.setAttribute('selected', 'true');
-    
-        // console.log(projectTypeDropdown[projectTypeDropdown.options.selectedIndex].setAttribute('selected', 'true'))
-    };
-
+    }
 
     // adding event listener to + review session button
     addReviewSessionButton.addEventListener('click', addReviewSession);
@@ -96,21 +80,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // click event listener on the Add instrument buttons
     addInstrumentButtonContainer.childNodes[1].addEventListener('click', addInstrument);
-
-    // change event listener on the instrument dropdown
-    // when any value is chosen => checks the hidden formset management [a formset management update function used by both the dropdown and the delete button] and compares all of the displayed dropdown values with the existing formsets, for each displayed instrument, if there isnt a formset for it, it creates one, if there is then it updates the quantity and if there is a formset existing for an instrument that isnt displayed anymore then it deletes that formset
-
-
-    // click event listener on the Delete instrument buttons
-    // (only available on additional instruments)
-    // when clicked => removes its assocaited instrument dropdown (and the delete button itself) and then checks the hidden formset management [a formset management update function used by both the dropdown and the delete button] and compares all of the displayed dropdown values with the existing formsets, for each displayed instrument, if there isnt a formset for it, it creates one, if there is then it updates the quantity and if there is a formset existing for an instrument that isnt displayed anymore then it deletes that formset
             
     // event listener on use-as-testimonial checkbox
-    useAsTestimonialCheckbox.addEventListener('change', toggleTestimonialTextContainer)
+    useAsTestimonialCheckbox.addEventListener('change', toggleTestimonialTextContainer);
 
     // change event listener on bpm input to change value if its outside the allowed range => prevents the validation breaking the form
-    let bpmInput = document.getElementById('id_bpm')
-    bpmInput.addEventListener('change', validateBpmInput)
+    let bpmInput = document.getElementById('id_bpm');
+    bpmInput.addEventListener('change', validateBpmInput);
 
     // style changes for the 'currently' image section (in 'edit_custom_song')
     if (document.getElementById('image-clear_id')){
@@ -126,62 +102,58 @@ document.addEventListener('DOMContentLoaded', function(){
 /**
  * @name projectTypeChosen
  * @description 
+ * Checks if the function is being triggered by the change event listener,
+ * if so, this means that its the event listener which is triggering the
+ * function call. At this point instrumentFormsetContainer's innerHTML can
+ * be cleared since the project type has changed due to user action
+ * (rather than being triggered by the edit form in order to set up the
+ * prepopulated form).
+ * Else, projectTypeChosen() has been triggered by the edit form already
+ * having a Project Type selected.
+ * Gets the index of the selected project type.
+ * Gets all the elements which need d-none adding/removing from their
+ * classList
 */
-// if set to nothing/empty => add d-none class to all the buttons and selects and remove d-none class from the 2 notes about needing to choose a project_type. Also resets the displayed price and all of the background formsets [just reload page? - TRY]
-// if #id_project_type innerText == 'Mini'/'Regular'/'Pro' => un-hide the note about changing the project_type will reset the instrument/reviews/price sections, and apply d-none class to the 2 notes about choosing projeect_type, display min_num_reviews and the +/- buttons with the minus button DISABLED, remove d-none from the included/additional instruments subheadings and hr, insert into #included-instruments-container the min_num_instruments amount of instrument dropdowns and remove the d-none from the Add Instrument button in the additional instruments section. Also sets the displayed price as the min_price (from the project_type)
 function projectTypeChosen(ev){
-    // checking if the function is being triggered by the change event listener
     if (ev.type == 'change'){
         ev.preventDefault();
-        srcElement = ev.srcElement;
-        console.log('from event listener')
-        // clearing instrumentFormsetContainer's innerHTML since the project type has changed (but not in edit mode)
+        var srcElement = ev.srcElement;
         instrumentFormsetContainer.innerHTML = '';
     } else {
-        // TRIGGER THIS PRE-POP FUNCTION - PASSING srcElement in?
-        srcElement = ev;
-        console.log('ev', ev)
-        console.log('type already chosen (edit mode)')
-    };
+        var srcElement = ev;
+    }
 
-    // getting the index of the selected project type
-    
     let selectedProjectTypeIndex = srcElement.options.selectedIndex;
-    console.log('selectedProjectTypeIndex', selectedProjectTypeIndex)
     let selectedProjectTypeText = srcElement[selectedProjectTypeIndex].innerText;
-    // let selectedProjectTypeIndex = ev.srcElement.options.selectedIndex;
-    // let selectedProjectTypeText = ev.srcElement[selectedProjectTypeIndex].innerText;
 
-    // -------- getting all the elements which need d-none adding/removing
-
-    // gets all of the select-a-project-msg notes
+    // select-a-project-msg notes
     let selectAProjectMessages = document.getElementsByClassName('select-a-project-msg');
             
-    // gets the changing-project-type-msg note
+    // changing-project-type-msg note
     let changingProjectTypeMsg = document.getElementById('changing-project-type-msg');
 
-    // gets the price-calculation-note note
+    // price-calculation-note note
     let priceCalulationNote = document.getElementById('price-calculation-note');
             
-    // gets the included-instruments-subheading heading
+    // included-instruments-subheading heading
     let includedInstrumentsSubheading = document.getElementById('included-instruments-subheading');
 
-    // gets the additional-instruments-subheading heading
+    // additional-instruments-subheading heading
     let additionalInstrumentsSubheading = document.getElementById('additional-instruments-subheading');
 
-    // gets the visible-instruments-dropdown hr
+    // visible-instruments-dropdown hr
     let visibleInstrumentsDropdownHr = document.getElementById('visible-instruments-dropdown').getElementsByClassName('hr-90-light')[0];
 
-    // gets the review-sessions-buttons
+    // review-sessions-buttons
     let reviewSessionsButtons = document.getElementById('review-sessions-buttons');
 
-    // gets project-type-duration-range-container
+    // project-type-duration-range-container
     let projectTypeDurationRangeContainer = document.getElementById('project-type-duration-range-container');
 
-    // gets the project-type-duration-range-note
+    // project-type-duration-range-note
     let projectTypeDurationRangeNote = document.getElementById('project-type-duration-range-note');
 
-    // resetting totalForms value
+    // resets totalForms value
     totalSelectedInstruments.value = 0;
 
 
@@ -214,7 +186,7 @@ function projectTypeChosen(ev){
 
         // setting blank num of reviews for displayed and the input
         numOfReviewsContainer.innerText = '';
-        numOfReviewsInput.setAttribute('value', 'N/A')
+        numOfReviewsInput.setAttribute('value', 'N/A');
 
         // ------ inserting price
         displayPriceContainer.innerText = '...';
@@ -274,39 +246,32 @@ function projectTypeChosen(ev){
         
             // gets num-of-existing-reviews-container innerText
             let existingNumReviewSessions = document.getElementById('num-of-existing-reviews-container').innerText;
-            console.log('existingNumReviewSessions', parseInt(existingNumReviewSessions))
 
             // sets the existing review sessions value
             numOfReviewsContainer.innerText = projectMinNumOfReviews;
             numOfReviewsInput.setAttribute('value', parseInt(projectMinNumOfReviews));
 
             if(parseInt(existingNumReviewSessions) > parseInt(projectMinNumOfReviews)){
-                // console.log('--------MORE EXISTING REVIEWS')
-                let numAdditionalReviews = parseInt(existingNumReviewSessions) - parseInt(projectMinNumOfReviews)
+                let numAdditionalReviews = parseInt(existingNumReviewSessions) - parseInt(projectMinNumOfReviews);
 
                 for(let i = 0; i < numAdditionalReviews; i++){
-                    // console.log('--------CALLING addReviewSession')
-                    // calls addReviewSession()
                     addReviewSession();
-                };
-            };
+                }
+            }
 
         } else {
             numOfReviewsContainer.innerText = projectMinNumOfReviews;
             numOfReviewsInput.setAttribute('value', parseInt(projectMinNumOfReviews));
-        };
+        }
 
-        
         // calling the check buttons function
         checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions);
     
-                
         // ------ clearing the included instruments container
         includedInstrumentsContainer.innerHTML = '';
 
         // gets the number of included instruments
         let projectNumOfInstruments = document.getElementById(`num-included-instruments-${selectedProjectTypeText}`).innerText;
-        // console.log('projectNumOfInstruments', projectNumOfInstruments);
 
         // ------ inserting copies of the instrument dropdowns into the included instrumnets container
         for (var i = 0; i < projectNumOfInstruments; i++){
@@ -331,24 +296,20 @@ function projectTypeChosen(ev){
             instrument.addEventListener('change', updateInstrumentFormsets);
         }
 
-    };
+    }
 
     // for edit mode => populating the instruments-select elements
     if (ev.type != 'change'){
-        console.log('pre-popping for existing instruments')
-        console.log('instrumentsSelects',instrumentsSelects[1])
         // NEED TO manually pre-pop the displayed inputs
         // gets the hidden existing-instrument
-        let existingInstruments = document.getElementsByClassName('existing-instrument')
+        let existingInstruments = document.getElementsByClassName('existing-instrument');
 
         // setting up totalNumPrepopSelects var and instrumentNames list
         let totalNumPrepopSelects = 0;
         let instrumentNames = [];
         for (let i = 0; i < existingInstruments.length; i++){
-            let instrumentQuantity = existingInstruments[i].innerText.split('-')[0]
-            let instrumentName = existingInstruments[i].innerText.split('-')[1]
-            console.log('existingInstrument quantity:', instrumentQuantity)
-            console.log('existingInstrument name:', instrumentName)
+            let instrumentQuantity = existingInstruments[i].innerText.split('-')[0];
+            let instrumentName = existingInstruments[i].innerText.split('-')[1];
 
             totalNumPrepopSelects = parseInt(totalNumPrepopSelects) + parseInt(instrumentQuantity);
             for (let i = 0; i < instrumentQuantity; i++){
@@ -356,19 +317,12 @@ function projectTypeChosen(ev){
             }
             
         }
-        console.log('totalNumPrepopSelects:', totalNumPrepopSelects)
-        console.log('instrumentNames:', instrumentNames)
-        
-        // uses the instrumentsSelects var  we just want the first totalNumPrepopSelects
-        // console.log('instrumentsSelects:', instrumentsSelects)
 
         // gets the number of instruments included in the project type 
         let projectNumOfInstruments = document.getElementById(`num-included-instruments-${selectedProjectTypeText}`).innerText;
 
         // checking how many additional selects are required 
         let numAdditionalSelects = parseInt(totalNumPrepopSelects) - parseInt(projectNumOfInstruments);
-        console.log('numAdditionalSelects:', numAdditionalSelects)
-
 
         // included selects are the number of projectNumOfInstruments if additional are required
         if (numAdditionalSelects > 0){
@@ -377,7 +331,7 @@ function projectTypeChosen(ev){
             for(let i = 0; i < numAdditionalSelects; i++){
                 // calls addInstrument()
                 addInstrument();
-            };
+            }
 
             // calling prepopulateExistingInstrumentSelects() for all the visible selects
             prepopulateExistingInstrumentSelects(instrumentNames, instrumentsSelects.length);
@@ -395,37 +349,34 @@ function projectTypeChosen(ev){
         }
 
         // gets id_song_instruments-INITIAL_FORMS to set the vaule to 0
-        let numSongInstrumentsInitialForms = document.getElementById('id_song_instruments-INITIAL_FORMS')
-        numSongInstrumentsInitialForms.setAttribute('value', 0)
+        let numSongInstrumentsInitialForms = document.getElementById('id_song_instruments-INITIAL_FORMS');
+        numSongInstrumentsInitialForms.setAttribute('value', 0);
 
         // calling the updateInstrumentFormsets function
-        updateInstrumentFormsets()
-    };
-};
+        updateInstrumentFormsets();
+    }
+}
 
 
-// prepopulateExistingInstrumentSelects
 /**
  * @name prepopulateExistingInstrumentSelects
  * @description 
+ * Goes through the selects and sets the instrument from instrumentNames as the
+ * selected option and then pops that value from the list (needs to de-select
+ * all other options)
+ * Removes first instrumentNames list item and stores in instrument.
+ * Loops through all options and selects the right one
 */
 function prepopulateExistingInstrumentSelects(instrumentNames, counter){
 
     for (let i = 0; i < counter; i++){
-        // goes through the selects and sets the instrument from instrumentNames as the selected option and then pops that value from the list (needs to de-select all other options)
-
-        // removes first instrumentNames list item and stores in instrument
         let instrument = instrumentNames.shift();
-        console.log(instrument)
 
         let currentSelect = instrumentsSelects[i];
 
-        // loops through all options and selects the right one
         for (let i = 0; i < currentSelect.length; i++){
             let optionValue = currentSelect[i].getAttribute('value');
-            // console.log('optionValue', optionValue)
             currentSelect[i].removeAttribute('selected');
-
             if (optionValue == instrument){
                 currentSelect[i].setAttribute('selected', true);
             }
@@ -434,22 +385,26 @@ function prepopulateExistingInstrumentSelects(instrumentNames, counter){
 }
 
 
-// updateInstrumentFormsets
 /**
  * @name updateInstrumentFormsets
  * @description 
+ * Clears instrumentFormsetContainer's innerHTML
+ * Creates empty array to append all valid instrument selections
+ * Adds all selected instruments to currentInstrumentSelection
+ * Creates the currentInstrumentSelectionDict{} where the keys
+ * are the instruments and the values are their quantities.
+ * As the instruments are loopeed through, if they exist in the
+ * dict then their value is increased by 1, else they're created
+ * with a default value of 1.
 */
 function updateInstrumentFormsets(ev){
     if (ev){
         ev.preventDefault();
     }
-    // clearing instrumentFormsetContainer's innerHTML
     instrumentFormsetContainer.innerHTML = '';
 
-    // creates empty array to append all valid instrument selections
     let currentInstrumentSelection = [];
 
-    // adds all selected instruments to currentInstrumentSelection
     for(let selectElement of instrumentsSelects){
         let selectValue = selectElement[selectElement.options.selectedIndex].value;
         if (selectValue != 'reset'){
@@ -459,21 +414,16 @@ function updateInstrumentFormsets(ev){
 
     let numUniqueInstrumentSelection = new Set(currentInstrumentSelection).size;
 
-    // create dictionary
     let currentInstrumentSelectionDict = {};
     for (let instrument of currentInstrumentSelection){
 
         if (instrument in currentInstrumentSelectionDict){
-            // adds 1 to the value
             currentInstrumentSelectionDict[instrument] = currentInstrumentSelectionDict[instrument] + 1;
         } else {
-            // creates the key with value = 1
             currentInstrumentSelectionDict[instrument] = 1;
         }
     }
     console.log('INSTRUMENT DICT', currentInstrumentSelectionDict);
-
-    // ---- create formsets for all unique and update quantity for duplicates [CREDIT - based on some logic i implemented in my P4 project]
 
     // resetting the counter for the instrument ids
     let instrumentId = 0;
@@ -485,7 +435,6 @@ function updateInstrumentFormsets(ev){
                 
         // gets a clone of the hidden new-instrument-form
         const clonedNewEmptyInstrumentForm = newEmptyInstrumentForm.cloneNode(true);
-            // let newEmptyInstrumentForm = document.getElementById('new-instrument-form').cloneNode(true);
             // applies its id
             clonedNewEmptyInstrumentForm.setAttribute('id', instrumentFormsetId);
             // appends it to the instrumentFormsetContainer as a child
@@ -498,7 +447,7 @@ function updateInstrumentFormsets(ev){
             let newEmptyInstrumentFormSelect = document.getElementById(`id_song_instruments-${instrumentId}-instrument`);
                     
             // loops through all options and selects the right one
-            for (i = 0; i < newEmptyInstrumentFormSelect.length; i++){
+            for (let i = 0; i < newEmptyInstrumentFormSelect.length; i++){
                 let optionInnerText = newEmptyInstrumentFormSelect[i].innerText;
                 newEmptyInstrumentFormSelect[i].removeAttribute('selected');
 
@@ -506,8 +455,6 @@ function updateInstrumentFormsets(ev){
                     newEmptyInstrumentFormSelect[i].setAttribute('selected', true);
                 }
             }
-            // checking the correct option is now selected
-            // console.log(newEmptyInstrumentFormSelect.options[newEmptyInstrumentFormSelect.selectedIndex]);
 
             // getting the quantity input
             let existingInstrumentFormQuantityInput = document.getElementById(`id_song_instruments-${instrumentId}-quantity`);
@@ -517,122 +464,123 @@ function updateInstrumentFormsets(ev){
                     
                 
         // adds 1 to counter for setting the instruments id number
-        instrumentId = parseInt(instrumentId) + 1
+        instrumentId = parseInt(instrumentId) + 1;
     }
     // update value of totalSelectedInstruments by getting the number of unique values
     totalSelectedInstruments.setAttribute('value', numUniqueInstrumentSelection);
-    // checking total forms value is updated
-    // console.log('totalSelectedInstruments', totalSelectedInstruments);
-};
-
+}
 
 
 /**
  * @name addInstrument
  * @description 
+ * Creates cloneNode of the additional-instruments-select-container.
+ * Appends it as a child
+ * Gets all of the delete-instrument-select-button buttons and applies
+ * a click event listner to them all.
+ * Applies the change event listener to all the instrumentsSelects.
+ * Increases the displayed price.
 */
 function addInstrument(ev){
     if (ev){
         ev.preventDefault();
     }
-    // creates cloneNode of the additional-instruments-select-container
+
     let newInstrumentSelect = additionalInstrumentsSelectContainer.cloneNode(true);
 
-    // appends it as a child
     additionalInstrumentsContainer.insertBefore(newInstrumentSelect, addInstrumentButtonContainer);
 
-    // gets all of the delete-instrument-select-button buttons
     let deleteInstrumentsSelectButtons = document.getElementsByClassName('delete-instrument-select-button');
 
-    // applies a click event listner to them all
     for (let button of deleteInstrumentsSelectButtons){
         button.addEventListener('click', deleteAdditionalInstrument);
     }
 
-    // applies the change event listener to all the instrumentsSelects
     for (let instrument of instrumentsSelects){
         instrument.addEventListener('change', updateInstrumentFormsets);
     }
 
-    // increases the displayed price
     displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) + parseFloat(additionalInstrumentPrice)).toFixed(2)}`;
-};
+}
 
 
 /**
  * @name deleteAdditionalInstrument
  * @description 
+ * Removes its parent ('additional-instruments-select-container')
+ * Decreases the displayed price
+ * Calls function to update the formsets
 */
 function deleteAdditionalInstrument(ev){
     if (ev){
         ev.preventDefault();
     }
-    // removes its parent ('additional-instruments-select-container')
     ev.srcElement.parentElement.remove();
 
-    // decreases the displayed price
     displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) - parseFloat(additionalInstrumentPrice)).toFixed(2)}`;
 
-    // calls function to update the formsets
-    updateInstrumentFormsets()
-};
+    updateInstrumentFormsets();
+}
 
 
 /**
  * @name addReviewSession
- * @description 
+ * @description
+ * Increases the number of reviews (displayed and the input)
+ * Increases the displayed price
+ * Checks which project was chosen and gettings its num_review_sessions
+ * Calls the checkReviewSessionButtons function
 */
 function addReviewSession(ev){
     if (ev){
         ev.preventDefault();
     }
-    // increasing the number of reviews (displayed and the input)
     numOfReviewsContainer.innerText = parseInt(numOfReviewsContainer.innerText)+1;
     numOfReviewsInput.setAttribute('value', parseInt(numOfReviewsInput.value)+1);
 
-    // increases the displayed price
     displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) + parseFloat(additionalReviewSessionPrice)).toFixed(2)}`;
-
-    // checking which project was chosen and gettings its num_review_sessions
+    
     let selectedProjectTypeText = projectTypeDropdown[projectTypeDropdown.options.selectedIndex].innerText;
     let projectMinNumOfReviews = document.getElementById(`num-included-reviews-${selectedProjectTypeText}`).innerText;
 
-    // calling the checkReviewSessionButtons function
-    checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions)
-};
+    checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions);
+}
 
 
 /**
  * @name subtractReviewSession
  * @description 
+ * Decreases the number of reviews (displayed and the input)
+ * Decreases the displayed price
+ * Checks which project was chosen and gettings its num_review_sessions
+ * Calls the checkReviewSessionButtons function
 */
 function subtractReviewSession(ev){
     if (ev){
         ev.preventDefault();
     }
-    // increasing the number of reviews (displayed and the input)
     numOfReviewsContainer.innerText = parseInt(numOfReviewsContainer.innerText)-1;
     numOfReviewsInput.setAttribute('value', parseInt(numOfReviewsInput.value)-1);
 
-    // decreases the displayed price
     displayPriceContainer.innerText = `£ ${(parseFloat(displayPriceContainer.innerText.replace('£', '')) - parseFloat(additionalReviewSessionPrice)).toFixed(2)}`;
 
-    // checking which project was chosen and gettings its num_review_sessions
     let selectedProjectTypeText = projectTypeDropdown[projectTypeDropdown.options.selectedIndex].innerText;
     let projectMinNumOfReviews = document.getElementById(`num-included-reviews-${selectedProjectTypeText}`).innerText;
 
-    // calling the checkReviewSessionButtons function
-    checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions)
-};
+    checkReviewSessionButtons(numOfReviewsContainer.innerText, projectMinNumOfReviews, maxNumReviewSessions);
+}
 
 
 /**
  * @name checkReviewSessionButtons
  * @description 
+ * If the current number of review sessions is equal to the minimum then the -
+ * button is disabled, else its enabled
+ * If the current number of review sessions is equal to the maximum then the +
+ * button is disabled, else its enabled
 */
 function checkReviewSessionButtons(currentNumReviewSessions, projectMinNumOfReviews, maxNumReviewSessions){
 
-    // if the current number of review sessions is equal to the minimum then the - button is disabled, else its enabled
     if (numOfReviewsContainer.innerText == projectMinNumOfReviews){
         subtractReviewSessionButton.disabled = true;
         subtractReviewSessionButton.classList.remove('btn-midi-warning');
@@ -643,7 +591,6 @@ function checkReviewSessionButtons(currentNumReviewSessions, projectMinNumOfRevi
         subtractReviewSessionButton.classList.remove('btn-l-grey');
     }
 
-    // if the current number of review sessions is equal to the maximum then the + button is disabled, else its enabled
     if (numOfReviewsContainer.innerText == maxNumReviewSessions){
         addReviewSessionButton.disabled = true;
         addReviewSessionButton.classList.remove('btn-teal');
@@ -653,29 +600,27 @@ function checkReviewSessionButtons(currentNumReviewSessions, projectMinNumOfRevi
         addReviewSessionButton.classList.add('btn-teal');
         addReviewSessionButton.classList.remove('btn-l-grey');
     }
-};
+}
 
 
 /**
  * @name toggleTestimonialTextContainer
  * @description 
+ * Gets the testimonial-text-container
+ * Checks if the checkbox is checked
 */
 function toggleTestimonialTextContainer(ev){
     if (ev){
         ev.preventDefault();
     }
-
-    // getting the testimonial-text-container
     let testimonialTextContainer = document.getElementById('testimonial-text-container');
 
-    // checks if the checkbox is checked
     if(useAsTestimonialCheckbox.checked){
         testimonialTextContainer.classList.remove('d-none');
     } else {
         testimonialTextContainer.classList.add('d-none');
     }
-
-};
+}
 
 
 /**
@@ -687,33 +632,30 @@ function validateBpmInput(ev){
         ev.preventDefault();
     }
     
-    console.log('bpm input', ev.target.innerHTML)
+    console.log('bpm input', ev.target.innerHTML);
     
-};
+}
 
 
 /**
  * @name styleCurrentImageSection
  * @description 
+ * Gets the image clear checkbox.
+ * Adds start padding to the checkbox
+ * Changes the label innerText
+ * Adds midi-teal class to the anchor element
+ * Adds bottom margin to the label element
 */
 function styleCurrentImageSection(){
     
     let imageClearCheckbox = document.getElementById('image-clear_id');
 
-    // adding start padding to the checkbox
     imageClearCheckbox.classList.add('ms-2');
 
-    console.log('imageClearCheckbox NEXT SIBLING', imageClearCheckbox.nextElementSibling.innerText)
-    // changing the label innerText
     imageClearCheckbox.nextElementSibling.innerText = 'Remove image';
     imageClearCheckbox.nextElementSibling.classList.add('text-capitalize', 'fs-6', 'fw-normal');
 
-    console.log('imageClearCheckbox PREV SIBLING', imageClearCheckbox.previousElementSibling)
-
-    // adding midi-teal class to the anchor element
     imageClearCheckbox.previousElementSibling.classList.add('midi-teal');
-
-    // adding bottom margin to the label element
     imageClearCheckbox.nextElementSibling.classList.add('mb-2');
-};
+}
         

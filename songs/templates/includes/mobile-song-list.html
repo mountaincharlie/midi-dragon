@@ -29,7 +29,7 @@
         <div class="col-12 px-0">
             {% if song.audio_file %}
             <audio controls controlsList="nodownload" class="mobile-audio-ctrls">
-                <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
             {% else %}

@@ -1,11 +1,10 @@
-import os
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponseRedirect
+""" views.py for the songs app """
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.views import generic, View
 from django.db.models import Q
 from django.db.models.functions import Lower
 from django.conf import settings
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from checkout.models import Order, OrderSong
 from .models import Song, Genre, SongInstrument, Instrument, ProjectType
@@ -25,25 +24,20 @@ class SongsList(generic.ListView):
         the superuser's username and gets all the songs by them (all Pre-made
         songs).
         Gets all of the genres from the Genres model.
-        Sets any potentially unused variables as None by default to avoid 
+        Sets any potentially unused variables as None by default to avoid
         errors in the template.
-        // FINISH
         """
-        # only the admin can view all of the songs
         if request.user.is_superuser:
             songs = Song.objects.all()
-        # for regular users (logged in or not, can only browse public pre-made songs)
         else:
-            # pre-made songs are those where the admin is the user
+            # pre-made songs = admin is the user
             superuser_name = User.objects.get(is_superuser=True)
             premade_songs = Song.objects.filter(user=superuser_name)
             # filtering these songs by only public ones
             songs = premade_songs.filter(public=True)
 
-        # getting all of the genres
         genres = Genre.objects.all()
 
-        # resetting all vars
         query = None
         sort = None
         direction = None
@@ -52,6 +46,7 @@ class SongsList(generic.ListView):
 
         # ----------- credit- CI walkthrough for how to implement this
         # checking if sorting has been applied first
+        # https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/933797d5e14d6c3f072df31adf0ca6f938d02218/products/views.py
         if 'sort' in request.GET:
             sort_key = request.GET['sort']
             sort = sort_key
@@ -59,19 +54,16 @@ class SongsList(generic.ListView):
             if sort_key == 'name':
                 sort_key = 'lower_name'
                 songs = songs.annotate(lower_name=Lower('name'))
-            # if sort_key == 'genre':
-            #     # setting the songs to order by genre name if genre is the sorting criteria
-            #     sort_key = 'genre__name'
             if 'direction' in request.GET:
                 direction = request.GET['direction']
-                # check if its decending so you add a '-' before
                 if direction == 'desc':
                     sort_key = f'-{sort_key}'
 
             # ordering the songs
             songs = songs.order_by(sort_key)
 
-        # if query (name attribute on search form input) exists, we need to get its value
+        # if query (name attribute on search form input) exists
+        # we need to get its value
         if 'query' in request.GET:
             query = request.GET['query']
             # handling blank search with django message and redirect
@@ -97,27 +89,23 @@ class SongsList(generic.ListView):
         # checking if the genre filter has been applied
         if 'genre' in request.GET:
             selected_genre = request.GET['genre']
-            # print('select value?', selected_genre)
             genre = Genre.objects.get(name=selected_genre)
             selected_genre_display_name = genre.display_name
-            # print('selected genre:', genre.pk)
             songs = songs.filter(genre=genre.pk)
 
         all_users_bought_songs = []
         if self.request.user.is_authenticated:
             # gets all of the user's Orders
-            users_orders = Order.objects.filter(user_profile=self.request.user.id)
+            users_orders = Order.objects.filter(
+                user_profile=self.request.user.id
+            )
             # loops through all orders and appends all order songs to the list
             for order in users_orders:
                 order_songs = OrderSong.objects.filter(order=order)
-                print('order_songs', order_songs)
                 for song in order_songs:
                     the_songs = list(Song.objects.filter(id=song.song.id))
-                    print('the_songs', the_songs)
                     for song in the_songs:
                         all_users_bought_songs.append(song)
-                        print('all_users_bought_songs', all_users_bought_songs)
-
 
         context = {
             'songs': songs,
@@ -162,25 +150,22 @@ class SongDetailsView(View):
         if song.likes.filter(id=self.request.user.id).exists():
             like = True
 
-        # if the user is logged in, then it checks if they have already ordered a song
+        # if the user is logged in, then it checks if they have
+        # already ordered a song
         user_has_bought_song = False
         if self.request.user.is_authenticated:
             # getting all the OrderSong instance for the song
             all_songs_orders = OrderSong.objects.filter(song=song)
-            print('all of the songs order', all_songs_orders)
 
             # gets all of the user's Orders
-            users_orders = Order.objects.filter(user_profile=self.request.user.id)
-            print('all of the users_orders users_orders', list(users_orders))
+            users_orders = Order.objects.filter(
+                user_profile=self.request.user.id
+            )
 
             # loop through their orders
             for order in users_orders:
-                print('order:', order)
                 if all_songs_orders.filter(order=order).exists():
-                    print('theyve ordered the song before')
                     user_has_bought_song = True
-                else:
-                    print('theyve NOT bought the song')
 
         context = {
             'song': song,
@@ -220,96 +205,6 @@ class LikeSong(View):
             song.likes.add(request.user)
 
         return redirect(song.get_absolute_url())
-
-
-# class DownloadSong(View):
-#     """
-#     Class based view inheriting Django's View
-#     Contains the get method for downloading the audio_file
-#     for a particular song
-#     """
-#     def get(self, request, *args, **kwargs):
-#         """
-#         Gets the song by its slug.
-#         Creates the filename which is the string of its audio_file name.
-#         Sets the file path which is the filename in the media folder.
-#         Opens the file for reading in binary (rb).
-#         FINISH...
-#         """
-#         song = get_object_or_404(Song, slug=self.kwargs['slug'])
-#         filename = str(song.audio_file)
-#         if 'USE_AWS' in os.environ:
-#             # file_path = f'{settings.MEDIA_URL}'+filename
-#             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/'+filename
-#             import boto3
-
-#             client = boto3.client(
-#                 's3',
-#                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-#                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-#                 region_name=settings.AWS_S3_REGION_NAME
-#             )
-#             bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-#             file_name = settings.MEDIAFILES_LOCATION + '/' + filename
-
-#             url = client.generate_presigned_url(
-#                 'get_object',
-#                 Params={
-#                     'Bucket': bucket_name,
-#                     'Key': file_name, },
-#                 ExpiresIn=600, )
-
-#             return HttpResponseRedirect(url)
-#             #ABOVE WORKS BUT NOT IDEAL
-
-#             #
-#             # import boto3
-
-#             # session = boto3.Session(
-#             #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-#             #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-#             #     region_name=settings.AWS_S3_REGION_NAME
-#             # )
-
-#             # s3 = session.resource('s3')
-
-#             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
-
-#             # s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME).download_file(filename, file_path)
-
-#             # import boto3
-
-#             # BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
-#             # KEY = 'media/' + filename
-
-#             # s3 = boto3.resource('s3')
-
-#             # s3.Bucket(BUCKET_NAME).download_file(KEY, 'download.mp3')
-
-#             # import boto3
-
-#             # s3_client = boto3.client(
-#             #     's3',
-#             #     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-#             #     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-#             #     region_name=settings.AWS_S3_REGION_NAME
-#             # )
-
-#             # file_path = 'https://mididragon.s3.eu-west-2.amazonaws.com/media/' + filename
-
-#             # s3_client.download_file(settings.AWS_STORAGE_BUCKET_NAME, filename, file_path)
-
-#             return render(request, "home/index.html")
-
-#         else:
-#             file_path = 'media/'+filename
-#         mime_type = filename.split('.')[1]
-
-#         # logic for opening the file and allowing it to be downloaded from adapted from (CREDIT - https://djangoadventures.com/how-to-create-file-download-links-in-django/)
-#         read_file = open(file_path, 'rb')
-#         response = HttpResponse(read_file, content_type=mime_type)
-#         response['Content-Disposition'] = f"attachment; filename={filename}"
-#         return response
 
 
 class TestimonialsList(generic.ListView):
@@ -356,29 +251,29 @@ class DesignCustomSong(View):
     def get(self, request, *args, **kwargs):
         """
         get method for getting the forms to be displayed to the user.
-        -gets the
-        FINISH ...
-
+        if the super user tries to view this page it redirects them
+        to their Site Management page
+        -gets the DesignCustomSongForm and AddSongInstrumentFormSet
+        -gets all instruments for the dropdown selection displayed
+        to users
+        -gets all the project_types to handle user's selection in
+        the form
+        -gets the MAX_NUM_REVIEW_SESSIONS var from settings.py
+        -gets the ADDITIONAL_INSTRUMENT_PRICE var from settings.py
+        -gets the ADDITIONAL_REVIEW_SESSION_PRICE var from settings.py
         """
-        # if the super user tries to view this page it redirects them to their Site Management page
         if request.user.is_superuser:
-            messages.info(request, "Redirecting Admin to Site Management page.")
+            messages.info(request, "Redirecting Admin to Site Management.")
             return redirect(reverse('all_songs'))
 
         custom_song_form = DesignCustomSongForm()
         song_instrument_formset = AddSongInstrumentFormSet()
 
-        # gets all instruments for the dropdown selection displayed to users
         instruments = Instrument.objects.all()
-
-        # gets all the project_types to handle user's selection in the form
         project_types = ProjectType.objects.all()
 
-        # gets the MAX_NUM_REVIEW_SESSIONS var from settings.py
         max_num_review_sessions = settings.MAX_NUM_REVIEW_SESSIONS
-        # gets the ADDITIONAL_INSTRUMENT_PRICE var from settings.py
         additional_instrument_price = settings.ADDITIONAL_INSTRUMENT_PRICE
-        # gets the ADDITIONAL_REVIEW_SESSION_PRICE var from settings.py
         additional_review_session_price = settings.ADDITIONAL_REVIEW_SESSION_PRICE
 
         context = {
@@ -397,7 +292,14 @@ class DesignCustomSong(View):
         """
         post method for when users click on the save button, which
         submits the design custom song forms.
-        -gets 
+        -gets the submitted form instance
+        -if its valid, the song is created from the data and the request
+        user is applied as the user for the song
+        -gets the instance of AddSongInstrumentFormSet for the new song
+        -if that is valid it is saved, a success message is displayed
+        and the user is taken to the newly created song.
+        -if the form isnt valid, a message is displayed to the user and
+        they are taken back to the form.
         """
 
         custom_song_form = DesignCustomSongForm(request.POST, request.FILES)
@@ -436,43 +338,35 @@ class EditCustomSong(View):
     Class based view inheriting Django's View
     Contains the get method for displaying the form to edit a custom
     song in the edit Custom Song template.
-    FINISH ...
     """
 
     def get(self, request, *args, **kwargs):
         """
         get method for getting the prepopulated forms to be displayed to the
         user
-        -gets the
-        FINISH ...
+        -gets the song to be edited
+        -gets all associated song instruments
+        -gets the forms and pre-populates them with the song instance
+        -gets all instruments for the dropdown selection displayed to users
+        -gets all the project_types to handle user's selection in the form
+        -gets the MAX_NUM_REVIEW_SESSIONS var from settings.py
+        -gets the ADDITIONAL_INSTRUMENT_PRICE var from settings.py
+        -gets the ADDITIONAL_REVIEW_SESSION_PRICE var from settings.py
+        -get the existing number of reviews to pre-pop the form
         """
-
-        # gets the song to be edited
         song = get_object_or_404(Song, slug=self.kwargs['slug'])
-
-        # gets all associated song instruments 
         song_instruments = SongInstrument.objects.filter(song=song)
 
-
-        # gets the forms and pre-populates them with the song instance
         custom_song_form = DesignCustomSongForm(instance=song)
         song_instrument_formset = AddSongInstrumentFormSet(instance=song)
-        # print(song_instrument_formset)
 
-        # gets all instruments for the dropdown selection displayed to users
         instruments = Instrument.objects.all()
-
-        # gets all the project_types to handle user's selection in the form
         project_types = ProjectType.objects.all()
 
-        # gets the MAX_NUM_REVIEW_SESSIONS var from settings.py
         max_num_review_sessions = settings.MAX_NUM_REVIEW_SESSIONS
-        # gets the ADDITIONAL_INSTRUMENT_PRICE var from settings.py
         additional_instrument_price = settings.ADDITIONAL_INSTRUMENT_PRICE
-        # gets the ADDITIONAL_REVIEW_SESSION_PRICE var from settings.py
         additional_review_session_price = settings.ADDITIONAL_REVIEW_SESSION_PRICE
 
-        # getting the existing number of reviews to pre-pop the form
         num_existing_review_sessions = song.num_of_reviews
 
         context = {
@@ -494,23 +388,26 @@ class EditCustomSong(View):
         """
         post method for when users click on the save button, which
         submits the design custom song forms.
-        -gets 
-        FINISH ...
+        -gets the song which has been edited
+        -gets the form with the song instance
+        -if the form is valid the song is updated and saved
+        -gets AddSongInstrumentFormSet
+        -if its valid, it removes existing song instruments for
+        this song so that only the new are applied
+        -a success message is displayed
+        -if the form isnt valid then the user is taken back to
+        the form and an error message is displayed
         """
-        # gets the song which has been edited
         song = get_object_or_404(Song, slug=self.kwargs['slug'])
-
-        # gets the form with the song instance
-        custom_song_form = DesignCustomSongForm(request.POST, request.FILES, instance=song)
-
-        # if request.FILES.get('upload_image'):
-        #     song.image = request.FILES.get('upload_image')
-        #     song.save()
+        custom_song_form = DesignCustomSongForm(
+            request.POST,
+            request.FILES,
+            instance=song
+        )
 
         if custom_song_form.is_valid():
             song = custom_song_form.save(commit=False)
             song.user = User.objects.get(id=self.request.user.id)
-            # check if image stays correct
             song.save()
 
             instruments_formset = AddSongInstrumentFormSet(
@@ -518,7 +415,6 @@ class EditCustomSong(View):
             )
 
             if instruments_formset.is_valid():
-                # removing existing song instruments for this song so that only the new are applied
                 instruments_to_delete = SongInstrument.objects.filter(song=song).delete()
 
                 instruments_formset.save()
@@ -565,16 +461,24 @@ class DeleteSong(generic.DeleteView):
         # if request.user.is_superuser => delete
         if request.user.is_superuser:
             song.delete()
-            messages.success(request, (f'"{song.name}" was successfully deleted'))
-            return render(request, 'home/index.html')
-            # return redirect()  # REDIRECT TO PROFILE once app created
-
-        # ADD --- AND doesnt exist in an order (hasnt been bought yet) => delete
+            messages.success(
+                request,
+                (f'"{song.name}" was successfully deleted')
+            )
+            return render(
+                request,
+                'home/index.html'
+            )
         elif request.user.username == song.user.username:
             song.delete()
-            messages.success(request, (f'"{song.name}" was successfully deleted'))
+            messages.success(
+                request,
+                (f'"{song.name}" was successfully deleted')
+            )
             return render(request, 'home/index.html')
-            # return redirect()  # REDIRECT TO PROFILE once app created
         else:
-            messages.error(request, ('You do not have permission to make this action'))
+            messages.error(
+                request,
+                ('You do not have permission to make this action')
+            )
             return render(request, 'home/index.html')

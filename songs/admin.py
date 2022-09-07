@@ -1,9 +1,13 @@
+""" admin.py for the songs app """
 from django.contrib import admin
 from .models import Genre, Instrument, ProjectType, Song, SongInstrument
 
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
+    """
+    GenreAdmin class, inheriting admin.ModelAdmin
+    """
 
     list_display = (
         'display_name',
@@ -18,8 +22,6 @@ class GenreAdmin(admin.ModelAdmin):
         'display_name',
     )
 
-    # actions = any methods you want to define below
-
 
 class SongInstrumentInline(admin.TabularInline):
     """ Tabular inline of the SongInstrument table """
@@ -28,6 +30,9 @@ class SongInstrumentInline(admin.TabularInline):
 
 @admin.register(Instrument)
 class InstrumentAdmin(admin.ModelAdmin):
+    """
+    InstrumentAdmin class, inheriting admin.ModelAdmin
+    """
 
     list_display = (
         'display_name',
@@ -42,11 +47,12 @@ class InstrumentAdmin(admin.ModelAdmin):
         'display_name',
     )
 
-    # actions = any methods you want to define below
-
 
 @admin.register(ProjectType)
 class ProjectTypeAdmin(admin.ModelAdmin):
+    """
+    ProjectTypeAdmin class, inheriting admin.ModelAdmin
+    """
 
     list_display = (
         'name',
@@ -56,8 +62,6 @@ class ProjectTypeAdmin(admin.ModelAdmin):
         'min_price',
     )
 
-    # ordering = ('pk',)
-
     search_fields = (
         'name',
         'song_length_range',
@@ -66,17 +70,12 @@ class ProjectTypeAdmin(admin.ModelAdmin):
         'min_price',
     )
 
-    # list_filter = (
-    #     'category',
-    #     'price',
-    #     'rating',
-    # )
-
-    # actions = any methods you want to define below
-
 
 @admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
+    """
+    SongAdmin class, inheriting admin.ModelAdmin
+    """
 
     list_display = (
         'name',
@@ -90,10 +89,6 @@ class SongAdmin(admin.ModelAdmin):
         'bpm',
         'use_as_testimonial',
         'created_date',
-        # dont keep the below
-        'image',
-        'audio_file',
-        'slug',
     )
 
     ordering = ('-created_date',)
@@ -130,21 +125,22 @@ class SongAdmin(admin.ModelAdmin):
         'genre',
         'bpm',
         'created_date',
-        # 'duration',
-        # 'price',
-        # 'likes',
     )
 
     inlines = [SongInstrumentInline, ]
 
-    actions = ['change_public_status', 'change_completed_status', 'change_testimonial_status']
+    actions = [
+        'change_public_status',
+        'change_completed_status',
+        'change_testimonial_status'
+    ]
 
     def change_public_status(self, request, queryset):
         """
         Changes the public status of selected songs, but only allows
         them to be made public if certain conditions apply.
         Checks first that the song is complete and has an audio file.
-        If it does, then it checks if either the song user is a regular 
+        If it does, then it checks if either the song user is a regular
         user (custom song) AND the song has use_as_testimonial = True OR
         that the song's user is the superuser (pre-made songs).
         In either of these cases, the song can be made public.

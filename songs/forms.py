@@ -34,18 +34,30 @@ class DesignCustomSongForm(forms.ModelForm):
     Adds labels to fields which don't have them disaplyed
     """
     project_type = forms.ModelChoiceField(
-        label="Project Type", required=True, queryset=ProjectType.objects.all(), empty_label="Select a project type"
+        label="Project Type",
+        required=True,
+        queryset=ProjectType.objects.all(),
+        empty_label="Select a project type"
     )
 
     genre = forms.ModelChoiceField(
-        label="Song Genre", required=True, queryset=Genre.objects.all(), empty_label="Select a genre"
+        label="Song Genre",
+        required=True,
+        queryset=Genre.objects.all(),
+        empty_label="Select a genre"
     )
 
     bpm = forms.IntegerField(
-        label='Beats Per Minute [between: 35-155]', min_value=35, max_value=155, required=False
+        label='Beats Per Minute [between: 35-155]',
+        min_value=35,
+        max_value=155,
+        required=False
     )
 
-    num_of_reviews = forms.CharField(label="Number of Review Sessions", required=False)
+    num_of_reviews = forms.CharField(
+        label="Number of Review Sessions",
+        required=False
+    )
 
     class Meta:
         """ meta data for DesignCustomSongForm """
@@ -96,7 +108,9 @@ class AddSongInstrumentForm(forms.ModelForm):
         exclude = ('song',)
 
     instrument = forms.ModelChoiceField(
-        label="Instrument", queryset=Instrument.objects.all(), empty_label="Select an instrument",
+        label="Instrument",
+        queryset=Instrument.objects.all(),
+        empty_label="Select an instrument",
         required=False
     )
 

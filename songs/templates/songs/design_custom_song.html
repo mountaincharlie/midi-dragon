@@ -4,9 +4,8 @@
 {% block extra_title %} - Design Custom Song{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">DESIGN CUSTOM SONG</h1>
@@ -19,7 +18,6 @@
             <!-- enctype => for uploading image/video/audio files -->
             <form id="design-custom-song-form" method="POST" enctype="multipart/form-data" class="form mb-2">
                 {% csrf_token %}
-                <!--  custom_song_form | crispy  -->
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="row">
@@ -55,7 +53,6 @@
                             </div>
                         </div>
                         
-
                         <!-- ----------- instruments section -------------- -->
                         
                         <div class="row">
@@ -89,7 +86,6 @@
                         <div id="hidden-instrument-elements" class="d-none">
                             <!-- select is d-none by default and JS is used to show the correct amount - on project_type selection AND on clicking the Add instrument button -->
                             <select class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font my-2">
-                                <!-- default selected -need to change with JS? -->
                                 <option value="reset" selected>Select an Instrument </option>
                                 {% for instrument in instruments %}
                                 <option value="{{ instrument }}" class="midi-l-grey">{{ instrument }}</option>
@@ -99,7 +95,6 @@
                             <!-- instrument select which is in container with a delete button (for additional instruments) -->
                             <div class="additional-instruments-select-container">
                                 <select class="instruments-select fs-6 midi-d-grey-bg midi-l-grey midi-border-teal logo-font my-2">
-                                    <!-- default selected -need to change with JS? -->
                                     <option value="reset" selected>Select an Instrument </option>
                                     {% for instrument in instruments %}
                                     <option value="{{ instrument }}" class="midi-l-grey">{{ instrument }}</option>
@@ -109,16 +104,12 @@
                                 <button class="delete-instrument-select-button btn btn-midi-warning my-2" type="button" aria-label="Delete insturment button">Delete Instrument</button>
                             </div>
 
-                            
-
                             <!-- add instrument button - inserted by JS beneath the last select in #visible-instruments-dropdown -->
                             <div id="add-song-instrument-container">
                                 <button id="add-song-instrument" class="btn btn-teal" type="button" aria-label="Add another instrument button">Add An Instrument</button>
                                 <!-- insert amount by passing into the context in the view from settings.py -->
                                 <span class="ps-2 logo-font">+ £{{ additional_instrument_price }}</span>
                             </div>
-                            
-
                         </div>
 
                         <!-- hidden formset management -->
@@ -228,7 +219,6 @@
                 <!-- save and delete buttons -->
                 <div class="row basic-font">
                     <div class="col-12 text-end">
-                        <!-- cancel should send user to their profile -->
                         {% if user.is_superuser %}
                             <a role="button" href="{% url 'all_songs' %}" class="btn btn-l-grey me-2">Cancel</a>
                         {% else %}
@@ -254,7 +244,6 @@
         <div id="additional-instrument-price">{{ additional_instrument_price }}</div>
         <div id="additional-review-session-price">{{ additional_review_session_price }}</div>
     </div>
-
 </div>
 {% endblock %}
 

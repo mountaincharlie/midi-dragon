@@ -5,10 +5,8 @@
 
 {% block content %}
 
-<!-- check that users can still view their own custom songs when private [NEED login to work first] -->
 {% if user.is_superuser or song.public or user.username == song.user.username %}
 
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
 
     <div class="row logo-font pt-4 align-items-center">
@@ -49,21 +47,16 @@
                     </p>
                 </div>
             </div>
-            <!-- Add to tracklist/download btn or note to user -->
             <div class="row">
-                <!-- add if statement for in the user's Tracklist => You already have this song in your Tracklist -->
-
-                <!-- add: OR song is in any of the user's orders -->
                 <div class="col-12 midi-l-grey">
-
-                    <!-- ---- IF the admin is viewing -->
+                    <!-- ---- If the admin is viewing -->
                     {% if user.is_superuser %}
                     <!-- always downloadable if audio file exists -->
                         {% if song.audio_file %}
                         <p class="d-inline fs-5 ps-2 basic-font p-2">
                             Download:
                             <audio controls class="download-button">
-                                <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                                <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                                 Your browser does not support the audio element.
                             </audio>
                         </p>
@@ -78,12 +71,9 @@
                                 This song is private and currently has no associated audio file.
                             </p>
                         {% endif %}
-                    <!-- ADD: elif for if its use_as_testimonial => if its the owning user then they see download if the audio exists (either in tracklist, order or neither) btn else other users see blank OR link to the user's content -->
-
                     <!-- ---- ELIF a logged in user is viewing -->
                     {% elif user.is_authenticated %}
-                        <!-- checking if the song is in their tracklist already -->
-                        <!-- if theyre not the owner of the song -->
+                        <!-- if the admin and viewing user are not the owner of the song => Testimonial -->
                         {% if user.username != song.user.username and not song.user.is_superuser %}
                             <p class="d-inline small basic-font midi-teal">
                                 Show your appreciation by giving this song a 'like', at the bottom of the page.
@@ -100,7 +90,7 @@
                                 <p class="d-inline fs-5 ps-2 basic-font p-2">
                                     Download:
                                     <audio controls class="download-button">
-                                        <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                                         Your browser does not support the audio element.
                                     </audio>
                                 </p>
@@ -109,7 +99,7 @@
                                 <p class="d-inline fs-5 ps-2 basic-font p-2">
                                     Download:
                                     <audio controls class="download-button">
-                                        <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                                         Your browser does not support the audio element.
                                     </audio>
                                 </p>
@@ -127,9 +117,6 @@
                                 <p class="d-inline small basic-font midi-teal">
                                     You have '{{ song.name }}' in your Tracklist.
                                 </p>
-
-                                <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
-
                                 <!-- else just show price and Add To Tracklist button like for non auth users below? -->
                             {% else %}
                                 <!-- price -->
@@ -141,9 +128,7 @@
                                 <!-- add to tracklist form -->
                                 {% include 'includes/add-to-tracklist-form.html' %}
                             {% endif %}
-                                <!-- add: if no audio, check if its a custom song => note that it will be downloadable when complete OR note that there was something wrong with this pre-made song's audio and to contact the admin -->
-
-                                <!-- else just show price and Add To Tracklist button like for non auth users below? -->
+                        <!-- else just show price and Add To Tracklist button like for non auth users below? -->
                         {% else %}
                             <!-- price -->
                             <div class="row">
@@ -155,7 +140,7 @@
                             {% include 'includes/add-to-tracklist-form.html' %}
                         {% endif %}
 
-                    <!-- if a none logged in user is viewing => only public pre-made songs -->
+                    <!-- if a non-logged in user is viewing => only public pre-made songs -->
                     {% else %}
                         <!-- checks if its a custom song (testimonial) -->
                         {% if not song.user.is_superuser %}
@@ -220,12 +205,12 @@
             <hr class="hr-90-teal">
         </div>
     </div>
-    <!-- audio player/your song will be playable here when the audio file is added msg -->
+    
     <div class="row">
         <div class="col-12 midi-l-grey text-center">
             {% if song.audio_file %}
             <audio controls controlsList="nodownload" class="mobile-audio-ctrls">
-                <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+                <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
             <!-- pre-made songs with missing auido file -->
@@ -253,7 +238,6 @@
                 Once, its complete and you've been notified of this, your song will be playable here.
             </p>
             <!-- bought custom songs without audio files => song isnt complete yet -->
-            <!-- FINISH ONCE ORDER MODEL IS CONNECTED TO USER PROFILE -->
             {% elif not song.user.is_superuser and song in users_orders %}
             <p class="basic-font m-0">
                 Your song will be playable here once its complete and uploaded by the admin.
@@ -377,14 +361,10 @@
 
         <div class="col-6 logo-font midi-l-grey text-end pe-4">
             {% if user.is_superuser %}
-            <!-- edit button -->
             <a href="{% url 'edit_custom_song' song.slug %}" class="btn midi-teal midi-border-teal me-2 basic-font" role="button">Edit</a>
-            <!-- delete button -->
             <a href="{% url 'delete_confirmation' song.slug %}" class="btn midi-warning midi-border-warning basic-font" role="button">Delete</a>
 
-            <!-- ADD: and song doesnt have an assocaited order no (hasnt been bought yet) -->
             {% elif user.username == song.user.username %}
-                <!-- { if tracklist_songs  } -->
                 <!-- checks if the current song is in the tracklist_songs list -->
                 {% if user_has_bought_song %}
                             <p class="d-inline small basic-font midi-teal"> Custom songs cannot be edited or deleted once they have been purchased.
@@ -394,9 +374,7 @@
                         You must remove {{ song.name }} from your Tracklist in order to Edit/Delete it.
                     </p>
                 {% else %}
-                    <!-- edit button -->
                     <a href="{% url 'edit_custom_song' song.slug %}" class="btn btn-teal me-2 basic-font" role="button">Edit</a>
-                    <!-- delete button -->
                     <a href="{% url 'delete_confirmation' song.slug %}" class="btn btn-midi-warning basic-font" role="button">Delete</a>
                 {% endif %}
             {% else %}

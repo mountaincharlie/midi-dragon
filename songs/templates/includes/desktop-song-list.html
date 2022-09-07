@@ -11,7 +11,7 @@
 <div class="col-md-4 col-lg-4 col-xl-3 mt-2">
     {% if song.audio_file %}
     <audio controls controlsList="nodownload" class="">
-        <source src="{{ song.audio_file.url }}" type="audio/mpeg" alt="{{ song.name }} audio">
+        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     {% else %}
@@ -35,7 +35,7 @@
         {% else %}
             <p class="midi-l-grey fs-6 m-0">Private</p>
         {% endif %}
-        <!-- <p class="midi-l-grey small m-0">[{{ song.user }}]</p> -->
+
         {% if song.user.is_superuser %}
         <p class="midi-l-grey small m-0">[Pre-made]</p>
         {% else %}
@@ -66,7 +66,7 @@
                                 <i class="fa-solid fa-compact-disc fs-3"></i>
                             </button>
                         </div>
-                        <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project-->
+                        <!-- hidden input which uses request.path to submit redirect_url to redirect to same page after item added - CREDIT CI walkthrough project in README -->
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                     </div>
                 </form>

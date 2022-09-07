@@ -4,9 +4,8 @@
 {% block extra_title %} - Pre-made Songs{% endblock %}
 
 {% block content %}
-<!-- bootstrap container for all the content on this page -->
 <div class="container pt-2 pb-4 overlay">
-    <!-- page heading -->
+
     <div class="row py-4">
         <div class="col-12">
             <h1 class="page-heading midi-l-grey">PRE-MADE SONGS</h1>
@@ -106,19 +105,14 @@
                 </div>
             </div>
     {% endif %}
-    
 </div>
 {% endblock %}
 
 {% block postload_js %}
-    <!-- ensures we append this to the block and not replace any other -->
     {{ block.super }}
-
-    <!-- PUT IN EXTERNAL JS FILE -->
-    <!-- JS for the sort dropdown feature - credit CI walkthrough for how to implement the sort/direction select -->
     <script type="text/javascript">
     
-        // ------- sort-selector logic implemented from CI walkthrough
+        // ------- sort-selector logic implemented from CI walkthrough - credit in README
 
         // capture change event from sort-selector
         var searchSortingSelect = document.getElementById('search-sorting');
@@ -157,7 +151,7 @@
                 currentUrl.searchParams.delete("direction");
                 window.location.replace(currentUrl);
             }
-        };
+        }
     </script>
     <script type="text/javascript">
     
@@ -193,6 +187,6 @@
                 currentUrl.searchParams.delete("genre");
                 window.location.replace(currentUrl);
             }
-        };
+        }
     </script>
 {% endblock %}
