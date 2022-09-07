@@ -1,8 +1,8 @@
-# Midi Dragon
+# midiDRAGON
 
-Midi Dragon is an ecommerce web application for users who want to design their own custom songs or short music clips, which are then created for them. From YouTubers looking for an intro song to capture the essence of their channel, to hobby video makers in need of a specific sound for their content, Midi Dragon’s choice of pre-made and custom songs is the perfect way for creators to find authentic sound for their projects. 
+midiDRAGON is an ecommerce web application for users who want to design their own custom songs or short music clips, which are then created for them. From YouTubers looking for an intro song to capture the essence of their channel, to hobby video makers in need of a specific sound for their content, midiDRAGON’s choice of pre-made and custom songs is the perfect way for creators to find authentic sound for their projects. 
 
-This application provides users with the ability to browse a collection of pre-made songs or design their own custom project with our simple form which they canview, edit and delete in their profile dashboard, up until they decide to purchase it. Testimonials from previous successful projects are available for users to get a feel for what Midi Dragon can create for them. Customers who are happy with their own custom songs have the option to allow their song to be used as a testimonial to promote their own platforms and content as well as reviewing Midi Dragon’s services.
+This application provides users with the ability to browse a collection of pre-made songs or design their own custom project with our simple form which they canview, edit and delete in their profile dashboard, up until they decide to purchase it. Testimonials from previous successful projects are available for users to get a feel for what midiDRAGON can create for them. Customers who are happy with their own custom songs have the option to allow their song to be used as a testimonial to promote their own platforms and content as well as reviewing midiDRAGON’s services.
 
 ### Deployed Site link
 * [midiDRAGON](https://midi-dragon.herokuapp.com/)
@@ -1147,7 +1147,7 @@ The below sections will follow the names of the Epics from my Project Management
 * Both small JavaScriptsat the bottom of songs/songs.html
   * no errors or warning in JSHint
 
-## Bugs [TO FINISH]
+## Bugs
 ---
 
 ### Bugs and Fixes
@@ -1189,8 +1189,6 @@ The below sections will follow the names of the Epics from my Project Management
   * Fix: I realised that I was not passing the actual song instance into the edit_custom_song template, so I added this to the context in the EditCustomSong() view get method.
 * Bug: My method for checking for the 'updating_tracklist' session variable and showing or not showing the rtacklist overview with any success messages appeared to not be working. After adding one item to the tracklist it would then always show the rtacklist overview in success messages, regardless of what they were for.
   * Fix: In contexts.py when I was changing the 'updating_tracklist' to 'false' this was actually only changing the value of the local variable, not updating the session variable, so I changed: updating_tracklist = 'false' to be: request.session['updating_tracklist'] = 'false'. After making this change it was also clear that the 'show_tracklist_overview_in_message' local variable was redundant, so I just used the local 'updating_tracklist' instead.
-* Bug: 
-  * Fix:
 
 
 ### Unfixed Bugs
@@ -1295,9 +1293,35 @@ listner in stripe_elements.js.
 
 ### Media
 * Images:
-  * Homepage background - by [moutaincharlie](https://github.com/mountaincharlie)
-  * For Finding My Place song - by [moutaincharlie](https://github.com/mountaincharlie)
-  * For Someplace song - by [Jérôme Prax on Unsplash](https://unsplash.com/photos/jLZWzT_kdTI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink)
+  * Homepage background image - [moutaincharlie](https://github.com/mountaincharlie)
+  * For Finding My Place song image - [moutaincharlie](https://github.com/mountaincharlie)
+  * For Sister Song song image - [moutaincharlie](https://github.com/mountaincharlie)
+  * For Carrot Cake song image - [moutaincharlie](https://github.com/mountaincharlie)
+  * For Roots United Promo song image - [moutaincharlie](https://github.com/mountaincharlie)
+  * For Someplace song image - [Jérôme Prax on Unsplash](https://unsplash.com/photos/jLZWzT_kdTI?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink)
+  * For As We March song image - [Joshua Earle on Unsplash](https://unsplash.com/photos/C6duwascOEA)
+  * For Arise song image - [Linus Sandvide on Unsplash](https://unsplash.com/photos/5DIFvVwe6wk)
+  * For Breath song image - [Greg Rakozy on Unsplash](https://unsplash.com/photos/oMpAz-DN-9I)
+  * For Edge song image - [Gabriel Encev on Unsplash](https://unsplash.com/photos/eT4aBSS9uJQ)
+  * For eight-bit Harp song image - [Heather Gill on Unsplash](https://unsplash.com/photos/Ub2JHFkIXWc)
+  * For Explore song image - [Kristjan Kotar on Unsplash](https://unsplash.com/photos/-h15p84GY5k)
+  * For Green Pines song image - [Luke Ellis-Craven on Unsplash](https://unsplash.com/photos/Y1WHNn_XYes)
+  * For Hatfield Rain song image - [Sies Kranen on Unsplash](https://unsplash.com/photos/fJY8xhRfU0c)
+  * For In These Strings song image - [Leon Seibert on Unsplash](https://unsplash.com/photos/AkXf5BI1_y0)
+  * For From Above song image - [Joe Green on Unsplash](https://unsplash.com/photos/9ZCZoH69dZQ)
+  * For Lonely Shores song image - [Ramy on Unsplash](https://unsplash.com/photos/rQ7pFn8dV7Y)
+  * For Friends From Far Away song image - [Luke Ellis-Craven on Unsplash](https://unsplash.com/photos/_tfFjSyIUZY)
+  * For Stardust Dreams song image - [Bryan Goff on Unsplash](https://unsplash.com/photos/f7YQo-eYHdM)
+  * For Little Indie Game song image - [Mitchell Orr on Unsplash](https://unsplash.com/photos/bYYtehpPaeE)
+  * For Playing With Coins song image - [Steve Johnson on Unsplash](https://unsplash.com/photos/0sPFjdcRhko)
+  * For Rising Birds song image - [Rov Camato on Pexels](https://www.pexels.com/photo/people-inside-museum-700413/)
+  * For Cathedral Ceiling song image - [Paulo Márcio Dos Santos on Pexels](https://www.pexels.com/photo/old-church-interior-with-cupola-and-frescoes-on-walls-3796547/)
+  * For Skipping School With The Sun song image - [Francesco Ungaro on Pexels](https://www.pexels.com/photo/mosaic-alien-on-wall-1670977/)
+  * For Strong Coffee At 2am song image - [Amr Taha on Unsplash](https://unsplash.com/photos/87HyqnGrCmg)
+  * For The Turning Tide song image - [Maahid Photos on Pexels](https://www.pexels.com/photo/waving-sea-with-foamy-water-7914461/)
+  * For Through The Forest song image - [Bernard Thomas on Pexels](https://www.pexels.com/photo/green-trees-and-trees-painting-1805435/)
+  * For Use Some Piano song image - [Geert Pieters on Unsplash](https://unsplash.com/photos/8QrPJ3Kfie4)
+  * For Newday Promo song image - [jonas on Unsplash](https://unsplash.com/photos/a3Sx4CGHnmI)
   * 
 * Icons:
   * Font Awesome's:
@@ -1334,12 +1358,32 @@ listner in stripe_elements.js.
   * Favicon made Font Awesome's [Dragon icon](https://fontawesome.com/icons/dragon?s=solid&f=classic) and converted using [favicon.io](https://favicon.io/favicon-converter/).
 
 * Audio files:
-  * __All the songs__ on the site were written, recorded and produced by me.
+  * __All the songs__ on the site were written, recorded and produced by me ([moutaincharlie](https://github.com/mountaincharlie)).
 
 
-## Future Features [TO FINISH]
+## Future Features
 ---
 Ideas that could be used to expand the site's functionality. 
 
-### AdOns
-* 
+### AddOns
+* Those who have purchased a Custom Song and wish to add something extra to it after purchasing the Song, can buy a couple more instruments or review sessions and have it together in a little package called an AddOn, which has to have an associated Custom song that was bought by the user.
+
+### Add Song/Genre/Instrument
+* As shown in the Initial Designs for this project, the admin could have some extra functionality in their Site Management page in order to add/edit Songs, Instruments and Songs in midiDRAGON.
+
+### Promotional Discounts
+* Have discounts for different seacons, visible in a banner in the header.
+* Or it could be based off how much a user interacts with the site or how long they've been using midiDRAGON for.
+
+### midiDRAGON Messenger
+* Have a chat function built into the site for the admins to keep in contact easily with users. It would also encourage users to spend more time on the site and is more personal than over email. 
+
+### Save For Later / Add To Favourites
+* Create custom user model or expand Django's one so that users can save songs for later and accecss it straight away instead of needing to find it again everytime they get to the site. It would also encourage users checkout more of the Pre-made songs, sto see what they can save for later.
+
+### Audio_clip as a Song Model Field
+* Have a field on the Song Model which allows users to upload one of their own audio recordings to be incorrporated into their song (like for Sister Song and Hatfield Rain).
+* The upload from users would need to be protected.
+
+### View as Customer Mode
+* Have a was to toggle the Admin being able to view their site as a user would see it so that they can manage the feel and accessability of the site..
