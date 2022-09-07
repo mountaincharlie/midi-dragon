@@ -170,11 +170,6 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
     border: 1px solid #00D1CF;
 }
 
-/* .hr-full-light{
-    width:100%;
-    border: 1px solid #9A9EAE;
-} */
-
 .hr-full-teal{
     width:100%;
     border: 1px solid #00D1CF;
@@ -182,10 +177,6 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
 
 
 /* ---------- midi dragon borders */
-
-/* .top-border-light{
-    border-top: 1px solid #9A9EAE;
-} */
 
 .midi-border-teal{
     border-radius: 2px;
@@ -214,10 +205,6 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
 .midi-btm-border-warning{
     border-bottom: 1px solid #fc5a5a;
 }
-
-/* .bottom-border-dark{
-    border-bottom: 1px solid #1D212E;
-} */
 
 
 /* ---------- midi dragon pages */
@@ -272,25 +259,16 @@ a:hover, .btn:hover, .pink-hover:hover, #mc_embed_signup{  /* i:hover, */
 }
 
 .square-img-large{
-    /* max-height: 30vw; */
     height:30vw;
     width: auto;
     border-radius: 4px;
-    /* position:relative;
-    bottom:25%; */
-    /* overflow:hidden; */
 }
-
-/* .song-details-image-row{
-    height: 30vw;
-} */
 
 
 /* ---------- Browse Pre-made Songs */
 
 .hover-highlight-row:hover{
     background-color: rgba(0, 209, 207, 0.2);
-    /* background-color: rgba(255, 87, 210, 0.3); */
 }
 
 
@@ -312,12 +290,6 @@ audio::-webkit-media-controls-mute-button:hover{
     background-color:#FF57D2;
     border-radius: 50%;
 }
-
-/* audio::-webkit-media-controls-timeline:hover,
-audio::-webkit-media-controls-volume-slider:hover{
-    background-color:#FF57D2;
-    border-radius: 10px;
-} */
 
 .mobile-audio-ctrls{
     max-width: 100%;
@@ -515,7 +487,6 @@ input:-webkit-autofill:active  {
     font-size: larger;
     font-weight:700;
     font-family:'Fira Sans', sans-serif;
-    /* text-transform: uppercase; */
 }
 
 #payment-form .asteriskField{
@@ -546,7 +517,6 @@ input:-webkit-autofill:active  {
 /* ---------- Stripe */
 
 #card-element {
-    /* font-family:'BioRhyme', sans-serif !important; */
     background-color: #1D212E;
     border: 1px solid #00D1CF;
     border-radius: 4px;
@@ -670,7 +640,6 @@ input:-webkit-autofill:active  {
     margin-top:10px;
 }
 
-
 #my-details-form{
     color:#9A9EAE;
     width: 80%;
@@ -779,6 +748,7 @@ input:-webkit-autofill:active  {
 .download-button::-webkit-media-controls-panel:hover{
     background-color:#FF57D2;
 }
+
 
 /* ---------- footer */
 
