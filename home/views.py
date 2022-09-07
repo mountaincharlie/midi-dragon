@@ -1,3 +1,8 @@
+"""
+home/views.py where I have created the class based views
+which control the data that is displayed and gathered between each
+of the templates and the database, through the urls, for the home app.
+"""
 from django.shortcuts import render
 from checkout.models import Order, OrderSong
 
@@ -45,7 +50,6 @@ def faqs(request):
     """
     View for returning the FAQs.html
     """
-
     return render(request, 'home/FAQs.html')
 
 
@@ -53,7 +57,6 @@ def tos(request):
     """
     View for returning the terms_of_service.html
     """
-
     return render(request, 'home/terms_of_service.html')
 
 
@@ -61,5 +64,4 @@ def privacy(request):
     """
     View for returning the privacy_policy.html
     """
-
     return render(request, 'home/privacy_policy.html')
