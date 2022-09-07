@@ -1223,7 +1223,7 @@ The below sections will follow the names of the Epics from my Project Management
 * [midiDRAGON](https://midi-dragon.herokuapp.com/)
 
 
-## Credits [TO FINISH]
+## Credits
 ---
 
 ### Helpful Resources
