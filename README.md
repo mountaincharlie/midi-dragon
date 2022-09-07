@@ -667,7 +667,7 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 
 ### Mobile First Design With Bootstrap 5
 * In order to make my site responsive across different screen sizes, I used Bootstrap's [Grid System](https://getbootstrap.com/docs/5.0/layout/grid/) to make use of its ability to rearrange columns on the screen depending on its screen size.
-* Examples of how this was useful/appeared to the user ...
+* Every page on midiDRAGON can adapt from desktop screens to mobile screens without breaking any features or sarificing any of the stylsh look.
 
 ### Consistency
 * Making use of Django as a templating language by creating a base.html file with title_extra, header, main and footer sections to be used across all pages and a toasts_base.html for consistency across my BS toasts.
@@ -676,19 +676,12 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 * Each page also has the same font for headings and for other text content so this also remains consistent throughout the site.
 * Deciding on colour scheme at the start inorder to write style rules to implement early on and to be able to create a landing page image with the same colours used throughout the site (e.g. creating teal-btn, grey-btn and red-btn to define the 3 btn types and all of them highlight in pink on hover/selection)
 
-### Specific Feedback Messages To Users 
-* e.g Successful signup/login message:
-    * screenshot
-
 ### Navigation
 * The site logo is a clickable link back to the homepage.
-* The footer across all pages contains the link to the Facebook business page, the MailChimp email subscription form and the link to the Privacy Policy document.
+* The footer across all pages contains the link to the Facebook business page, the MailChimp email subscription form and links to the Privacy Policy, FAQs and Terms of Service pages.
 * Features such as the searchbar, genre/song types search selections, My TrackList, Profile/Login and Logout/Register links are available in the header in all pages, so the user doesn't have to go anywhere specific in order to use these features.
-* Return buttons so that the user can navigate easily from their search results back to where they made the search.
-    * screenshots
-* Cancel button on Create Project, Edit Project and Delete Project confirmation pages so that the user doesn't have to use the browsers back button in order to cancel out of any of these pages.
-    * screenshots
-
+* Throughout the site the user is prompted with messages and navigational buttons to help guide them through their experience. Evidence of this user friendly and simple navigation can be found in the Final Designs section which shows the features and functionality avaliable to users depending on their authentication, previous interactions with the site (e.g. past orders or current songs in their Tracklist) and helping them make the most of their experince with midiDRAGON.
+* Cancel button on the Design Custom Song, Edit Custom Song and Delete confirmation pages so that the user doesn't have to use the browsers back button in order to cancel out of any of these features.
 
 ## Accessibility [TO FINISH]
 ---
@@ -699,9 +692,6 @@ The items in the OrderItems table are essentially order ‘versions’ of songs 
 ### Semantic Elements
 * Using 'header', 'nav', 'main' and 'footer' in base.html to make the roles of each section obvious.
 * Adding role="button" for link elements which are being used as buttons
-
-### Aria-Labels
-* Added aria-labels to all link and button elements
 
 
 ## Commit Messages [TO FINISH]
@@ -1200,7 +1190,7 @@ The below sections will follow the names of the Epics from my Project Management
 
 
 ### Unfixed Bugs
-* Should be: No known unfixed bugs (other than warnings/errors explained in code validation section)
+* No known unfixed bugs (other than warnings/errors explained in code validation section)
 
 
 ## Deployment [TO FINISH]
@@ -1278,7 +1268,6 @@ The below sections will follow the names of the Epics from my Project Management
   * Google Font's [Fira Sans](https://fonts.google.com/specimen/Fira+Sans) for the rest of the site's text content.
 
 ### Code
-* (FINISH ... installed django extensions if any)
 * Expandable navbar made with [Bootstrap 5 navbars](https://getbootstrap.com/docs/5.0/components/navbar/#external-content)
 * Dropdown menus made with [Bootstrap 5 dropdowns](https://getbootstrap.com/docs/5.0/components/dropdowns/)
 * Email Subscription form created with [Mailchimp's](https://mailchimp.com/en-gb/) Embedded Form Builder
