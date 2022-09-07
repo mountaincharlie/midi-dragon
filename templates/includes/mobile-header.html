@@ -1,10 +1,9 @@
 <div class="row w-100">
-
     <!-- burger icon dropdown  -->
     <div class="col mobiledropdowncontainer text-center fs-1 p-0">
         <!-- burger icon is the dropdown-toggle -->
         <!-- unordered list is in the dropdown-menu -->
-        <div class="dropdown-toggle text-center midi-l-grey pink-hover" type="button" id="burgericondropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown-toggle text-center midi-l-grey pink-hover" role="button" id="burgericondropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-bars"></i>
         </div>
         <ul class="dropdown-menu midi-d-grey-bg" aria-labelledby="burgericondropdownbtn">
@@ -27,13 +26,11 @@
         </ul>
     </div>
 
-
-
     <!-- search icon dropdown -->
     <div class="col mobiledropdowncontainer midi-l-grey pink-hover text-center fs-5 p-0">
         <!-- search icon is the dropdown-toggle -->
         <!-- search form is in the dropdown-menu -->
-        <div class="dropdown-toggle text-center pink-hover fs-5" type="button" id="mobilesearchdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown-toggle text-center pink-hover fs-5" role="button" id="mobilesearchdropdownbtn" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-magnifying-glass"></i>
             <p>Search</p>
         </div>
@@ -42,7 +39,6 @@
                 <div class="input-group">
                     <!-- the 'query' is what is being submitted -->
                     <input class="form-control midi-l-grey rounded-2 midi-d-grey-bg" type="text" name="query" placeholder="Search">
-                    <!-- DOES IT NEED form-control CLASS TO WORK? - STYLE DIFFERENTLY -->
                     <button class="btn midi-l-grey pink-hover" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
