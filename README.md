@@ -4,8 +4,8 @@ midiDRAGON is an ecommerce web application for users who want to design their ow
 
 This application provides users with the ability to browse a collection of pre-made songs or design their own custom project with our simple form which they canview, edit and delete in their profile dashboard, up until they decide to purchase it. Testimonials from previous successful projects are available for users to get a feel for what midiDRAGON can create for them. Customers who are happy with their own custom songs have the option to allow their song to be used as a testimonial to promote their own platforms and content as well as reviewing midiDRAGON’s services.
 
-### Deployed Site link
-* [midiDRAGON](https://midi-dragon.herokuapp.com/)
+### Site Preview
+* midiDRAGON is not currenly live.
 
 ![Viewing midiDRAGON on desktop](./static/images/readme_images/midi-dragon-desktop-view.png "Viewing midiDRAGON on desktop")
 ![Viewing midiDRAGON on mobile](./static/images/readme_images/midi-dragon-mobile-view.png "Viewing midiDRAGON on mobile")
